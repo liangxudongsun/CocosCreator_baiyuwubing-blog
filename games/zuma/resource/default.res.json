@@ -1,0 +1,313 @@
+{
+	"groups": [
+		{
+			"keys": "zuma_json,changeNPC_mp3,fashe_mp3,music_mp3,BPMovieClip_png,BPMovieClip_json,BallMovieClip_png,BallMovieClip_json,scoreUIHeiBg_png,texiaoPngTuji_json,gameoverFinishTuji_json,bg_png,boarder_png,map1_jpg,map2_jpg,map3_png,map4_jpg,map5_jpg,map6_jpg,map7_jpg,map8_jpg,map9_jpg,map10_jpg,ExplosionNew1_mp3,ExplosionNew2_mp3,ExplosionNew3_mp3,ExplosionNew4_mp3,PowerupEnvironment_mp3,ExtraTime_mp3,guide_jiantou_png,guide_Clear_png,guide_Congratulations_png,guide_Gap_png,guide_Game_will_end_if_png,guide_Marbles_png,guide_Swap_png,guide_Tutorial_png,guide_Skip_jpg,guide_A_RAINBOW_BALL_png,guide_tap_rainbow_png,zuma_hole_normal_png,continue_mask_png,guide_PLay_now_png,guide_start_png,bg_2_jpg,thumb_pb_png,track_pb_png,timeMask_png,continue_png,btn_end_now_png,btn_resume_game_png,btn_resume_png,text_Finish_Game_png,text_Game_Paused_png,ball_faguang_png,text_DANGROUS_png,dangerous_mp3,dangerous_json,dangerous_png,ball_shadow_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "Sound/changeNPC.mp3",
+			"type": "sound",
+			"name": "changeNPC_mp3"
+		},
+		{
+			"url": "Sound/fashe.mp3",
+			"type": "sound",
+			"name": "fashe_mp3"
+		},
+		{
+			"url": "Sound/music.mp3",
+			"type": "sound",
+			"name": "music_mp3"
+		},
+		{
+			"url": "zuma/zuma.json",
+			"type": "sheet",
+			"name": "zuma_json",
+			"subkeys": "allClear,black,blue,boarder1,boarder2,canonUp,continue,finalScore,gameOver,green,line,purple,rainbow,rainbowBtn,rainbowDark,rainbowcolor,red,timeUp,white,yellow"
+		},
+		{
+			"url": "BPMovieClipFps/BPMovieClip.png",
+			"type": "image",
+			"name": "BPMovieClip_png"
+		},
+		{
+			"url": "BPMovieClipFps/BPMovieClip.json",
+			"type": "json",
+			"name": "BPMovieClip_json"
+		},
+		{
+			"url": "BallMovieClipFps/BallMovieClip.png",
+			"type": "image",
+			"name": "BallMovieClip_png"
+		},
+		{
+			"url": "BallMovieClipFps/BallMovieClip.json",
+			"type": "json",
+			"name": "BallMovieClip_json"
+		},
+		{
+			"url": "texiaoPng/scoreUIHeiBg.png",
+			"type": "image",
+			"name": "scoreUIHeiBg_png"
+		},
+		{
+			"url": "texiaoPngTuji/texiaoPngTuji.json",
+			"type": "sheet",
+			"name": "texiaoPngTuji_json",
+			"subkeys": "1,2,3,30s,60s,90s,GamePause,back,backGame,canonBottom,go,pause,quitGame,reverse,shadow,time,wave,wave-guang,wave1,wave10,wave2,wave3,wave4,wave5,wave6,wave7,wave8,wave9"
+		},
+		{
+			"url": "gameoverFinishTuji/gameoverFinishTuji.json",
+			"type": "sheet",
+			"name": "gameoverFinishTuji_json",
+			"subkeys": "chainEffect,clear,freeze,game_Over,gameclear_chao,time_Up"
+		},
+		{
+			"url": "ZumaBg/bg.png",
+			"type": "image",
+			"name": "bg_png"
+		},
+		{
+			"url": "ZumaBg/boarder.png",
+			"type": "image",
+			"name": "boarder_png"
+		},
+		{
+			"url": "ZumaBg/map1.jpg",
+			"type": "image",
+			"name": "map1_jpg"
+		},
+		{
+			"url": "ZumaBg/map2.jpg",
+			"type": "image",
+			"name": "map2_jpg"
+		},
+		{
+			"url": "ZumaBg/map3.png",
+			"type": "image",
+			"name": "map3_png"
+		},
+		{
+			"url": "ZumaBg/map4.jpg",
+			"type": "image",
+			"name": "map4_jpg"
+		},
+		{
+			"url": "ZumaBg/map5.jpg",
+			"type": "image",
+			"name": "map5_jpg"
+		},
+		{
+			"url": "ZumaBg/map6.jpg",
+			"type": "image",
+			"name": "map6_jpg"
+		},
+		{
+			"url": "ZumaBg/map7.jpg",
+			"type": "image",
+			"name": "map7_jpg"
+		},
+		{
+			"url": "ZumaBg/map8.jpg",
+			"type": "image",
+			"name": "map8_jpg"
+		},
+		{
+			"url": "ZumaBg/map9.jpg",
+			"type": "image",
+			"name": "map9_jpg"
+		},
+		{
+			"url": "ZumaBg/map10.jpg",
+			"type": "image",
+			"name": "map10_jpg"
+		},
+		{
+			"url": "Sound/ExplosionNew1.mp3",
+			"type": "sound",
+			"name": "ExplosionNew1_mp3"
+		},
+		{
+			"url": "Sound/ExplosionNew2.mp3",
+			"type": "sound",
+			"name": "ExplosionNew2_mp3"
+		},
+		{
+			"url": "Sound/ExplosionNew3.mp3",
+			"type": "sound",
+			"name": "ExplosionNew3_mp3"
+		},
+		{
+			"url": "Sound/ExplosionNew4.mp3",
+			"type": "sound",
+			"name": "ExplosionNew4_mp3"
+		},
+		{
+			"url": "Sound/PowerupEnvironment.mp3",
+			"type": "sound",
+			"name": "PowerupEnvironment_mp3"
+		},
+		{
+			"url": "Sound/ExtraTime.mp3",
+			"type": "sound",
+			"name": "ExtraTime_mp3"
+		},
+		{
+			"url": "assets/guide/guide_jiantou.png",
+			"type": "image",
+			"name": "guide_jiantou_png"
+		},
+		{
+			"url": "assets/guide/guide_Clear.png",
+			"type": "image",
+			"name": "guide_Clear_png"
+		},
+		{
+			"url": "assets/guide/guide_Congratulations.png",
+			"type": "image",
+			"name": "guide_Congratulations_png"
+		},
+		{
+			"url": "assets/guide/guide_Gap.png",
+			"type": "image",
+			"name": "guide_Gap_png"
+		},
+		{
+			"url": "assets/guide/guide_Game_will_end_if.png",
+			"type": "image",
+			"name": "guide_Game_will_end_if_png"
+		},
+		{
+			"url": "assets/guide/guide_Marbles.png",
+			"type": "image",
+			"name": "guide_Marbles_png"
+		},
+		{
+			"url": "assets/guide/guide_Swap.png",
+			"type": "image",
+			"name": "guide_Swap_png"
+		},
+		{
+			"url": "assets/guide/guide_Tutorial.png",
+			"type": "image",
+			"name": "guide_Tutorial_png"
+		},
+		{
+			"url": "assets/guide/guide_Skip.jpg",
+			"type": "image",
+			"name": "guide_Skip_jpg"
+		},
+		{
+			"url": "assets/guide/guide_A_RAINBOW_BALL.png",
+			"type": "image",
+			"name": "guide_A_RAINBOW_BALL_png"
+		},
+		{
+			"url": "assets/guide/guide_tap_rainbow.png",
+			"type": "image",
+			"name": "guide_tap_rainbow_png"
+		},
+		{
+			"url": "zuma/zuma_hole_normal.png",
+			"type": "image",
+			"name": "zuma_hole_normal_png"
+		},
+		{
+			"url": "zuma/continue_mask.png",
+			"type": "image",
+			"name": "continue_mask_png"
+		},
+		{
+			"name": "guide_PLay_now_png",
+			"type": "image",
+			"url": "assets/guide/guide_PLay_now.png"
+		},
+		{
+			"name": "guide_start_png",
+			"type": "image",
+			"url": "assets/guide/guide_start.png"
+		},
+		{
+			"name": "bg_2_jpg",
+			"type": "image",
+			"url": "ZumaBg/bg_2.jpg"
+		},
+		{
+			"name": "thumb_pb_png",
+			"type": "image",
+			"url": "assets/ProgressBar/thumb_pb.png"
+		},
+		{
+			"name": "track_pb_png",
+			"type": "image",
+			"url": "assets/ProgressBar/track_pb.png"
+		},
+		{
+			"name": "timeMask_png",
+			"type": "image",
+			"url": "assets/ProgressBar/timeMask.png"
+		},
+		{
+			"name": "continue_png",
+			"type": "image",
+			"url": "zuma/continue.png"
+		},
+		{
+			"name": "btn_end_now_png",
+			"type": "image",
+			"url": "zuma/btn_end_now.png"
+		},
+		{
+			"name": "btn_resume_game_png",
+			"type": "image",
+			"url": "zuma/btn_resume_game.png"
+		},
+		{
+			"name": "btn_resume_png",
+			"type": "image",
+			"url": "zuma/btn_resume.png"
+		},
+		{
+			"name": "text_Finish_Game_png",
+			"type": "image",
+			"url": "zuma/text_Finish_Game.png"
+		},
+		{
+			"name": "text_Game_Paused_png",
+			"type": "image",
+			"url": "zuma/text_Game_Paused.png"
+		},
+		{
+			"name": "ball_faguang_png",
+			"type": "image",
+			"url": "zuma/ball_faguang.png"
+		},
+		{
+			"name": "text_DANGROUS_png",
+			"type": "image",
+			"url": "zuma/text_DANGROUS.png"
+		},
+		{
+			"name": "dangerous_mp3",
+			"type": "sound",
+			"url": "Sound/dangerous.mp3"
+		},
+		{
+			"name": "dangerous_json",
+			"type": "json",
+			"url": "texiaoPngTuji/dangerous.json"
+		},
+		{
+			"name": "dangerous_png",
+			"type": "image",
+			"url": "texiaoPngTuji/dangerous.png"
+		},
+		{
+			"name": "ball_shadow_png",
+			"type": "image",
+			"url": "BallMovieClipFps/ball_shadow.png"
+		}
+	]
+}

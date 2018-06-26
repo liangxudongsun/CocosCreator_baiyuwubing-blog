@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="GameOverUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui"
+        xmlns:w="http://ns.egret.com/wing">
+	<w:Config id="1600fff0212"></w:Config>
+	<e:Group width="640" height="1136" x="0" y="0">
+		<e:Image source="scoreUIHeiBg_png" horizontalCenter="0" verticalCenter="0" />
+		<e:Image id="bg" x="322.87" y="566.66" scaleX="0.6" scaleY="0.6" anchorOffsetX="429.29" anchorOffsetY="636.36"
+		         source="bg_png" />
+		<e:Image id="boarder1" source="boarder1" x="320.59" y="345.48" scaleX="0.6" scaleY="0.6" anchorOffsetX="297.98"
+		         anchorOffsetY="75.76" />
+		<e:Image id="boarder2" source="boarder2" x="322.24" y="543.22" anchorOffsetX="186.43" anchorOffsetY="130.35"
+		         height="246.02" width="371.39" scale9Grid="41,36,250,64" />
+		<e:Image id="img_game_over" source="gameOver" x="315.82" y="346.63" scaleX="0.6" scaleY="0.6" anchorOffsetX="237.37"
+		         anchorOffsetY="45.45" visible="false" />
+		<e:Image id="img_all_clear" x="318.48" y="335.99" scaleX="0.6" scaleY="0.6" anchorOffsetX="237.37"
+		         anchorOffsetY="45.45" source="zuma_json.allClear" visible="false" />
+		<e:Image id="img_times_up" x="362.37" y="346.63" scaleX="0.6" scaleY="0.6" anchorOffsetX="237.37"
+		         anchorOffsetY="45.45" source="zuma_json.timeUp" visible="false" />
+		<e:Image id="line" source="line" x="320.23" y="559.94" scaleX="0.6" scaleY="0.6" anchorOffsetX="287.71"
+		         anchorOffsetY="146.46" height="271" width="570.7" />
+		<e:Image id="finalScore" source="finalScore" x="321.7" y="730.42" scaleX="0.6" scaleY="0.6" anchorOffsetX="193.33"
+		         anchorOffsetY="40" />
+		<e:Image id="boarder3" source="boarder2" x="322.19" y="808.95" anchorOffsetX="116.38" anchorOffsetY="48.13"
+		         height="93" width="230" />
+		<e:Label id="clear" text="Clear" x="207.2" y="457.66" anchorOffsetX="38" anchorOffsetY="18" scaleX="1.2" scaleY="1.2" />
+		<e:Label id="clearScore" text="0" x="424.34" y="456.66" anchorOffsetX="45.78" anchorOffsetY="17.16" scaleX="1.2"
+		         scaleY="1.2" width="91.17" textAlign="left" />
+		<e:Label id="combo" text="Combo" x="219.2" y="509.48" anchorOffsetX="48" anchorOffsetY="16.33" scaleX="1.2"
+		         scaleY="1.2" />
+		<e:Label id="comboScore" text="0" x="426.87" y="508.48" anchorOffsetX="48.05" anchorOffsetY="15.5" scaleX="1.2"
+		         scaleY="1.2" width="95.33" textAlign="left" />
+		<e:Label id="chain" text="Chain" x="217.2" y="559.48" anchorOffsetX="48" anchorOffsetY="16.33" scaleX="1.2"
+		         scaleY="1.2" />
+		<e:Label id="chainScore" text="0" x="428.97" y="558.48" anchorOffsetX="51.47" anchorOffsetY="15.5" scaleX="1.2"
+		         scaleY="1.2" width="102" textAlign="left" />
+		<e:Label id="boardClear" text="BoardClear" x="217.2" y="615.48" anchorOffsetX="48" anchorOffsetY="16.33" scaleX="1.2"
+		         scaleY="1.2" />
+		<e:Label id="boardClearScore" text="0" x="428.69" y="614.48" anchorOffsetX="51.24" anchorOffsetY="15.5" scaleX="1.2"
+		         scaleY="1.2" width="100.33" textAlign="left" />
+		<e:Label id="FinalScore" text="0" y="780" textAlign="center" horizontalCenter="0" size="50" />
+		<e:Group id="gp_continue" y="900" horizontalCenter="0">
+			<e:Button id="continue" label="" y="0" enabled="true" x="0" scaleX="0.6" scaleY="0.6">
+				<e:skinName>
+					<e:Skin states="up,down,disabled">
+						<e:Image width="100%" height="100%" source="continue_png" />
+						<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0" />
+					</e:Skin>
+				</e:skinName>
+			</e:Button>
+			<e:Image id="img_mask" source="continue_mask_png" y="0" scaleX="0.6" scaleY="0.6" touchEnabled="false" x="0" />
+		</e:Group>
+	</e:Group>
+</e:Skin>

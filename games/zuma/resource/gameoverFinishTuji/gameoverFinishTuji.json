@@ -1,0 +1,7 @@
+{"file":"gameoverFinishTuji.png","frames":{
+"chainEffect":{"x":1083,"y":236,"w":258,"h":116,"offX":20,"offY":16,"sourceW":300,"sourceH":150},
+"clear":{"x":1083,"y":1,"w":693,"h":233,"offX":5,"offY":4,"sourceW":706,"sourceH":240},
+"freeze":{"x":1,"y":1593,"w":593,"h":206,"offX":19,"offY":7,"sourceW":631,"sourceH":220},
+"game_Over":{"x":1,"y":1067,"w":1076,"h":524,"offX":0,"offY":0,"sourceW":1076,"sourceH":524},
+"gameclear_chao":{"x":1,"y":1,"w":1080,"h":538,"offX":0,"offY":21,"sourceW":1080,"sourceH":578},
+"time_Up":{"x":1,"y":541,"w":1076,"h":524,"offX":0,"offY":0,"sourceW":1076,"sourceH":524}}}

@@ -1,0 +1,21 @@
+{
+	"skins": {
+		"ProgressBarSkin": "resource/eui_skins/ProgressBarSkin.exml",
+		"mypanel": "resource/eui_skins/mypanel.exml",
+		"NPCFire": "resource/eui_skins/NPCFire.exml",
+		"GameOverUI": "resource/eui_skins/GameOverUI.exml",
+		"Pause": "resource/eui_skins/Pause.exml",
+		"GuideView": "resource/eui_skins/GuideViewSkin.exml"
+	},
+	"autoGenerateExmlsList": true,
+	"exmls": [
+		"resource/eui_skins/ButtonSkin.exml",
+		"resource/eui_skins/GameOverUI.exml",
+		"resource/eui_skins/GuideViewSkin.exml",
+		"resource/eui_skins/NPCFire.exml",
+		"resource/eui_skins/Pause.exml",
+		"resource/eui_skins/ProgressBarSkin.exml",
+		"resource/eui_skins/mypanel.exml"
+	],
+	"path": "resource/default.thm.json"
+}
