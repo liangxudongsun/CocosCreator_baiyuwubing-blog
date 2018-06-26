@@ -1,0 +1,48 @@
+{
+	"styles": {
+		"1": {
+			"textColor": "0x6e442a",
+			"textAlign": "center",
+			"size": "22"
+		},
+		"white": {
+			"textColor": "0xffffff"
+		},
+		"red": {
+			"textColor": "0xFF0B0B"
+		},
+		"green": {
+			"textColor": "0x53ffe6"
+		},
+		"yellow": {
+			"textColor": "0xffe045"
+		}
+	},
+	"skins": {
+		"LoadingUI": "resource/eui_skins/LoadingUISkin.exml",
+		"BaseView": "resource/eui_skins/BaseViewSkin.exml",
+		"MainView": "resource/eui_skins/MainViewSkin.exml",
+		"GameView": "resource/eui_skins/GameViewSkin.exml",
+		"GameOverView": "resource/eui_skins/GameOverViewSkin.exml",
+		"GMItem": "resource/eui_skins/GMItemSkin.exml",
+		"PauseView": "resource/eui_skins/PauseViewSkin.exml",
+		"GuideView": "resource/eui_skins/GuideViewSkin.exml"
+	},
+	"autoGenerateExmlsList": true,
+	"exmls": [
+		"resource/eui_skins/BaseViewSkin.exml",
+		"resource/eui_skins/BoxItemSkin.exml",
+		"resource/eui_skins/ButtonSkin.exml",
+		"resource/eui_skins/GMItemSkin.exml",
+		"resource/eui_skins/GMViewSkin.exml",
+		"resource/eui_skins/GameOverViewSkin.exml",
+		"resource/eui_skins/ProgressBarSkin.exml",
+		"resource/eui_skins/GameViewSkin.exml",
+		"resource/eui_skins/GuideViewSkin.exml",
+		"resource/eui_skins/HSliderSkin.exml",
+		"resource/eui_skins/LoadingUISkin.exml",
+		"resource/eui_skins/MainViewSkin.exml",
+		"resource/eui_skins/PauseViewSkin.exml"
+	],
+	"path": "resource/default.thm.json"
+}
