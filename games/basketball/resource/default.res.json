@@ -1,0 +1,215 @@
+{
+	"groups": [
+		{
+			"keys": "bg_jpg,description_json,ball_png,ball_kuang_flag_png,ball_shadow_png,cat_png,finger_png,kuang_png,light_png,red_kuang_png,right_bg_png,shadow_png,shop_png,stage_bg_png,awww1_mp3,awww2_mp3,clap1_mp3,clap2_mp3,clap3_mp3,clap4_mp3,clap5_mp3,coinpickup_mp3,ding_mp3,hit01_mp3,hit02_mp3,hit03_mp3,hit04_mp3,hit05_mp3,hit06_mp3,hit07_mp3,net_mp3,netdirect_mp3,throw01_mp3,ball_net_png,coin_png,effect_coin_json,effect_coin_png,coin_down_png,coin_down_bg_png,ball_net_line_jpg,music_mp3",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/bg.jpg",
+			"type": "image",
+			"name": "bg_jpg"
+		},
+		{
+			"url": "config/description.json",
+			"type": "json",
+			"name": "description_json"
+		},
+		{
+			"url": "assets/basketball/ball.png",
+			"type": "image",
+			"name": "ball_png"
+		},
+		{
+			"url": "assets/basketball/ball_kuang_flag.png",
+			"type": "image",
+			"name": "ball_kuang_flag_png"
+		},
+		{
+			"url": "assets/basketball/ball_shadow.png",
+			"type": "image",
+			"name": "ball_shadow_png"
+		},
+		{
+			"url": "assets/basketball/cat.png",
+			"type": "image",
+			"name": "cat_png"
+		},
+		{
+			"url": "assets/basketball/finger.png",
+			"type": "image",
+			"name": "finger_png"
+		},
+		{
+			"url": "assets/basketball/kuang.png",
+			"type": "image",
+			"name": "kuang_png"
+		},
+		{
+			"url": "assets/basketball/light.png",
+			"type": "image",
+			"name": "light_png"
+		},
+		{
+			"url": "assets/basketball/red_kuang.png",
+			"type": "image",
+			"name": "red_kuang_png"
+		},
+		{
+			"url": "assets/basketball/right_bg.png",
+			"type": "image",
+			"name": "right_bg_png"
+		},
+		{
+			"url": "assets/basketball/shadow.png",
+			"type": "image",
+			"name": "shadow_png"
+		},
+		{
+			"url": "assets/basketball/shop.png",
+			"type": "image",
+			"name": "shop_png"
+		},
+		{
+			"url": "assets/basketball/stage_bg.png",
+			"type": "image",
+			"name": "stage_bg_png"
+		},
+		{
+			"url": "assets/sound/awww1.mp3",
+			"type": "sound",
+			"name": "awww1_mp3"
+		},
+		{
+			"url": "assets/sound/awww2.mp3",
+			"type": "sound",
+			"name": "awww2_mp3"
+		},
+		{
+			"url": "assets/sound/clap1.mp3",
+			"type": "sound",
+			"name": "clap1_mp3"
+		},
+		{
+			"url": "assets/sound/clap2.mp3",
+			"type": "sound",
+			"name": "clap2_mp3"
+		},
+		{
+			"url": "assets/sound/clap3.mp3",
+			"type": "sound",
+			"name": "clap3_mp3"
+		},
+		{
+			"url": "assets/sound/clap4.mp3",
+			"type": "sound",
+			"name": "clap4_mp3"
+		},
+		{
+			"url": "assets/sound/clap5.mp3",
+			"type": "sound",
+			"name": "clap5_mp3"
+		},
+		{
+			"url": "assets/sound/coinpickup.mp3",
+			"type": "sound",
+			"name": "coinpickup_mp3"
+		},
+		{
+			"url": "assets/sound/ding.mp3",
+			"type": "sound",
+			"name": "ding_mp3"
+		},
+		{
+			"url": "assets/sound/hit01.mp3",
+			"type": "sound",
+			"name": "hit01_mp3"
+		},
+		{
+			"url": "assets/sound/hit02.mp3",
+			"type": "sound",
+			"name": "hit02_mp3"
+		},
+		{
+			"url": "assets/sound/hit03.mp3",
+			"type": "sound",
+			"name": "hit03_mp3"
+		},
+		{
+			"url": "assets/sound/hit04.mp3",
+			"type": "sound",
+			"name": "hit04_mp3"
+		},
+		{
+			"url": "assets/sound/hit05.mp3",
+			"type": "sound",
+			"name": "hit05_mp3"
+		},
+		{
+			"url": "assets/sound/hit06.mp3",
+			"type": "sound",
+			"name": "hit06_mp3"
+		},
+		{
+			"url": "assets/sound/hit07.mp3",
+			"type": "sound",
+			"name": "hit07_mp3"
+		},
+		{
+			"url": "assets/sound/net.mp3",
+			"type": "sound",
+			"name": "net_mp3"
+		},
+		{
+			"url": "assets/sound/netdirect.mp3",
+			"type": "sound",
+			"name": "netdirect_mp3"
+		},
+		{
+			"url": "assets/sound/throw01.mp3",
+			"type": "sound",
+			"name": "throw01_mp3"
+		},
+		{
+			"url": "assets/basketball/ball_net.png",
+			"type": "image",
+			"name": "ball_net_png"
+		},
+		{
+			"name": "coin_png",
+			"type": "image",
+			"url": "assets/basketball/coin.png"
+		},
+		{
+			"name": "effect_coin_json",
+			"type": "json",
+			"url": "assets/basketball/effect_coin.json"
+		},
+		{
+			"name": "effect_coin_png",
+			"type": "image",
+			"url": "assets/basketball/effect_coin.png"
+		},
+		{
+			"name": "coin_down_png",
+			"type": "image",
+			"url": "assets/basketball/coin_down.png"
+		},
+		{
+			"name": "coin_down_bg_png",
+			"type": "image",
+			"url": "assets/basketball/coin_down_bg.png"
+		},
+		{
+			"name": "ball_net_line_jpg",
+			"type": "image",
+			"url": "assets/basketball/ball_net_line.jpg"
+		},
+		{
+			"name": "music_mp3",
+			"type": "sound",
+			"url": "assets/sound/music.mp3"
+		}
+	]
+}

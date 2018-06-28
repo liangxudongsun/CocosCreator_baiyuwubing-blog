@@ -1,32 +1,42 @@
 --- 
-layout: default 
+layout: page 
 title: "Games" 
 description: "some games" 
-header-img: "img/tag-bg.jpg"
+header-img: "img/tag-bg.jpg" 
 multilingual: true 
 ---
-<!-- Page Header -->
-<header class="intro-header" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading" id="tag-heading">
-                    <h1>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</h1>
-                    <span class="subheading">{{ page.description }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
 
-<!-- Main Content -->
-<body>
-    <table border="1">
-     <tr>
-       <th><a href="zuma"> zuma </a></th>
-     </tr>
-     <tr>
-       <td><a href="tetris"> tetris </a></td>
-     </tr>
-   </table>
-</body>
+<!-- Bootstrap Core JavaScript -->
+<!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
+<script src="{{ " /js/bootstrap.min.js " | prepend: site.baseurl }}"></script>
+
+<div class="container-fluid">
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="caption">
+                        <img>
+                        <h3>basketball</h3>
+                        <p>basketball game</p>
+                        <p>
+                            <a href="basketball" target="_blank" class="btn btn-primary" role="button">Play</a>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="caption">
+                        <img>
+                        <h3>tetris</h3>
+                        <p>tetris game</p>
+                        <p>
+                            <a href="tetris" target="_blank" class="btn btn-primary" role="button">Play</a>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

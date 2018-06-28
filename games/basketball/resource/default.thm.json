@@ -1,0 +1,21 @@
+{
+	"styles": {
+		"1": {
+			"textColor": "0x6e442a",
+			"textAlign": "center",
+			"size": "22"
+		}
+	},
+	"skins": {
+		"BaseView": "resource/eui_skins/BaseViewSkin.exml",
+		"MainView": "resource/eui_skins/MainViewSkin.exml",
+		"GameView": "resource/eui_skins/GameViewSkin.exml"
+	},
+	"autoGenerateExmlsList": true,
+	"exmls": [
+		"resource/eui_skins/BaseViewSkin.exml",
+		"resource/eui_skins/GameViewSkin.exml",
+		"resource/eui_skins/MainViewSkin.exml"
+	],
+	"path": "resource/default.thm.json"
+}

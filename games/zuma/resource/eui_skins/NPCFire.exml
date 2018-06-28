@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="NPCFireSkin" width="286" height="300" xmlns:e="http://ns.egret.com/eui"
-        xmlns:w="http://ns.egret.com/wing">
-	<w:Config id="15fc36fab8a"></w:Config>
-	<e:Image id="prepareBall" source="" y="150" x="143" />
-	<e:Image id="catchBall" x="75" source="" y="150" />
-	<e:Image id="Hold" source="canonUp" scaleX="0.6" scaleY="0.6" anchorOffsetY="136.5" rotation="90" anchorOffsetX="211"
-	         x="143" y="150" />
-</e:Skin>
