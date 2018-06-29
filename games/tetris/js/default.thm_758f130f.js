@@ -430,12 +430,12 @@ window.skins={};
 	__extends(GameViewSkin, _super);
 	function GameViewSkin() {
 		_super.call(this);
-		this.skinParts = ["tweenGroup","img_next_di","gp_next","gp_next0","gp_next1","gp_all_next","lb_score","lb_time","lb_verison","lb_lianxiao","lb_4qing","lb_total_count","pb_level","lb_level","pb_mess","lb_miss","lb_mess","gp_map","gp_map_bg","img_game_light","img_time_left","gp_tips_level_up","lb_combo","gp_tips_combo","gp_tips_teris","gp_touch","img_hold_di","gp_hold","gp_hold_all","img_hold_light","gp_hold_btn","img_daojishi","gp_daojishi","img_gm","btn_pause","btn_direclydown"];
+		this.skinParts = ["tweenGroup","img_next_di","gp_next","gp_next0","gp_next1","gp_all_next","lb_score","lb_time","lb_verison","lb_lianxiao","lb_4qing","lb_total_count","pb_level","lb_level","pb_mess","lb_miss","lb_mess","gp_map","gp_map_bg","img_game_light","img_time_left","gp_tips_level_up","img_bonus_time","gp_bouns_time","gp_tips_teris","gp_touch","img_hold_di","gp_hold","gp_hold_all","img_hold_light","gp_hold_btn","img_daojishi","gp_daojishi","img_gm","btn_pause","btn_direclydown"];
 		
 		this.height = 1334;
 		this.width = 750;
 		this.tweenGroup_i();
-		this.elementsContent = [this._Image1_i(),this._Group2_i(),this._Group3_i(),this.lb_verison_i(),this.lb_lianxiao_i(),this.lb_4qing_i(),this.lb_total_count_i(),this._Group4_i(),this._Group5_i(),this.gp_map_bg_i(),this.img_game_light_i(),this.img_time_left_i(),this.gp_tips_level_up_i(),this.gp_tips_combo_i(),this.gp_tips_teris_i(),this.gp_touch_i(),this.gp_hold_btn_i(),this.gp_daojishi_i(),this.img_gm_i(),this.btn_pause_i(),this.btn_direclydown_i()];
+		this.elementsContent = [this._Image1_i(),this._Group2_i(),this._Group3_i(),this.lb_verison_i(),this.lb_lianxiao_i(),this.lb_4qing_i(),this.lb_total_count_i(),this._Group4_i(),this._Group5_i(),this.gp_map_bg_i(),this.img_game_light_i(),this.img_time_left_i(),this.gp_tips_level_up_i(),this.gp_bouns_time_i(),this.gp_tips_teris_i(),this.gp_touch_i(),this.gp_hold_btn_i(),this.gp_daojishi_i(),this.img_gm_i(),this.btn_pause_i(),this.btn_direclydown_i()];
 		
 		eui.Binding.$bindProperties(this, ["img_game_light"],[0],this._TweenItem1,"target");
 		eui.Binding.$bindProperties(this, [true],[],this._Object1,"loop");
@@ -815,9 +815,9 @@ window.skins={};
 		t.y = 527;
 		return t;
 	};
-	_proto.gp_tips_combo_i = function () {
+	_proto.gp_bouns_time_i = function () {
 		var t = new eui.Group();
-		this.gp_tips_combo = t;
+		this.gp_bouns_time = t;
 		t.percentHeight = 100;
 		t.horizontalCenter = 0;
 		t.verticalCenter = 0;
@@ -831,26 +831,16 @@ window.skins={};
 	_proto._Group6_i = function () {
 		var t = new eui.Group();
 		t.horizontalCenter = 0;
-		t.scaleX = 0.5;
-		t.scaleY = 0.5;
-		t.verticalCenter = -200;
-		t.elementsContent = [this._Image7_i(),this.lb_combo_i()];
+		t.verticalCenter = -100;
+		t.elementsContent = [this.img_bonus_time_i()];
 		return t;
 	};
-	_proto._Image7_i = function () {
+	_proto.img_bonus_time_i = function () {
 		var t = new eui.Image();
-		t.source = "gameTexture_json.text_COMBO";
+		this.img_bonus_time = t;
+		t.source = "gameTexture_json.text_BONUS_TIME";
 		t.verticalCenter = 0;
 		t.x = 0;
-		return t;
-	};
-	_proto.lb_combo_i = function () {
-		var t = new eui.Label();
-		this.lb_combo = t;
-		t.size = 80;
-		t.text = "+1";
-		t.x = 307;
-		t.y = 0;
 		return t;
 	};
 	_proto.gp_tips_teris_i = function () {
@@ -863,10 +853,10 @@ window.skins={};
 		t.percentWidth = 100;
 		t.x = 30;
 		t.y = 30;
-		t.elementsContent = [this._Image8_i()];
+		t.elementsContent = [this._Image7_i()];
 		return t;
 	};
-	_proto._Image8_i = function () {
+	_proto._Image7_i = function () {
 		var t = new eui.Image();
 		t.horizontalCenter = 0;
 		t.scaleX = 0.5;
@@ -888,17 +878,17 @@ window.skins={};
 		this.gp_hold_btn = t;
 		t.x = 5;
 		t.y = 275;
-		t.elementsContent = [this._Image9_i(),this._Image10_i(),this._Label4_i(),this.gp_hold_all_i(),this.img_hold_light_i()];
+		t.elementsContent = [this._Image8_i(),this._Image9_i(),this._Label4_i(),this.gp_hold_all_i(),this.img_hold_light_i()];
 		return t;
 	};
-	_proto._Image9_i = function () {
+	_proto._Image8_i = function () {
 		var t = new eui.Image();
 		t.horizontalCenter = 0;
 		t.source = "gameTexture_json.bg_HOLD";
 		t.y = 36;
 		return t;
 	};
-	_proto._Image10_i = function () {
+	_proto._Image9_i = function () {
 		var t = new eui.Image();
 		t.height = 122;
 		t.scale9Grid = new egret.Rectangle(31,16,81,97);
@@ -2644,51 +2634,20 @@ window.skins={};
 	__extends(MainViewSkin, _super);
 	function MainViewSkin() {
 		_super.call(this);
-		this.skinParts = ["gameView","gameOverView","gmView","pauseView","guideView"];
+		this.skinParts = ["layer_base"];
 		
 		this.height = 1336;
 		this.width = 750;
-		this.elementsContent = [this.gameView_i(),this.gameOverView_i(),this.gmView_i(),this.pauseView_i(),this.guideView_i()];
+		this.elementsContent = [this.layer_base_i()];
 	}
 	var _proto = MainViewSkin.prototype;
 
-	_proto.gameView_i = function () {
-		var t = new GameView();
-		this.gameView = t;
-		t.horizontalCenter = 0;
-		t.verticalCenter = 0;
-		return t;
-	};
-	_proto.gameOverView_i = function () {
-		var t = new GameOverView();
-		this.gameOverView = t;
-		t.horizontalCenter = 0;
-		t.verticalCenter = 0;
-		t.visible = false;
-		return t;
-	};
-	_proto.gmView_i = function () {
-		var t = new GMView();
-		this.gmView = t;
-		t.horizontalCenter = 0;
-		t.verticalCenter = 0;
-		t.visible = false;
-		return t;
-	};
-	_proto.pauseView_i = function () {
-		var t = new PauseView();
-		this.pauseView = t;
-		t.horizontalCenter = 0;
-		t.verticalCenter = 0;
-		t.visible = false;
-		return t;
-	};
-	_proto.guideView_i = function () {
-		var t = new GuideView();
-		this.guideView = t;
-		t.horizontalCenter = 0;
-		t.verticalCenter = 0;
-		t.visible = false;
+	_proto.layer_base_i = function () {
+		var t = new eui.Group();
+		this.layer_base = t;
+		t.percentHeight = 100;
+		t.touchEnabled = false;
+		t.percentWidth = 100;
 		return t;
 	};
 	return MainViewSkin;

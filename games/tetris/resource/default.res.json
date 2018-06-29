@@ -65,7 +65,7 @@
 			"url": "assets/bg/gameTexture.json",
 			"type": "sheet",
 			"name": "gameTexture_json",
-			"subkeys": "bg_HOLD,bg_LEVEL,bg_NEXT,bg_hold_light,bg_left,bg_miss,bg_miss_top,bg_time_socre,btn_End_Game,btn_Resume,btn_SUBMIT_SCORE,btn_directly_down,btn_red_RESUME,btn_submit_mask,img_jindutiao_di,img_jindutiao_liang,img_jindutiaodian,img_line_blue,img_music,img_pause,img_sound,img_toggle_off,img_toggle_on,text_COMBO,text_GAME_pause,text_Game_Over,text_TETRIS,text_daojishi_1,text_daojishi_2,text_daojishi_3,text_level_up,text_time_tip_120,text_time_tip_180,text_time_tip_30,text_time_tip_60"
+			"subkeys": "bg_HOLD,bg_LEVEL,bg_NEXT,bg_hold_light,bg_left,bg_miss,bg_miss_top,bg_time_socre,btn_End_Game,btn_Resume,btn_SUBMIT_SCORE,btn_directly_down,btn_red_RESUME,btn_submit_mask,img_jindutiao_di,img_jindutiao_liang,img_jindutiaodian,img_line_blue,img_music,img_pause,img_sound,img_toggle_off,img_toggle_on,text_BONUS_TIME,text_COMBO,text_GAME_pause,text_Game_Over,text_TETRIS,text_daojishi_1,text_daojishi_2,text_daojishi_3,text_level_up,text_time_tip_120,text_time_tip_180,text_time_tip_30,text_time_tip_60"
 		},
 		{
 			"url": "assets/effect/effect_del.json",
