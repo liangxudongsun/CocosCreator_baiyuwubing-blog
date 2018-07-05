@@ -1,0 +1,84 @@
+{
+	"groups": [
+		{
+			"keys": "description_json,effect_coin_json,effect_coin_png,preloading_jpg,bg_mp3,v_down_mp3,ball_png,global_img_bg_png,global_img_ninepatch_png,square_png,star_png,triangle_png",
+			"name": "preload"
+		},
+		{
+			"keys": "img_loading_di_png,img_loading_top_png",
+			"name": "loading"
+		}
+	],
+	"resources": [
+		{
+			"url": "config/description.json",
+			"type": "json",
+			"name": "description_json"
+		},
+		{
+			"url": "assets/effect/effect_coin.json",
+			"type": "json",
+			"name": "effect_coin_json"
+		},
+		{
+			"url": "assets/effect/effect_coin.png",
+			"type": "image",
+			"name": "effect_coin_png"
+		},
+		{
+			"url": "assets/preloading.jpg",
+			"type": "image",
+			"name": "preloading_jpg"
+		},
+		{
+			"url": "assets/load/img_loading_di.png",
+			"type": "image",
+			"name": "img_loading_di_png"
+		},
+		{
+			"url": "assets/load/img_loading_top.png",
+			"type": "image",
+			"name": "img_loading_top_png"
+		},
+		{
+			"url": "assets/sound/bg.mp3",
+			"type": "sound",
+			"name": "bg_mp3"
+		},
+		{
+			"name": "v_down_mp3",
+			"type": "sound",
+			"url": "assets/sound/v_down.mp3"
+		},
+		{
+			"name": "ball_png",
+			"type": "image",
+			"url": "assets/game/ball.png"
+		},
+		{
+			"name": "global_img_bg_png",
+			"type": "image",
+			"url": "assets/game/global_img_bg.png"
+		},
+		{
+			"name": "global_img_ninepatch_png",
+			"type": "image",
+			"url": "assets/game/global_img_ninepatch.png"
+		},
+		{
+			"name": "square_png",
+			"type": "image",
+			"url": "assets/game/square.png"
+		},
+		{
+			"name": "star_png",
+			"type": "image",
+			"url": "assets/game/star.png"
+		},
+		{
+			"name": "triangle_png",
+			"type": "image",
+			"url": "assets/game/triangle.png"
+		}
+	]
+}
