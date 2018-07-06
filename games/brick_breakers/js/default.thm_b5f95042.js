@@ -83,7 +83,7 @@ window.skins={};
 	_proto._Label1_i = function () {
 		var t = new eui.Label();
 		t.horizontalCenter = 0;
-		t.size = 91;
+		t.size = 100;
 		t.text = "Game Over";
 		t.y = 401;
 		return t;
@@ -92,10 +92,8 @@ window.skins={};
 		var t = new eui.Button();
 		this.btn_reset = t;
 		t.horizontalCenter = 0;
-		t.icon = "square_png";
-		t.label = "RESET";
-		t.scaleX = 3;
-		t.scaleY = 3;
+		t.icon = "btn_retry_png";
+		t.label = "";
 		t.verticalCenter = 0;
 		return t;
 	};
@@ -104,11 +102,11 @@ window.skins={};
 	__extends(GameViewSkin, _super);
 	function GameViewSkin() {
 		_super.call(this);
-		this.skinParts = ["lb_level","lb_ball_count","lb_version","gp_touch","gp_test","btn_reset"];
+		this.skinParts = ["lb_level","lb_ball_count","lb_version","gp_touch","gp_map","img_add_speed","gp_test","btn_reset"];
 		
 		this.height = 1334;
 		this.width = 750;
-		this.elementsContent = [this._Image1_i(),this.lb_level_i(),this.lb_ball_count_i(),this.lb_version_i(),this.gp_touch_i(),this.gp_test_i(),this.btn_reset_i()];
+		this.elementsContent = [this._Image1_i(),this.lb_level_i(),this.lb_ball_count_i(),this.lb_version_i(),this.gp_touch_i(),this.gp_map_i(),this.img_add_speed_i(),this.gp_test_i(),this.btn_reset_i()];
 	}
 	var _proto = GameViewSkin.prototype;
 
@@ -163,12 +161,33 @@ window.skins={};
 	};
 	_proto._Image2_i = function () {
 		var t = new eui.Image();
-		t.percentHeight = 110;
+		t.percentHeight = 120;
 		t.horizontalCenter = 0;
 		t.scale9Grid = new egret.Rectangle(16,14,58,60);
 		t.source = "global_img_ninepatch_png";
 		t.verticalCenter = 0;
-		t.percentWidth = 110;
+		t.percentWidth = 120;
+		return t;
+	};
+	_proto.gp_map_i = function () {
+		var t = new eui.Group();
+		this.gp_map = t;
+		t.percentHeight = 100;
+		t.horizontalCenter = 0;
+		t.touchChildren = false;
+		t.touchEnabled = false;
+		t.verticalCenter = 0;
+		t.percentWidth = 100;
+		return t;
+	};
+	_proto.img_add_speed_i = function () {
+		var t = new eui.Image();
+		this.img_add_speed = t;
+		t.alpha = 0;
+		t.horizontalCenter = 0;
+		t.source = "img_add_speed_png";
+		t.touchEnabled = false;
+		t.verticalCenter = 0;
 		return t;
 	};
 	_proto.gp_test_i = function () {
@@ -185,10 +204,12 @@ window.skins={};
 	_proto.btn_reset_i = function () {
 		var t = new eui.Button();
 		this.btn_reset = t;
-		t.bottom = 45;
+		t.bottom = 35;
 		t.horizontalCenter = 0;
-		t.icon = "square_png";
-		t.label = "RESET";
+		t.icon = "btn_retry_png";
+		t.label = "";
+		t.scaleX = 0.5;
+		t.scaleY = 0.5;
 		return t;
 	};
 	return GameViewSkin;

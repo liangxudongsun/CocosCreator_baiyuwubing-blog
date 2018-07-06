@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,effect_coin_json,effect_coin_png,preloading_jpg,bg_mp3,v_down_mp3,ball_png,global_img_bg_png,global_img_ninepatch_png,square_png,star_png,triangle_png",
+			"keys": "description_json,effect_coin_json,effect_coin_png,preloading_jpg,bg_mp3,v_down_mp3,ball_png,global_img_bg_png,global_img_ninepatch_png,square_png,star_png,triangle_png,game_img_guildline_0_png,img_danger_png,btn_retry_png,img_add_speed_png,img_brick_effect_row_col_png",
 			"name": "preload"
 		},
 		{
@@ -79,6 +79,31 @@
 			"name": "triangle_png",
 			"type": "image",
 			"url": "assets/game/triangle.png"
+		},
+		{
+			"name": "game_img_guildline_0_png",
+			"type": "image",
+			"url": "assets/game/game_img_guildline_0.png"
+		},
+		{
+			"name": "img_danger_png",
+			"type": "image",
+			"url": "assets/game/img_danger.png"
+		},
+		{
+			"name": "btn_retry_png",
+			"type": "image",
+			"url": "assets/game/btn_retry.png"
+		},
+		{
+			"name": "img_add_speed_png",
+			"type": "image",
+			"url": "assets/game/img_add_speed.png"
+		},
+		{
+			"name": "img_brick_effect_row_col_png",
+			"type": "image",
+			"url": "assets/game/img_brick_effect_row_col.png"
 		}
 	]
 }
