@@ -102,11 +102,11 @@ window.skins={};
 	__extends(GameViewSkin, _super);
 	function GameViewSkin() {
 		_super.call(this);
-		this.skinParts = ["lb_level","lb_ball_count","lb_version","gp_touch","gp_map","img_add_speed","gp_test","btn_reset"];
+		this.skinParts = ["img_game_bg","lb_level","lb_ball_count","lb_version","gp_touch","gp_map","img_add_speed","gp_test","btn_reset"];
 		
 		this.height = 1334;
 		this.width = 750;
-		this.elementsContent = [this._Image1_i(),this.lb_level_i(),this.lb_ball_count_i(),this.lb_version_i(),this.gp_touch_i(),this.gp_map_i(),this.img_add_speed_i(),this.gp_test_i(),this.btn_reset_i()];
+		this.elementsContent = [this._Image1_i(),this.img_game_bg_i(),this.lb_level_i(),this.lb_ball_count_i(),this.lb_version_i(),this.gp_touch_i(),this.gp_map_i(),this.img_add_speed_i(),this.gp_test_i(),this.btn_reset_i()];
 	}
 	var _proto = GameViewSkin.prototype;
 
@@ -119,14 +119,23 @@ window.skins={};
 		t.percentWidth = 100;
 		return t;
 	};
+	_proto.img_game_bg_i = function () {
+		var t = new eui.Image();
+		this.img_game_bg = t;
+		t.horizontalCenter = 0;
+		t.scale9Grid = new egret.Rectangle(39,42,2,3);
+		t.source = "global_img_ninepatch_png";
+		t.y = 0;
+		return t;
+	};
 	_proto.lb_level_i = function () {
 		var t = new eui.Label();
 		this.lb_level = t;
 		t.bold = true;
 		t.horizontalCenter = 0;
-		t.size = 100;
+		t.size = 80;
 		t.text = "lv.0";
-		t.top = 30;
+		t.top = 10;
 		return t;
 	};
 	_proto.lb_ball_count_i = function () {
@@ -156,17 +165,6 @@ window.skins={};
 	_proto.gp_touch_i = function () {
 		var t = new eui.Group();
 		this.gp_touch = t;
-		t.elementsContent = [this._Image2_i()];
-		return t;
-	};
-	_proto._Image2_i = function () {
-		var t = new eui.Image();
-		t.percentHeight = 120;
-		t.horizontalCenter = 0;
-		t.scale9Grid = new egret.Rectangle(16,14,58,60);
-		t.source = "global_img_ninepatch_png";
-		t.verticalCenter = 0;
-		t.percentWidth = 120;
 		return t;
 	};
 	_proto.gp_map_i = function () {

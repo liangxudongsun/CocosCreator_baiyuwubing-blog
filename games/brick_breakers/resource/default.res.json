@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,effect_coin_json,effect_coin_png,preloading_jpg,bg_mp3,v_down_mp3,ball_png,global_img_bg_png,global_img_ninepatch_png,square_png,star_png,triangle_png,game_img_guildline_0_png,img_danger_png,btn_retry_png,img_add_speed_png,img_brick_effect_row_col_png",
+			"keys": "description_json,effect_coin_json,effect_coin_png,bg_mp3,v_down_mp3,ball_png,global_img_bg_png,global_img_ninepatch_png,square_png,star_png,triangle_png,game_img_guildline_0_png,img_danger_png,btn_retry_png,img_add_speed_png,img_brick_effect_row_col_png,razer_h_png,razer_v_png,img_brick_effect_row_png,img_brick_effect_col_png",
 			"name": "preload"
 		},
 		{
@@ -24,11 +24,6 @@
 			"url": "assets/effect/effect_coin.png",
 			"type": "image",
 			"name": "effect_coin_png"
-		},
-		{
-			"url": "assets/preloading.jpg",
-			"type": "image",
-			"name": "preloading_jpg"
 		},
 		{
 			"url": "assets/load/img_loading_di.png",
@@ -104,6 +99,26 @@
 			"name": "img_brick_effect_row_col_png",
 			"type": "image",
 			"url": "assets/game/img_brick_effect_row_col.png"
+		},
+		{
+			"name": "razer_h_png",
+			"type": "image",
+			"url": "assets/game/razer_h.png"
+		},
+		{
+			"name": "razer_v_png",
+			"type": "image",
+			"url": "assets/game/razer_v.png"
+		},
+		{
+			"name": "img_brick_effect_row_png",
+			"type": "image",
+			"url": "assets/game/img_brick_effect_row.png"
+		},
+		{
+			"name": "img_brick_effect_col_png",
+			"type": "image",
+			"url": "assets/game/img_brick_effect_col.png"
 		}
 	]
 }
