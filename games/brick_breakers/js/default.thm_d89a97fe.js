@@ -76,16 +76,31 @@ window.skins={};
 		
 		this.height = 1334;
 		this.width = 750;
-		this.elementsContent = [this._Label1_i(),this.btn_reset_i()];
+		this.elementsContent = [this._Group1_i()];
 	}
 	var _proto = GameOverViewSkin.prototype;
 
+	_proto._Group1_i = function () {
+		var t = new eui.Group();
+		t.horizontalCenter = 0;
+		t.verticalCenter = 0;
+		t.elementsContent = [this._Image1_i(),this._Label1_i(),this.btn_reset_i()];
+		return t;
+	};
+	_proto._Image1_i = function () {
+		var t = new eui.Image();
+		t.source = "result_img_resultbg_png";
+		t.x = 0;
+		t.y = 0;
+		return t;
+	};
 	_proto._Label1_i = function () {
 		var t = new eui.Label();
+		t.bold = true;
 		t.horizontalCenter = 0;
 		t.size = 100;
 		t.text = "Game Over";
-		t.y = 401;
+		t.y = 89;
 		return t;
 	};
 	_proto.btn_reset_i = function () {
@@ -94,7 +109,7 @@ window.skins={};
 		t.horizontalCenter = 0;
 		t.icon = "btn_retry_png";
 		t.label = "";
-		t.verticalCenter = 0;
+		t.verticalCenter = 123;
 		return t;
 	};
 	return GameOverViewSkin;
@@ -123,10 +138,11 @@ window.skins={};
 		var t = new eui.Label();
 		this.lb_level = t;
 		t.bold = true;
-		t.horizontalCenter = 0;
-		t.size = 40;
-		t.text = "lv.0";
-		t.top = 0;
+		t.right = 180;
+		t.size = 60;
+		t.text = "0";
+		t.touchEnabled = false;
+		t.y = 20;
 		return t;
 	};
 	_proto.lb_version_i = function () {
@@ -162,7 +178,7 @@ window.skins={};
 		var t = new eui.Label();
 		this.lb_ball_count = t;
 		t.anchorOffsetX = 80;
-		t.size = 40;
+		t.size = 30;
 		t.text = "0";
 		t.textAlign = "center";
 		t.verticalAlign = "top";
@@ -211,12 +227,12 @@ window.skins={};
 	_proto.btn_reset_i = function () {
 		var t = new eui.Button();
 		this.btn_reset = t;
-		t.bottom = 0;
-		t.horizontalCenter = 0;
 		t.icon = "btn_retry_png";
 		t.label = "";
 		t.scaleX = 0.5;
 		t.scaleY = 0.5;
+		t.x = 20;
+		t.y = 20;
 		return t;
 	};
 	return GameViewSkin;
