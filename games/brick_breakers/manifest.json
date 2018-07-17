@@ -8,10 +8,11 @@
 		"js/game.min_45aa06f6.js",
 		"js/socket.min_8b4cb752.js",
 		"js/promise.min_83a6a5d.js",
-		"js/physics.min_d425a559.js"
+		"js/physics.min_ee8a311e.js"
 	],
 	"game": [
-		"js/default.thm_8889577d.js",
-		"js/main.min_5527ec8f.js"
+		"js/cross-sdk.min_720cf4c1.js",
+		"js/default.thm_5df5a9b5.js",
+		"js/main.min_857be964.js"
 	]
 }

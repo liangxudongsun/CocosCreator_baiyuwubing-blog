@@ -1,0 +1,6 @@
+{"file":"ballTexture.png","frames":{
+"ball1":{"x":0,"y":256,"w":126,"h":126,"offX":0,"offY":0,"sourceW":126,"sourceH":126},
+"ball2":{"x":128,"y":128,"w":126,"h":126,"offX":0,"offY":0,"sourceW":126,"sourceH":126},
+"ball3":{"x":0,"y":128,"w":126,"h":126,"offX":0,"offY":0,"sourceW":126,"sourceH":126},
+"ball4":{"x":128,"y":0,"w":126,"h":126,"offX":0,"offY":0,"sourceW":126,"sourceH":126},
+"ball5":{"x":0,"y":0,"w":126,"h":126,"offX":0,"offY":0,"sourceW":126,"sourceH":126}}}

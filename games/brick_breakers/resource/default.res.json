@@ -1,11 +1,11 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,effect_coin_json,effect_coin_png,bg_mp3,v_down_mp3,ball_png,global_img_bg_png,global_img_ninepatch_png,square_png,star_png,triangle_png,game_img_guildline_0_png,img_danger_png,btn_retry_png,img_add_speed_png,img_brick_effect_row_col_png,razer_h_png,razer_v_png,img_brick_effect_row_png,img_brick_effect_col_png,result_img_resultbg_png",
+			"keys": "description_json,effect_coin_json,effect_coin_png,bg_mp3,v_down_mp3",
 			"name": "preload"
 		},
 		{
-			"keys": "img_loading_di_png,img_loading_top_png",
+			"keys": "img_loading_di_png,img_loading_top_png,preloading_png",
 			"name": "loading"
 		}
 	],
@@ -41,89 +41,38 @@
 			"name": "bg_mp3"
 		},
 		{
-			"name": "v_down_mp3",
+			"url": "assets/sound/v_down.mp3",
 			"type": "sound",
-			"url": "assets/sound/v_down.mp3"
+			"name": "v_down_mp3"
 		},
 		{
-			"name": "ball_png",
+			"url": "assets/preloading.png",
 			"type": "image",
-			"url": "assets/game/ball.png"
+			"name": "preloading_png"
 		},
 		{
-			"name": "global_img_bg_png",
-			"type": "image",
-			"url": "assets/game/global_img_bg.png"
+			"url": "assets/game/ball/ballTexture.json",
+			"type": "sheet",
+			"name": "ballTexture_json",
+			"subkeys": "ball1,ball2,ball3,ball4,ball5"
 		},
 		{
-			"name": "global_img_ninepatch_png",
-			"type": "image",
-			"url": "assets/game/global_img_ninepatch.png"
+			"url": "assets/game/brick/brickTexture.json",
+			"type": "sheet",
+			"name": "brickTexture_json",
+			"subkeys": "1-1-1,1-1-2,1-1-3,1-2-1,1-2-2,1-2-3,1-3-1,1-3-2,1-3-3,1-4-1,1-4-2,1-4-3,1-5-1,1-5-2,1-5-3,2-1-1,2-1-2,2-1-3,2-2-1,2-2-2,2-2-3,2-3-1,2-3-2,2-3-3,2-4-1,2-4-2,2-4-3,2-5-1,2-5-2,2-5-3,3-1-1,3-1-2,3-1-3,3-2-1,3-2-2,3-2-3,3-3-1,3-3-2,3-3-3,3-4-1,3-4-2,3-4-3,3-5-1,3-5-2,3-5-3,4-1-1,4-1-2,4-1-3,4-2-1,4-2-2,4-2-3,4-3-1,4-3-2,4-3-3,4-4-1,4-4-2,4-4-3,4-5-1,4-5-2,4-5-3"
 		},
 		{
-			"name": "square_png",
-			"type": "image",
-			"url": "assets/game/square.png"
+			"url": "assets/game/canno/cannoTexture.json",
+			"type": "sheet",
+			"name": "cannoTexture_json",
+			"subkeys": "cannon1,cannon2,cannon3"
 		},
 		{
-			"name": "star_png",
-			"type": "image",
-			"url": "assets/game/star.png"
-		},
-		{
-			"name": "triangle_png",
-			"type": "image",
-			"url": "assets/game/triangle.png"
-		},
-		{
-			"name": "game_img_guildline_0_png",
-			"type": "image",
-			"url": "assets/game/game_img_guildline_0.png"
-		},
-		{
-			"name": "img_danger_png",
-			"type": "image",
-			"url": "assets/game/img_danger.png"
-		},
-		{
-			"name": "btn_retry_png",
-			"type": "image",
-			"url": "assets/game/btn_retry.png"
-		},
-		{
-			"name": "img_add_speed_png",
-			"type": "image",
-			"url": "assets/game/img_add_speed.png"
-		},
-		{
-			"name": "img_brick_effect_row_col_png",
-			"type": "image",
-			"url": "assets/game/img_brick_effect_row_col.png"
-		},
-		{
-			"name": "razer_h_png",
-			"type": "image",
-			"url": "assets/game/razer_h.png"
-		},
-		{
-			"name": "razer_v_png",
-			"type": "image",
-			"url": "assets/game/razer_v.png"
-		},
-		{
-			"name": "img_brick_effect_row_png",
-			"type": "image",
-			"url": "assets/game/img_brick_effect_row.png"
-		},
-		{
-			"name": "img_brick_effect_col_png",
-			"type": "image",
-			"url": "assets/game/img_brick_effect_col.png"
-		},
-		{
-			"name": "result_img_resultbg_png",
-			"type": "image",
-			"url": "assets/game/result_img_resultbg.png"
+			"url": "assets/game/gameTexture.json",
+			"type": "sheet",
+			"name": "gameTexture_json",
+			"subkeys": "b_leader,b_musicoff,b_musicon,b_normal,b_reset,b_setting,b_setting2,b_share,b_video_icon,b_view_kuang,bg_bottom_top,bg_view_back,coin,game_img_guildline_0,img_add_speed,img_brick_effect_col,img_brick_effect_row,img_brick_effect_row_col,img_danger,light_effect,light_icon,light_icon2,razer_h,razer_v"
 		}
 	]
 }
