@@ -2,11 +2,11 @@
 
 # Site settings
 title: baiyuwubing
-SEOTitle:  baiyuwubing
+SEOTitle:  lamyoung
 header-img: img/home-bg.jpg
 email: 273404202@qq.com
-description: "  welcome!"
-keyword: "  welcome!"
+description: "welcome!"
+keyword: "lamyoung"
 url: ""              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
@@ -51,7 +51,7 @@ kramdown:
 
 
 # Disqus settings
-# disqus_username: lamyoung
+disqus_username: lamyoung
 
 # Netease settings
 netease_comment: false
