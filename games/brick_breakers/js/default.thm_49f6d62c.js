@@ -9,8 +9,8 @@ window.skins={};
                 };
                 window.generateEUI = {};
                 generateEUI.paths = {};
-                generateEUI.styles = {"1":{"textColor":"0xffffff","textAlign":"center","size":"22"},"brick_hp":{"textColor":"0x000000","textAlign":"center","size":"40","verticalAlign":"middle","bold":"true"}};
-                generateEUI.skins = {"eui.Button":"resource/eui_skins/ButtonSkin.exml","BaseView":"resource/eui_skins/BaseViewSkin.exml","MainView":"resource/eui_skins/MainViewSkin.exml","GameView":"resource/eui_skins/GameViewSkin.exml","GameOverView":"resource/eui_skins/GameOverViewSkin.exml","BeginView":"resource/eui_skins/BeginViewSkin.exml","GameTopView":"resource/eui_skins/GameTopViewSkin.exml"};generateEUI.paths['resource/eui_skins/BaseViewSkin.exml'] = window.BaseViewSkin = (function (_super) {
+                generateEUI.styles = {"1":{"textColor":"0xffffff","textAlign":"center","size":"22"},"brick_hp":{"textColor":"0x000000","textAlign":"center","size":"40","verticalAlign":"middle","bold":"true"},"coin_btn":{"textColor":"0x000000"}};
+                generateEUI.skins = {"eui.Button":"resource/eui_skins/ButtonSkin.exml","BaseView":"resource/eui_skins/BaseViewSkin.exml","MainView":"resource/eui_skins/MainViewSkin.exml","GameView":"resource/eui_skins/GameViewSkin.exml","GameOverView":"resource/eui_skins/GameOverViewSkin.exml","BeginView":"resource/eui_skins/BeginViewSkin.exml","GameTopView":"resource/eui_skins/GameTopViewSkin.exml","UseCoinButton":"resource/eui_skins/UseCoinButtonSkin.exml"};generateEUI.paths['resource/eui_skins/BaseViewSkin.exml'] = window.BaseViewSkin = (function (_super) {
 	__extends(BaseViewSkin, _super);
 	function BaseViewSkin() {
 		_super.call(this);
@@ -22,6 +22,52 @@ window.skins={};
 	var _proto = BaseViewSkin.prototype;
 
 	return BaseViewSkin;
+})(eui.Skin);generateEUI.paths['resource/eui_skins/ButtonSkin.exml'] = window.skins.ButtonSkin = (function (_super) {
+	__extends(ButtonSkin, _super);
+	function ButtonSkin() {
+		_super.call(this);
+		this.skinParts = ["iconDisplay","labelDisplay"];
+		
+		this.elementsContent = [this.iconDisplay_i(),this.labelDisplay_i()];
+		this.states = [
+			new eui.State ("up",
+				[
+				])
+			,
+			new eui.State ("down",
+				[
+					new eui.SetProperty("iconDisplay","scaleX",0.95),
+					new eui.SetProperty("iconDisplay","scaleY",0.95)
+				])
+			,
+			new eui.State ("disabled",
+				[
+				])
+		];
+	}
+	var _proto = ButtonSkin.prototype;
+
+	_proto.iconDisplay_i = function () {
+		var t = new eui.Image();
+		this.iconDisplay = t;
+		t.horizontalCenter = 0;
+		t.verticalCenter = 0;
+		return t;
+	};
+	_proto.labelDisplay_i = function () {
+		var t = new eui.Label();
+		this.labelDisplay = t;
+		t.bottom = 8;
+		t.left = 8;
+		t.right = 8;
+		t.size = 20;
+		t.textAlign = "center";
+		t.textColor = 0xFFFFFF;
+		t.top = 8;
+		t.verticalAlign = "middle";
+		return t;
+	};
+	return ButtonSkin;
 })(eui.Skin);generateEUI.paths['resource/eui_skins/CommonButtonSkin.exml'] = window.skins.CommonButtonSkin = (function (_super) {
 	__extends(CommonButtonSkin, _super);
 	function CommonButtonSkin() {
@@ -142,6 +188,7 @@ window.skins={};
 		t.horizontalCenter = 0;
 		t.icon = "gameTexture_json.b_share";
 		t.label = "";
+		t.skinName = "skins.ButtonSkin";
 		t.verticalCenter = 0;
 		return t;
 	};
@@ -155,57 +202,11 @@ window.skins={};
 		return t;
 	};
 	return BeginViewSkin;
-})(eui.Skin);generateEUI.paths['resource/eui_skins/ButtonSkin.exml'] = window.skins.ButtonSkin = (function (_super) {
-	__extends(ButtonSkin, _super);
-	function ButtonSkin() {
-		_super.call(this);
-		this.skinParts = ["iconDisplay","labelDisplay"];
-		
-		this.elementsContent = [this.iconDisplay_i(),this.labelDisplay_i()];
-		this.states = [
-			new eui.State ("up",
-				[
-				])
-			,
-			new eui.State ("down",
-				[
-					new eui.SetProperty("iconDisplay","scaleX",0.95),
-					new eui.SetProperty("iconDisplay","scaleY",0.95)
-				])
-			,
-			new eui.State ("disabled",
-				[
-				])
-		];
-	}
-	var _proto = ButtonSkin.prototype;
-
-	_proto.iconDisplay_i = function () {
-		var t = new eui.Image();
-		this.iconDisplay = t;
-		t.horizontalCenter = 0;
-		t.verticalCenter = 0;
-		return t;
-	};
-	_proto.labelDisplay_i = function () {
-		var t = new eui.Label();
-		this.labelDisplay = t;
-		t.bottom = 8;
-		t.left = 8;
-		t.right = 8;
-		t.size = 20;
-		t.textAlign = "center";
-		t.textColor = 0xFFFFFF;
-		t.top = 8;
-		t.verticalAlign = "middle";
-		return t;
-	};
-	return ButtonSkin;
 })(eui.Skin);generateEUI.paths['resource/eui_skins/GameOverViewSkin.exml'] = window.GameOverViewSkin = (function (_super) {
 	__extends(GameOverViewSkin, _super);
 	function GameOverViewSkin() {
 		_super.call(this);
-		this.skinParts = ["btn_reset"];
+		this.skinParts = ["btn_reset","btn_share","coinbtn_relive"];
 		
 		this.height = 1334;
 		this.width = 750;
@@ -217,7 +218,7 @@ window.skins={};
 		var t = new eui.Group();
 		t.horizontalCenter = 0;
 		t.verticalCenter = 0;
-		t.elementsContent = [this._Image1_i(),this._Label1_i(),this.btn_reset_i()];
+		t.elementsContent = [this._Image1_i(),this._Label1_i(),this.btn_reset_i(),this.btn_share_i(),this.coinbtn_relive_i()];
 		return t;
 	};
 	_proto._Image1_i = function () {
@@ -243,7 +244,26 @@ window.skins={};
 		t.horizontalCenter = 0;
 		t.icon = "gameTexture_json.b_reset";
 		t.label = "";
-		t.verticalCenter = 123;
+		t.skinName = "skins.ButtonSkin";
+		t.verticalCenter = 251;
+		return t;
+	};
+	_proto.btn_share_i = function () {
+		var t = new eui.Button();
+		this.btn_share = t;
+		t.horizontalCenter = 0;
+		t.icon = "gameTexture_json.b_share";
+		t.label = "";
+		t.skinName = "skins.ButtonSkin";
+		t.verticalCenter = 80;
+		return t;
+	};
+	_proto.coinbtn_relive_i = function () {
+		var t = new UseCoinButton();
+		this.coinbtn_relive = t;
+		t.horizontalCenter = 0;
+		t.label = "复活";
+		t.verticalCenter = -88;
 		return t;
 	};
 	return GameOverViewSkin;
@@ -251,7 +271,7 @@ window.skins={};
 	__extends(GameTopViewSkin, _super);
 	function GameTopViewSkin() {
 		_super.call(this);
-		this.skinParts = ["lb_coin_num"];
+		this.skinParts = ["lb_coin_num","lb_best_score"];
 		
 		this.height = 1334;
 		this.width = 750;
@@ -265,7 +285,7 @@ window.skins={};
 		t.touchEnabled = false;
 		t.percentWidth = 100;
 		t.x = 0;
-		t.elementsContent = [this._Image1_i(),this._Image2_i(),this.lb_coin_num_i()];
+		t.elementsContent = [this._Image1_i(),this._Image2_i(),this.lb_coin_num_i(),this.lb_best_score_i()];
 		return t;
 	};
 	_proto._Image1_i = function () {
@@ -292,6 +312,16 @@ window.skins={};
 		t.text = "0";
 		t.verticalCenter = 0;
 		t.x = 73;
+		return t;
+	};
+	_proto.lb_best_score_i = function () {
+		var t = new eui.Label();
+		this.lb_best_score = t;
+		t.bold = true;
+		t.horizontalCenter = 0;
+		t.size = 40;
+		t.text = "0";
+		t.verticalCenter = 0;
 		return t;
 	};
 	return GameTopViewSkin;
@@ -509,11 +539,11 @@ window.skins={};
 	__extends(MainViewSkin, _super);
 	function MainViewSkin() {
 		_super.call(this);
-		this.skinParts = ["layer_base","layer_top","layer_ad","layer_effect"];
+		this.skinParts = ["layer_base","layer_top","layer_ad","layer_effect","lb_tips","gp_tips"];
 		
 		this.height = 1336;
 		this.width = 750;
-		this.elementsContent = [this.layer_base_i(),this.layer_top_i(),this.layer_ad_i(),this.layer_effect_i()];
+		this.elementsContent = [this.layer_base_i(),this.layer_top_i(),this.layer_ad_i(),this.layer_effect_i(),this.gp_tips_i()];
 	}
 	var _proto = MainViewSkin.prototype;
 
@@ -549,5 +579,126 @@ window.skins={};
 		t.percentWidth = 100;
 		return t;
 	};
+	_proto.gp_tips_i = function () {
+		var t = new eui.Group();
+		this.gp_tips = t;
+		t.horizontalCenter = 0;
+		t.touchChildren = false;
+		t.touchEnabled = false;
+		t.verticalCenter = 0;
+		t.visible = false;
+		t.elementsContent = [this._Image1_i(),this.lb_tips_i()];
+		return t;
+	};
+	_proto._Image1_i = function () {
+		var t = new eui.Image();
+		t.percentHeight = 100;
+		t.horizontalCenter = 0;
+		t.scale9Grid = new egret.Rectangle(1,1,8,8);
+		t.source = "gameTexture_json.bg_view_back";
+		t.verticalCenter = 0;
+		t.percentWidth = 100;
+		return t;
+	};
+	_proto.lb_tips_i = function () {
+		var t = new eui.Label();
+		this.lb_tips = t;
+		t.horizontalCenter = 0;
+		t.text = "";
+		t.verticalCenter = 0;
+		return t;
+	};
 	return MainViewSkin;
+})(eui.Skin);generateEUI.paths['resource/eui_skins/UseCoinButtonSkin.exml'] = window.UseCoinButtonSkin = (function (_super) {
+	__extends(UseCoinButtonSkin, _super);
+	function UseCoinButtonSkin() {
+		_super.call(this);
+		this.skinParts = ["iconDisplay","labelDisplay","lb_cost","gp_main"];
+		
+		this.elementsContent = [this.gp_main_i()];
+		this.states = [
+			new eui.State ("up",
+				[
+				])
+			,
+			new eui.State ("down",
+				[
+					new eui.SetProperty("iconDisplay","visible",false),
+					new eui.SetProperty("gp_main","scaleX",0.95),
+					new eui.SetProperty("gp_main","scaleY",0.95)
+				])
+			,
+			new eui.State ("disabled",
+				[
+				])
+		];
+	}
+	var _proto = UseCoinButtonSkin.prototype;
+
+	_proto.gp_main_i = function () {
+		var t = new eui.Group();
+		this.gp_main = t;
+		t.x = 0;
+		t.y = 0;
+		t.elementsContent = [this._Image1_i(),this.iconDisplay_i(),this.labelDisplay_i(),this._Group1_i()];
+		return t;
+	};
+	_proto._Image1_i = function () {
+		var t = new eui.Image();
+		t.height = 80;
+		t.horizontalCenter = 0;
+		t.scale9Grid = new egret.Rectangle(11,10,27,29);
+		t.source = "gameTexture_json.b_normal";
+		t.verticalCenter = 0;
+		t.width = 240;
+		return t;
+	};
+	_proto.iconDisplay_i = function () {
+		var t = new eui.Image();
+		this.iconDisplay = t;
+		t.x = 0;
+		t.y = 0;
+		return t;
+	};
+	_proto.labelDisplay_i = function () {
+		var t = new eui.Label();
+		this.labelDisplay = t;
+		t.style = "coin_btn";
+		t.size = 40;
+		t.text = "复活";
+		t.textAlign = "center";
+		t.textColor = 0xFFFFFF;
+		t.verticalAlign = "middle";
+		t.verticalCenter = 0;
+		t.x = 15;
+		return t;
+	};
+	_proto._Group1_i = function () {
+		var t = new eui.Group();
+		t.verticalCenter = 0;
+		t.x = 131;
+		t.elementsContent = [this._Image2_i(),this.lb_cost_i()];
+		return t;
+	};
+	_proto._Image2_i = function () {
+		var t = new eui.Image();
+		t.source = "gameTexture_json.coin";
+		t.x = 0;
+		t.y = 0;
+		return t;
+	};
+	_proto.lb_cost_i = function () {
+		var t = new eui.Label();
+		this.lb_cost = t;
+		t.style = "coin_btn";
+		t.left = 45;
+		t.size = 30;
+		t.text = "100";
+		t.textAlign = "center";
+		t.textColor = 0xFFFFFF;
+		t.verticalAlign = "middle";
+		t.verticalCenter = 0;
+		return t;
+	};
+	return UseCoinButtonSkin;
 })(eui.Skin);

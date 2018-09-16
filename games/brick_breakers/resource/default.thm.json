@@ -11,6 +11,9 @@
 			"size": "40",
 			"verticalAlign": "middle",
 			"bold": "true"
+		},
+		"coin_btn": {
+			"textColor": "0x000000"
 		}
 	},
 	"skins": {
@@ -20,19 +23,21 @@
 		"GameView": "resource/eui_skins/GameViewSkin.exml",
 		"GameOverView": "resource/eui_skins/GameOverViewSkin.exml",
 		"BeginView": "resource/eui_skins/BeginViewSkin.exml",
-		"GameTopView": "resource/eui_skins/GameTopViewSkin.exml"
+		"GameTopView": "resource/eui_skins/GameTopViewSkin.exml",
+		"UseCoinButton": "resource/eui_skins/UseCoinButtonSkin.exml"
 	},
 	"autoGenerateExmlsList": true,
 	"exmls": [
 		"resource/eui_skins/BaseViewSkin.exml",
+		"resource/eui_skins/ButtonSkin.exml",
 		"resource/eui_skins/CommonButtonSkin.exml",
 		"resource/eui_skins/BeginViewSkin.exml",
-		"resource/eui_skins/ButtonSkin.exml",
 		"resource/eui_skins/GameOverViewSkin.exml",
 		"resource/eui_skins/GameTopViewSkin.exml",
 		"resource/eui_skins/GameViewSkin.exml",
 		"resource/eui_skins/LoadingUISkin.exml",
-		"resource/eui_skins/MainViewSkin.exml"
+		"resource/eui_skins/MainViewSkin.exml",
+		"resource/eui_skins/UseCoinButtonSkin.exml"
 	],
 	"path": "resource/default.thm.json"
 }

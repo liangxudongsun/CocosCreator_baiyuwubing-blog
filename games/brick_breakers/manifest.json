@@ -1,9 +1,9 @@
 {
 	"initial": [
-		"js/egret.min_acd30022.js",
-		"js/egret.web.min_3e311c0e.js",
-		"js/eui.min_22447123.js",
-		"js/assetsmanager.min_49f5417f.js",
+		"js/egret.min_40e267ce.js",
+		"js/egret.web.min_29018c52.js",
+		"js/eui.min_9cf92601.js",
+		"js/assetsmanager.min_e1440ef3.js",
 		"js/tween.min_6c5a88f9.js",
 		"js/game.min_45aa06f6.js",
 		"js/socket.min_8b4cb752.js",
@@ -11,8 +11,7 @@
 		"js/physics.min_ee8a311e.js"
 	],
 	"game": [
-		"js/cross-sdk.min_720cf4c1.js",
-		"js/default.thm_5df5a9b5.js",
-		"js/main.min_857be964.js"
+		"js/default.thm_49f6d62c.js",
+		"js/main.min_9ef4dee0.js"
 	]
 }
