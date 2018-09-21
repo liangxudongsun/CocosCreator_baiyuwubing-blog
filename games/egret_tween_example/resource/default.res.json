@@ -1,0 +1,69 @@
+{
+	"groups": [
+		{
+			"name": "preload",
+			"keys": "default_thm.json,preloading_jpg,description_json,effect_coin_json,effect_coin_png,btn_on_png,text_tip_game_Over_png,bg_mp3,v_down_mp3"
+		},
+		{
+			"name": "loading",
+			"keys": "img_loading_di_png,img_loading_top_png"
+		}
+	],
+	"resources": [
+		{
+			"url": "default.thm.json",
+			"type": "json",
+			"name": "default_thm.json"
+		},
+		{
+			"url": "assets/preloading.jpg",
+			"type": "image",
+			"name": "preloading_jpg"
+		},
+		{
+			"url": "config/description.json",
+			"type": "json",
+			"name": "description_json"
+		},
+		{
+			"url": "assets/effect/effect_coin_6226f5ce.json",
+			"type": "json",
+			"name": "effect_coin_json"
+		},
+		{
+			"url": "assets/effect/effect_coin_5963626f.png",
+			"type": "image",
+			"name": "effect_coin_png"
+		},
+		{
+			"url": "assets/game/btn_on_f0114e15.png",
+			"type": "image",
+			"name": "btn_on_png"
+		},
+		{
+			"url": "assets/game/text_tip_game_Over_73bb5ea.png",
+			"type": "image",
+			"name": "text_tip_game_Over_png"
+		},
+		{
+			"url": "assets/load/img_loading_di_43a3276.png",
+			"type": "image",
+			"name": "img_loading_di_png"
+		},
+		{
+			"url": "assets/load/img_loading_top_4337b97e.png",
+			"type": "image",
+			"name": "img_loading_top_png"
+		},
+		{
+			"url": "assets/sound/bg_cf2d56f3.mp3",
+			"type": "sound",
+			"name": "bg_mp3"
+		},
+		{
+			"url": "assets/sound/v_down_e8178711.mp3",
+			"type": "sound",
+			"name": "v_down_mp3"
+		}
+	]
+}
