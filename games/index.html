@@ -13,42 +13,20 @@ multilingual: true
 <div class="container-fluid">
     <table class="table table-hover">
         <tbody>
+            {% for game in site.games %}
             <tr>
                 <td>
                     <div class="caption">
                         <img>
-                        <h3>bricks breakers</h3>
-                        <p>bricks breakers game</p>
+                        <h3>{{game.name}}</h3>
+                        <p>{{game.desc}}</p>
                         <p>
-                            <a href="brick_breakers" target="_blank" class="btn btn-primary" role="button">Play</a>
+                            <a href="{{game.href}}" target="_blank" class="btn btn-primary" role="button">Play</a>
                         </p>
                     </div>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <div class="caption">
-                        <img>
-                        <h3>basketball</h3>
-                        <p>basketball game</p>
-                        <p>
-                            <a href="basketball" target="_blank" class="btn btn-primary" role="button">Play</a>
-                        </p>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="caption">
-                        <img>
-                        <h3>tetris</h3>
-                        <p>tetris game</p>
-                        <p>
-                            <a href="tetris" target="_blank" class="btn btn-primary" role="button">Play</a>
-                        </p>
-                    </div>
-                </td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>

@@ -95,3 +95,22 @@ friends: [
     }
 ]
 
+# Games
+games: [
+    {
+        name: "brick breakers",
+        desc: "brick breakers game!",
+        href: "/games/brick_breakers"
+    },
+    {
+        name: "tween example",
+        desc: "egret tween example!",
+        href: "/games/egret_tween_example"
+    },
+    {
+        name: "basketball",
+        desc: "basketball game",
+        href: "/games/basketball"
+    }
+]
+
