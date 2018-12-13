@@ -7,11 +7,12 @@
 		"js/tween.min_6c5a88f9.js",
 		"js/socket.min_8b4cb752.js",
 		"js/promise.min_83a6a5d.js",
-		"js/game.min_45aa06f6.js"
+		"js/game.min_45aa06f6.js",
+		"js/stackTrace.min_43784b13.js"
 	],
 	"game": [
 		"js/particle.min_101973f5.js",
-		"js/default.thm_758f130f.js",
-		"js/main.min_d4b18e0b.js"
+		"js/default.thm_562cd245.js",
+		"js/main.min_6131d14d.js"
 	]
 }
