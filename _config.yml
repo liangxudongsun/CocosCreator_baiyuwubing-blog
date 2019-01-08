@@ -114,3 +114,5 @@ games: [
     }
 ]
 
+
+theme: jekyll-theme-cayman
