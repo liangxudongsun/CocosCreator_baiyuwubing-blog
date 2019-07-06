@@ -1,3 +1,2 @@
 > 写写代码
-
-Hey!
+> [简历](../../website/resume)
