@@ -15,11 +15,11 @@ future: true
 
 # SNS settings
 RSS: false
-# weibo_username:     huxpro
-# zhihu_username:     huxpro
+# weibo_username:     
+# zhihu_username:     
 github_username:    baiyuwubing
-# twitter_username:   huxpro
-#facebook_username:  huxpro
+# twitter_username:   
+#facebook_username:  
 #linkedin_username:  firstname-lastname-idxxxx
 
 
@@ -51,7 +51,8 @@ kramdown:
 
 
 # Disqus settings
-disqus_username: lamyoung
+# disqus_username: lamyoung
+livere_uid: MTAyMC80NTY5NS8yMjIwNg==
 
 # Netease settings
 netease_comment: false
@@ -64,7 +65,7 @@ netease_comment: false
 
 # Google Analytics
 # ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-# ga_domain: huangxuan.me
+# ga_domain: .me
 
 
 
