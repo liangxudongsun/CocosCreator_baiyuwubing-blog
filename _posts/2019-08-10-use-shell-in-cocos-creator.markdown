@@ -42,7 +42,7 @@ cocos creator v2.0.8
 #!/bin/bash
 #author:lamyoung
 # build.sh
-/Applications/CocosCreator_2.app/Contents/MacOS/CocosCreator --path './../../' --build "platform=web-mobile;"
+/Applications/CocosCreator.app/Contents/MacOS/CocosCreator --path './../../' --build "platform=web-mobile;"
 ```
 在终端修改*build.sh*为可执行文件
 ```shell
@@ -318,7 +318,7 @@ gulp.task('default', gulp.series(gulp.parallel('read_build_config', 'clean_backu
 
 your_version=`date +%Y%m%d%H%M%S`
 echo 'your target is web'
-/Applications/CocosCreator_2.app/Contents/MacOS/CocosCreator --path './../../' --build "platform=web-mobile;${your_debug};"
+/Applications/CocosCreator.app/Contents/MacOS/CocosCreator --path './../../' --build "platform=web-mobile;${your_debug};"
 gulp  -f build_web_gulpfile.js
 cd './../../build'
 zip -r "./web_${your_game_name}_${your_version}"  './web-mobile'
