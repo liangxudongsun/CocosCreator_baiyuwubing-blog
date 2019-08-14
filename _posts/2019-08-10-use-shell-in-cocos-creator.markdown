@@ -2,10 +2,9 @@
 layout: post
 title:  "Use shell in cocos creator"
 date:   2019-08-11 17:00:00 +0800
-categories: cocos
+categories: cocos-creator
 tags:
-    - cocos
-    - creator
+    - cocos-creator
     - shell
     - gulp
 ---

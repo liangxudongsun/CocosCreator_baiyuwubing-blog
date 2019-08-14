@@ -2,12 +2,12 @@
 
 # Site settings
 title: lamyoung
-SEOTitle:  lamyoung
+SEOTitle:  lamyoung | baiyuwubing
 header-img: img/home-bg.jpg
 email: 273404202@qq.com
-description: "welcome!"
-keyword: "lamyoung!"
-url: ""              # your host, for absolute URL
+description: "这里是lamyoung的博客"
+keyword: "lamyoung, baiyuwubing, 白玉无冰"
+url: "http://lamyoung.com/"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # Publish posts or collection documents with a future date.
@@ -32,8 +32,6 @@ paginate: 10
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md"]
 anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
 
-
-
 # Gems
 # from PR#40, to support local preview for Jekyll 3.0
 plugins: [jekyll-paginate]
@@ -47,8 +45,6 @@ plugins: [jekyll-paginate]
 markdown: kramdown
 kramdown:
   input: GFM                            # use Github Flavored Markdown !important
-
-
 
 # Disqus settings
 # disqus_username: lamyoung
@@ -77,7 +73,7 @@ sidebar-about-description: ""
 
 
 # Featured Tags
-featured-tags: false                     # whether or not using Feature-Tags
+featured-tags: true                     # whether or not using Feature-Tags
 featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
 
 
