@@ -2,6 +2,7 @@
 layout: post
 title:  "用微信云开发存取用户的数据"
 date:   2019-08-14 19:08:00 +0800
+header-img: "img/in-post/post-bg-wx-cloud.jpg"
 categories: wxcloud
 tags:
     - wxcloud

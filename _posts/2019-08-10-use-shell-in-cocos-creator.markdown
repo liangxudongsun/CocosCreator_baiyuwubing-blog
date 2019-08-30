@@ -2,6 +2,7 @@
 layout: post
 title:  "Use shell in cocos creator"
 date:   2019-08-11 17:00:00 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
 categories: cocos-creator
 tags:
     - cocos-creator

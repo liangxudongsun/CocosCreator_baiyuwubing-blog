@@ -2,6 +2,7 @@
 layout: post
 title:  "重置facebook小游戏排行榜"
 date:   2019-08-27 19:00:00 +0800
+header-img: "img/in-post/post-facebook-Instant-games.jpg"
 categories: fb-instant-games
 tags:
     - fb-instant-games

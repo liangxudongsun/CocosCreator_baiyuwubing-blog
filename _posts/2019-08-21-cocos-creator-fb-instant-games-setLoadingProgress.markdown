@@ -2,6 +2,7 @@
 layout: post
 title:  "为何cocos creator发布的facebook小游戏的载入进度条从0%飞向100%"
 date:   2019-08-21 19:00:00 +0800
+header-img: "img/in-post/post-facebook-Instant-games.jpg"
 categories: cocos-creator
 tags:
     - cocos-creator
