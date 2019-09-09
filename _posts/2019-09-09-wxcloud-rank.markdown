@@ -149,7 +149,7 @@ wx.cloud.callFunction({
     },
 }).then((res) => {
     const result = res.result || [];
-    const outDatas = []；
+    const outDatas = [];
     // 成功
     for (const entry of result) {
         let outData = {};
