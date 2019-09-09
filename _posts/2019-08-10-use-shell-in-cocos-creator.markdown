@@ -7,7 +7,6 @@ categories: cocos-creator
 tags:
     - cocos-creator
     - shell
-    - gulp
 ---
  
 > Use the Power of Command Shells
