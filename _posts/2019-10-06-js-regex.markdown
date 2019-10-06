@@ -1,0 +1,374 @@
+---
+layout: post
+title:  "JavaScript 正则表达式(RegEx)实用指南【译】"
+date:   2019-10-06 10:24:00 +0800
+categories: javascript
+tags:
+    - javascript
+---
+> 快速实践指南。用示例理解正则表达式。
+
+![](/img/in-post/2019-10-06-bg.png)  
+
+当初次见到正则表达式时，它们可能看起来像是乱七八糟的随机字符串。尽管它们看起来语法有些混乱，但它们其实是非常有用。  
+
+正确理解正则表达式能帮助你成为更有效的程序员。为了全面了解正则表达式世界，首先需要学习基础概念，然后在其基础上扩展。  
+
+事不宜迟，让我们开始吧:)  
+
+### 什么是正则表达式？
+**正则表达式是用于匹配字符串中字符组合的模式。**它们构成了自己的一门小语言，是许多编程语言(如Javascript，Perl，Python，Php和Java)的一部分。  
+
+正则表达式帮助你可以检查例如电子邮件地址或密码之类的字符串是否符合一定的模式，进一步处理相关信息和提示。
+
+
+### 创建一个正则表达式
+有两种方法可以在Javascript中创建正则表达式。 可以使用`RegExp`构造函数创建它，也可以使用两个正斜杠(`/`)。
+
+#### 正则表达式构造函数：
+**语法**：`new RegExp(pattern [，flags])`  
+
+例如：  
+```js
+var regexConst = new RegExp('abc');
+```
+
+#### 正则表达式字面量：
+***语法***：`/pattern/flags`   
+
+例如：
+```js
+var regexLiteral = /abc/;
+```
+
+- 这些标志(flags)是可选的，我将在本文后面解释。  
+
+在某些情况下，可能想动态创建正则表达式，在这种情况下，正则表达式   字面量不起作用，因此必须使用正则表达式构造函数。  
+
+无论选择哪种方法，结果都将是一个正则表达式对象。 两个正则表达式对象都将具有相同的方法和属性。  
+
+**由于在上面的示例中使用两个正斜杠，因此，如果要将正斜杠(`/`)用作正则表达式的一部分，则必须使用反斜杠(`\`)进行转义。**
+
+### 正则表达式方法
+测试正则表达式的方法主要有两种。
+
+#### RegExp.prototype.test()
+一个在字符串中测试是否匹配的RegExp方法，它返回 `true` 或 `false`。
+
+例如：
+```js
+var regex = /hello/;
+var str = 'hello world';
+var result = regex.test(str);
+console.log(result);
+// returns true
+```
+
+#### RegExp.prototype.exec()
+ 
+一个在字符串中执行查找匹配的RegExp方法，它返回一个数组（未匹配到则返回 `null`）。
+
+例如：
+```js
+var regex = /hello/;
+var str = 'hello world';
+var result = regex.exec(str);
+console.log(result);
+// returns [ 'hello', index: 0, input: 'hello world', groups: undefined ]
+// 'hello' -> 匹配的全部字符串
+// index: -> 匹配到的字符位于原始字符串的基于0的索引值
+// input: -> 原始字符串
+```
+
+我们将在本文使用 `test()` 方法。
+
+
+
+### Simple Regex Patterns
+It is the most basic pattern, which simply matches the literal text with the test string. For example:
+```js
+var regex = /hello/;
+console.log(regex.test('hello world'));
+// true
+```
+
+### Special Characters
+Up until now we’ve created simple regular expression patterns. Now, let’s tap into the full power of regular expressions when handling more complex cases.  
+
+For example, instead of matching a specific email address let’s say we’d like to match a number of email addresses. That’s where special characters come into play. There are special symbols and characters that you have to memorize in order to fully understand the regular expressions.  
+
+#### Flags:
+Regular expressions have five optional flags or modifiers. Let’s discuss the two most important flags:  
+
+- **g** — Global search, don’t return after the first match
+- **i** — Case-insensitive search  
+
+You can also combine the flags in a single regular expression. Note that their order doesn’t have any effect on the result.
+Let’s look at some code examples:  
+
+##### Regular Expression Literal — Syntax `/pattern/flags`
+```js
+var regexGlobal = /abc/g;
+console.log(regexGlobal.test('abc abc'));
+// it will match all the occurence of 'abc', so it won't return 
+// after first match.
+var regexInsensitive = /abc/i;
+console.log(regexInsensitive.test('Abc'));
+// returns true, because the case of string characters don't matter 
+// in case-insensitive search.
+```
+
+##### Regular Expression Constructor — Syntax `new RegExp('pattern', 'flags')`
+```js
+var regexGlobal = new RegExp('abc','g')
+console.log(regexGlobal.test('abc abc'));
+// it will match all the occurence of 'abc', so it won't return // after first match.
+var regexInsensitive = new RegExp('abc','i')
+console.log(regexInsensitive.test('Abc'));
+// returns true, because the case of string characters don't matter // in case-insensitive search.
+```
+
+#### Character groups:
+**Character set [xyz]** — A character set is a way to match different characters in a single position, it matches any single character in the string from characters present inside the brackets. For example:  
+
+```js
+var regex = /[bt]ear/;
+console.log(regex.test('tear'));
+// returns true
+console.log(regex.test('bear'));
+// return true
+console.log(regex.test('fear'));
+// return false
+```
+
+**Note** — All the special characters except for caret (^) (Which has entirely different meaning inside the character set) lose their special meaning inside the character set.  
+
+***Negated character set [^xyz]** — It matches anything that is not enclosed in the brackets. For example:  
+
+```js
+var regex = /[^bt]ear/;
+console.log(regex.test('tear'));
+// returns false
+console.log(regex.test('bear'));
+// return false
+console.log(regex.test('fear'));
+// return true
+```
+
+Ranges [a-z] — Suppose we want to match all of the letters of an alphabet in a single position, we could write all the letters inside the brackets, but there is an easier way and that is ranges. For example: [a-h] will match all the letters from a to h. Ranges can also be digits like [0-9] or capital letters like [A-Z].
+
+```js
+var regex = /[a-z]ear/;
+console.log(regex.test('fear'));
+// returns true
+console.log(regex.test('tear'));
+// returns true
+```
+
+`Meta-characters` — Meta-characters are characters with a special meaning. There are many meta character but I am going to cover the most important ones here.  
+
+- \d — Match any digit character ( same as [0-9] ).
+- \w — Match any word character. A word character is any letter, digit, and underscore. (Same as [a-zA-Z0–9_] ) i.e alphanumeric character.
+- \s — Match a whitespace character (spaces, tabs etc).
+- \t — Match a tab character only.
+- \b — Find a match at beginning or ending of a word. Also known as word boundary.
+- . — (period) Matches any character except for newline.
+- \D — Match any non digit character (same as [^0–9]).
+- \W — Match any non word character (Same as [^a-zA-Z0–9_] ).
+- \S — Match a non whitespace character.  
+
+Quantifiers: — Quantifiers are symbols that have a special meaning in a regular expression.
+- + — Matches the preceding expression 1 or more times.
+```js
+var regex = /\d+/;
+console.log(regex.test('8'));
+// true
+console.log(regex.test('88899'));
+// true
+console.log(regex.test('8888845'));
+// true
+```
+
+- * —Matches the preceding expression 0 or more times.
+```js
+var regex = /go*d/;
+console.log(regex.test('gd'));
+// true
+console.log(regex.test('god'));
+// true
+console.log(regex.test('good'));
+// true
+console.log(regex.test('goood'));
+// true
+```
+
+- ? — Matches the preceding expression 0 or 1 time, that is preceding pattern is optional.
+```js
+var regex = /goo?d/;
+console.log(regex.test('god'));
+// true
+console.log(regex.test('good'));
+// true
+console.log(regex.test('goood'));
+// false
+```
+
+- ^ — Matches the beginning of the string, the regular expression that follows it should be at the start of the test string. i.e the caret (^) matches the start of string.
+```js
+var regex = /^g/;
+console.log(regex.test('good'));
+// true
+console.log(regex.test('bad'));
+// false
+console.log(regex.test('tag'));
+// false
+```
+
+- $ — Matches the end of the string, that is the regular expression that precedes it should be at the end of the test string. The dollar ($) sign matches the end of the string.
+```js
+var regex = /.com$/;
+console.log(regex.test('test@testmail.com'));
+// true
+console.log(regex.test('test@testmail'));
+// false
+```
+
+- {N} — Matches exactly N occurrences of the preceding regular expression.
+```js
+var regex = /go{2}d/;
+console.log(regex.test('good'));
+// true
+console.log(regex.test('god'));
+// false
+{N,} — Matches at least N occurrences of the preceding regular expression.
+var regex = /go{2,}d/;
+console.log(regex.test('good'));
+// true
+console.log(regex.test('goood'));
+// true
+console.log(regex.test('gooood'));
+// true
+```
+
+- {N,M} — Matches at least N occurrences and at most M occurrences of the preceding regular expression (where M > N).
+```js
+var regex = /go{1,2}d/;
+console.log(regex.test('god'));
+// true
+console.log(regex.test('good'));
+// true
+console.log(regex.test('goood'));
+// false
+```
+- Alternation X|Y — Matches either X or Y. For example:
+```js
+var regex = /(green|red) apple/;
+console.log(regex.test('green apple'));
+// true
+console.log(regex.test('red apple'));
+// true
+console.log(regex.test('blue apple'));
+// false
+```
+Note — If you want to use any special character as a part of the expression, say for example you want to match literal + or ., then you have to escape them with backslash ( \ ).
+For example:
+```js
+var regex = /a+b/;  // This won't work
+var regex = /a\+b/; // This will work
+console.log(regex.test('a+b')); // true
+```
+#### Advanced
+(x) — Matches x and remembers the match. These are called capturing groups. This is also used to create sub expressions within a regular expression. For example :-
+```js
+var regex = /(foo)bar\1/;
+console.log(regex.test('foobarfoo'));
+// true
+console.log(regex.test('foobar'));
+// false
+```
+`\1` remembers and uses that match from first subexpression within parentheses.
+
+`(?:x)` — Matches x and does not remember the match. These are called non capturing groups. Here \1 won’t work, it will match the literal \1.
+
+```js
+var regex = /(?:foo)bar\1/;
+console.log(regex.test('foobarfoo'));
+// false
+console.log(regex.test('foobar'));
+// false
+console.log(regex.test('foobar\1'));
+// true
+```
+
+`x(?=y)` — Matches x only if x is followed by y. Also called positive look ahead. For example:
+
+```js
+var regex = /Red(?=Apple)/;
+console.log(regex.test('RedApple'));
+// true
+```
+
+In the above example, match will occur only if Redis followed by Apple.
+
+### Practicing Regex:
+Let’s practice some of the concepts that we have learned above.
+- Match any 10 digit number :
+```js
+var regex = /^\d{10}$/;
+console.log(regex.test('9995484545'));
+// true
+```
+
+Let’s break that down and see what’s going on up there.
+
+1. If we want to enforce that the match must span the whole string, we can add the quantifiers ^ and $. The caret ^ matches the start of the input string, whereas the dollar sign $ matches the end. So it would not match if string contain more than 10 digits.  
+2. `\d` matches any digit character.  
+3. `{10}` matches the previous expression, in this case \d exactly 10 times. So if the test string contains less than or more than 10 digits, the result will be false.  
+
+- Match a date with following format DD-MM-YYYY or DD-MM-YY
+```js
+var regex = /^(\d{1,2}-){2}\d{2}(\d{2})?$/;
+console.log(regex.test('01-01-1990'));
+// true
+console.log(regex.test('01-01-90'));
+// true
+console.log(regex.test('01-01-190'));
+// false
+```
+Let’s break that down and see what’s going on up there.
+1. Again, we have wrapped the entire regular expression inside ^ and $, so that the match spans entire string.
+2. `(` start of first subexpression.
+3. `\d{1,2}` matches at least 1 digit and at most 2 digits.
+4. `-` matches the literal hyphen character.
+5. `)` end of first subexpression.
+6. `{2}` match the first subexpression exactly two times.
+7. `\d{2}` matches exactly two digits.
+8. `(\d{2})?` matches exactly two digits. But it’s optional, so either year contains 2 digits or 4 digits.
+
+- Matching Anything But a Newline
+The expression should match any string with a format like abc.def.ghi.jkl where each variable a, b, c, d, e, f, g, h, i, j, k, l can be any character except new line.
+```js
+var regex = /^(.{3}\.){3}.{3}$/;
+console.log(regex.test('123.456.abc.def'));
+// true
+console.log(regex.test('1243.446.abc.def'));
+// false
+console.log(regex.test('abc.def.ghi.jkl'));
+// true
+```
+
+Let’s break that down and see what’s going on up there.
+1. We have wrapped entire regular expression inside ^ and $, so that the match spans entire string.
+2. `(` start of first sub expression
+3. `.{3}` matches any character except new line for exactly 3 times.
+4. `\.` matches the literal . period
+5. `)` end of first sub expression
+6. `{3}` matches the first sub expression exactly 3 times.
+7. `.{3}` matches any character except new line for exactly 3 times.
+
+### Conclusion
+Regular expression can be fairly complex at times, but having a proper understanding of the above concepts will help you understand more complex regex patterns easily. You can learn more about regex here and practice it here.
+
+
+----
+[原文链接🔗](https://blog.bitsrc.io/a-beginners-guide-to-regular-expressions-regex-in-javascript-9c58feb27eb4){:target="_blank"}
