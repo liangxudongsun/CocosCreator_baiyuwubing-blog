@@ -167,7 +167,7 @@ console.log(regex.test('tear'));
 **元字符** — 元字符是具有特殊含义的字符。 一共有很多元字符，但我将在这里介绍最重要的字符。  
 
 - `\d` — 匹配一个数字。等价于`[0-9]`。
-- `\w` — 匹配一个单字字符（字母、数字或者下划线）。等价于 [A-Za-z0-9_]。即字母数字字符。
+- `\w` — 匹配一个单字字符（字母、数字或者下划线）。等价于 `[A-Za-z0-9_]`。即字母数字字符。
 - `\s` — 匹配一个空白字符，包括空格、制表符、换页符和换行符。
 - `\t` — 匹配一个水平制表符 (U+0009)。
 - `\b` — 匹配单词的开头或结尾。 也称为字边界。
@@ -317,22 +317,22 @@ console.log(regex.test('RedApple'));
 
 
 
-### Practicing Regex:
-Let’s practice some of the concepts that we have learned above.
-- Match any 10 digit number :
+
+### 练习正则表达式
+让我们练习上面学到的一些概念。  
+
+- 匹配任何10位数字：  
 ```js
 var regex = /^\d{10}$/;
 console.log(regex.test('9995484545'));
 // true
 ```
+让我们分解一下，看看每步做了什么。  
+1. 如果我们要强制匹配必须跨越整个字符串，则可以添加量词`^`和`$`。 插入符号`^`与输入字符串的开头匹配，而美元符号`$`与结尾匹配。 因此，如果字符串包含的位数超过10位，则不会匹配。
+2. `\d`匹配任何数字字符。
+3. `{10}`与上一个表达式匹配，在这种情况下，`\d`恰好是10倍。 因此，如果测试字符串包含的位数少于或大于10，则结果将为`false`。  
 
-Let’s break that down and see what’s going on up there.
-
-1. If we want to enforce that the match must span the whole string, we can add the quantifiers ^ and $. The caret ^ matches the start of the input string, whereas the dollar sign $ matches the end. So it would not match if string contain more than 10 digits.  
-2. `\d` matches any digit character.  
-3. `{10}` matches the previous expression, in this case \d exactly 10 times. So if the test string contains less than or more than 10 digits, the result will be false.  
-
-- Match a date with following format DD-MM-YYYY or DD-MM-YY
+- 匹配 以`DD-MM-YYYY` 或 `DD-MM-YY`格式 的日期。
 ```js
 var regex = /^(\d{1,2}-){2}\d{2}(\d{2})?$/;
 console.log(regex.test('01-01-1990'));
@@ -342,18 +342,18 @@ console.log(regex.test('01-01-90'));
 console.log(regex.test('01-01-190'));
 // false
 ```
-Let’s break that down and see what’s going on up there.
-1. Again, we have wrapped the entire regular expression inside ^ and $, so that the match spans entire string.
-2. `(` start of first subexpression.
-3. `\d{1,2}` matches at least 1 digit and at most 2 digits.
-4. `-` matches the literal hyphen character.
-5. `)` end of first subexpression.
-6. `{2}` match the first subexpression exactly two times.
-7. `\d{2}` matches exactly two digits.
-8. `(\d{2})?` matches exactly two digits. But it’s optional, so either year contains 2 digits or 4 digits.
+让我们分解一下，看看每步做了什么。  
+1. 同样地，我们将整个正则表达式包装在`^`和`$`内，以使匹配跨整个字符串。
+2. `(` 第一个子表达式的开始。
+3. `\d{1,2}` 匹配至少1位和最多2位数字。
+4. `-` 匹配文字连字符`-`。
+5. `)` 第一个子表达式的结尾。
+6. `{2}` 与第一个子表达式完全匹配两次。
+7. `\d{2}` 精确匹配两位数。
+8. `(\d{2})?` 精确匹配两位数。 但是它是可选的，因此年份包含2位数字或4位数字。
 
-- Matching Anything But a Newline
-The expression should match any string with a format like abc.def.ghi.jkl where each variable a, b, c, d, e, f, g, h, i, j, k, l can be any character except new line.
+- 匹配除换行符之外的所有内容  
+表达式应匹配任何格式如`abc.def.ghi.jkl`的字符串，其中每个变量a，b，c，d，e，f，g，h，i，j，k，l可以是除换行符之外的任何字符。
 ```js
 var regex = /^(.{3}\.){3}.{3}$/;
 console.log(regex.test('123.456.abc.def'));
@@ -363,18 +363,17 @@ console.log(regex.test('1243.446.abc.def'));
 console.log(regex.test('abc.def.ghi.jkl'));
 // true
 ```
+让我们分解一下，看看每步做了什么。 
+1. 我们将整个正则表达式包装在`^`和`$`内，以便匹配跨整个字符串。
+2. `(` 第一个子表达式的开始。
+3. `.{3}` 与除换行符之外的任何字符完全匹配3次。
+4. `\.` 匹配字符点`.`
+5. `)` 第一个子表达式的结尾。
+6. `{3}` 与第一个子表达式完全匹配3次。
+7. `.{3}` 与除换行符之外的任何字符完全匹配3次。
 
-Let’s break that down and see what’s going on up there.
-1. We have wrapped entire regular expression inside ^ and $, so that the match spans entire string.
-2. `(` start of first sub expression
-3. `.{3}` matches any character except new line for exactly 3 times.
-4. `\.` matches the literal . period
-5. `)` end of first sub expression
-6. `{3}` matches the first sub expression exactly 3 times.
-7. `.{3}` matches any character except new line for exactly 3 times.
-
-### Conclusion
-Regular expression can be fairly complex at times, but having a proper understanding of the above concepts will help you understand more complex regex patterns easily. You can learn more about regex here and practice it here.
+### 总结
+正则表达式有时可能会相当复杂，但是对上述概念的正确理解将有助于你轻松理解更复杂的正则表达式模式。 你可以在[这里](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_Expressions)了解有关正则表达式的更多信息,在[这里](https://www.hackerrank.com/domains/regex)练习。
 
 
 ----
