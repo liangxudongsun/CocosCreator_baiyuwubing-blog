@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "JavaScript 正则表达式(RegEx)实用指南【译】"
+title:  "JavaScript 正则表达式(RegExp)实用指南【译】"
 date:   2019-10-06 10:24:00 +0800
 categories: javascript
 tags:
@@ -84,52 +84,53 @@ console.log(result);
 
 
 
-### Simple Regex Patterns
-It is the most basic pattern, which simply matches the literal text with the test string. For example:
+
+### 简单的正则表达式模式
+这是最基本的模式，只需将文字文本与测试字符串匹配即可。 例如：
 ```js
 var regex = /hello/;
 console.log(regex.test('hello world'));
 // true
 ```
 
-### Special Characters
-Up until now we’ve created simple regular expression patterns. Now, let’s tap into the full power of regular expressions when handling more complex cases.  
+### 特殊字符
+到目前为止，我们已经创建了简单的正则表达式模式。 现在，让我们在处理更复杂的情况时充分利用正则表达式的全部功能。  
 
-For example, instead of matching a specific email address let’s say we’d like to match a number of email addresses. That’s where special characters come into play. There are special symbols and characters that you have to memorize in order to fully understand the regular expressions.  
+例如，我们在一堆邮箱地址中，我们要排除qq邮箱。 那是特殊字符起作用的地方。 为了完全理解正则表达式，你必须记住一些特殊的符号和字符。  
 
-#### Flags:
-Regular expressions have five optional flags or modifiers. Let’s discuss the two most important flags:  
+#### 标志
+正则表达式具有五个可选的标志或修饰符。 让我们讨论两个最重要的标志： 
 
-- **g** — Global search, don’t return after the first match
-- **i** — Case-insensitive search  
+- `g` — 常用于执行一个全局搜索匹配, 即(不仅仅返回第一个匹配的, 而是返回全部)
+- `i` — 不区分大小写搜索。  
 
-You can also combine the flags in a single regular expression. Note that their order doesn’t have any effect on the result.
-Let’s look at some code examples:  
+还可以在单个正则表达式中用多个标志。他们的顺序对结果没有任何影响。
 
-##### Regular Expression Literal — Syntax `/pattern/flags`
+让我们看一些代码示例：
+
+##### 正则表达式字面量 — 语法 `/pattern/flags`
 ```js
 var regexGlobal = /abc/g;
 console.log(regexGlobal.test('abc abc'));
-// it will match all the occurence of 'abc', so it won't return 
-// after first match.
+// 它将匹配所有的'abc'，在第一次匹配后不会返回
 var regexInsensitive = /abc/i;
 console.log(regexInsensitive.test('Abc'));
-// returns true, because the case of string characters don't matter 
-// in case-insensitive search.
+// returns true, 因为忽略大小写
 ```
 
-##### Regular Expression Constructor — Syntax `new RegExp('pattern', 'flags')`
+##### 正则表达式构造函数 — 语法 `new RegExp('pattern', 'flags')`
 ```js
 var regexGlobal = new RegExp('abc','g')
 console.log(regexGlobal.test('abc abc'));
-// it will match all the occurence of 'abc', so it won't return // after first match.
+// 它将匹配所有的'abc'，在第一次匹配后不会返回
 var regexInsensitive = new RegExp('abc','i')
 console.log(regexInsensitive.test('Abc'));
-// returns true, because the case of string characters don't matter // in case-insensitive search.
+// returns true, 因为忽略大小写
 ```
 
-#### Character groups:
-**Character set [xyz]** — A character set is a way to match different characters in a single position, it matches any single character in the string from characters present inside the brackets. For example:  
+#### 字符集:
+
+`[xyz]` — 字符集是在一个位置匹配不同字符的一种方法，它可以匹配括号内出现的字符中字符串中的任何一个字符。 例如：  
 
 ```js
 var regex = /[bt]ear/;
@@ -141,9 +142,7 @@ console.log(regex.test('fear'));
 // return false
 ```
 
-**Note** — All the special characters except for caret (^) (Which has entirely different meaning inside the character set) lose their special meaning inside the character set.  
-
-***Negated character set [^xyz]** — It matches anything that is not enclosed in the brackets. For example:  
+`[^xyz]` — `^`用在一个方括号的开头的时候, 它表示这个字符集是否定的，它可以匹配除了括号内出现的字符中字符串中的任何一个字符。 例如：
 
 ```js
 var regex = /[^bt]ear/;
@@ -155,7 +154,7 @@ console.log(regex.test('fear'));
 // return true
 ```
 
-Ranges [a-z] — Suppose we want to match all of the letters of an alphabet in a single position, we could write all the letters inside the brackets, but there is an easier way and that is ranges. For example: [a-h] will match all the letters from a to h. Ranges can also be digits like [0-9] or capital letters like [A-Z].
+`[a-z]` — 如果我们想将一个字母的所有字母都匹配在一个位置，我们可以将所有字母写在方括号内，但是有一种更简单的方法，那就是范围。 例如：[a-h]将匹配从a到h的所有字母，`[0-9]`将匹配从a到h的所有数字，[A-Z]将匹配所有大写字母。
 
 ```js
 var regex = /[a-z]ear/;
@@ -165,20 +164,21 @@ console.log(regex.test('tear'));
 // returns true
 ```
 
-`Meta-characters` — Meta-characters are characters with a special meaning. There are many meta character but I am going to cover the most important ones here.  
+**元字符** — 元字符是具有特殊含义的字符。 一共有很多元字符，但我将在这里介绍最重要的字符。  
 
-- \d — Match any digit character ( same as [0-9] ).
-- \w — Match any word character. A word character is any letter, digit, and underscore. (Same as [a-zA-Z0–9_] ) i.e alphanumeric character.
-- \s — Match a whitespace character (spaces, tabs etc).
-- \t — Match a tab character only.
-- \b — Find a match at beginning or ending of a word. Also known as word boundary.
-- . — (period) Matches any character except for newline.
-- \D — Match any non digit character (same as [^0–9]).
-- \W — Match any non word character (Same as [^a-zA-Z0–9_] ).
-- \S — Match a non whitespace character.  
+- `\d` — 匹配一个数字。等价于`[0-9]`。
+- `\w` — 匹配一个单字字符（字母、数字或者下划线）。等价于 [A-Za-z0-9_]。即字母数字字符。
+- `\s` — 匹配一个空白字符，包括空格、制表符、换页符和换行符。
+- `\t` — 匹配一个水平制表符 (U+0009)。
+- `\b` — 匹配单词的开头或结尾。 也称为字边界。
+- `.`  — （小数点）默认匹配除换行符之外的任何单个字符。
+- `\D` — 匹配一个非数字字符。等价于`[^0-9]`。
+- `\W` — 匹配一个非单字字符。等价于 `[^A-Za-z0-9_]`
+- `\S` — 匹配一个非空白字符。 
 
-Quantifiers: — Quantifiers are symbols that have a special meaning in a regular expression.
-- + — Matches the preceding expression 1 or more times.
+**量词** — 量词是在正则表达式中具有特殊含义的符号。  
+
+- `+` — 匹配前面一个表达式 1 次或者多次。  
 ```js
 var regex = /\d+/;
 console.log(regex.test('8'));
@@ -189,7 +189,7 @@ console.log(regex.test('8888845'));
 // true
 ```
 
-- * —Matches the preceding expression 0 or more times.
+- `*` — 匹配前一个表达式 0 次或多次。  
 ```js
 var regex = /go*d/;
 console.log(regex.test('gd'));
@@ -202,7 +202,7 @@ console.log(regex.test('goood'));
 // true
 ```
 
-- ? — Matches the preceding expression 0 or 1 time, that is preceding pattern is optional.
+- `?` — 匹配前面一个表达式 0 次或者 1 次。  
 ```js
 var regex = /goo?d/;
 console.log(regex.test('god'));
@@ -213,7 +213,7 @@ console.log(regex.test('goood'));
 // false
 ```
 
-- ^ — Matches the beginning of the string, the regular expression that follows it should be at the start of the test string. i.e the caret (^) matches the start of string.
+- `^` — 匹配字符串的开头，紧随其后的正则表达式应位于测试字符串的开头。  
 ```js
 var regex = /^g/;
 console.log(regex.test('good'));
@@ -224,7 +224,7 @@ console.log(regex.test('tag'));
 // false
 ```
 
-- $ — Matches the end of the string, that is the regular expression that precedes it should be at the end of the test string. The dollar ($) sign matches the end of the string.
+- `$` — 匹配字符串的末尾，即在它之前的正则表达式应位于测试字符串的末尾。  
 ```js
 var regex = /.com$/;
 console.log(regex.test('test@testmail.com'));
@@ -233,14 +233,17 @@ console.log(regex.test('test@testmail'));
 // false
 ```
 
-- {N} — Matches exactly N occurrences of the preceding regular expression.
+- `{N}` — N 是一个正整数，匹配了前面一个字符刚好出现了 N 次。
 ```js
 var regex = /go{2}d/;
 console.log(regex.test('good'));
 // true
 console.log(regex.test('god'));
 // false
-{N,} — Matches at least N occurrences of the preceding regular expression.
+```
+
+- `{N,}` — N 是一个正整数，匹配前一个字符至少出现了 N 次。
+```js
 var regex = /go{2,}d/;
 console.log(regex.test('good'));
 // true
@@ -250,7 +253,7 @@ console.log(regex.test('gooood'));
 // true
 ```
 
-- {N,M} — Matches at least N occurrences and at most M occurrences of the preceding regular expression (where M > N).
+- `{N,M}` — N 和 M 都是整数。匹配前面的字符至少 N 次，最多 M 次。
 ```js
 var regex = /go{1,2}d/;
 console.log(regex.test('god'));
@@ -260,7 +263,8 @@ console.log(regex.test('good'));
 console.log(regex.test('goood'));
 // false
 ```
-- Alternation X|Y — Matches either X or Y. For example:
+
+- `X|Y` — 匹配 X 或者 Y
 ```js
 var regex = /(green|red) apple/;
 console.log(regex.test('green apple'));
@@ -270,15 +274,17 @@ console.log(regex.test('red apple'));
 console.log(regex.test('blue apple'));
 // false
 ```
-Note — If you want to use any special character as a part of the expression, say for example you want to match literal + or ., then you have to escape them with backslash ( \ ).
-For example:
+
+如果表达式中包括特殊字符, 例如要匹配 `+` 或 `.`, 就必须使用转义符号(`\`).
 ```js
 var regex = /a+b/;  // This won't work
 var regex = /a\+b/; // This will work
 console.log(regex.test('a+b')); // true
 ```
-#### Advanced
-(x) — Matches x and remembers the match. These are called capturing groups. This is also used to create sub expressions within a regular expression. For example :-
+
+#### 高级一点的用法
+
+`(x)` — 匹配x并记住匹配。 这些称为捕获组。 这也用于在正则表达式中创建子表达式。 例如 ：  
 ```js
 var regex = /(foo)bar\1/;
 console.log(regex.test('foobarfoo'));
@@ -286,9 +292,9 @@ console.log(regex.test('foobarfoo'));
 console.log(regex.test('foobar'));
 // false
 ```
-`\1` remembers and uses that match from first subexpression within parentheses.
+`\1` 记住并使用括号中第一个子表达式中的匹配项（上面的例子 `\1` 等同于 `foo` ）。
 
-`(?:x)` — Matches x and does not remember the match. These are called non capturing groups. Here \1 won’t work, it will match the literal \1.
+`(?:x)` — 匹配x，不记住匹配。 这些称为非捕获组。 这里的`\1`将不起作用，它将与字符串 `\1`匹配。
 
 ```js
 var regex = /(?:foo)bar\1/;
@@ -300,15 +306,16 @@ console.log(regex.test('foobar\1'));
 // true
 ```
 
-`x(?=y)` — Matches x only if x is followed by y. Also called positive look ahead. For example:
+`x(?=y)` — 匹配 x 仅仅当 x 后面跟着 y 。这种叫做先行断言。
 
 ```js
 var regex = /Red(?=Apple)/;
 console.log(regex.test('RedApple'));
 // true
 ```
+在上面的示例中，仅当`Red`紧跟`Apple`时，匹配才会发生。
 
-In the above example, match will occur only if Redis followed by Apple.
+
 
 ### Practicing Regex:
 Let’s practice some of the concepts that we have learned above.
