@@ -1,0 +1,114 @@
+---
+layout: post
+title:  "cocos creator tween | 如何在旧版本使用tween"
+date:   2019-10-17 23:33:33 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+> cocos creator V2.0.9版本 引入了全新的缓动 API：cc.tween，能提供更简洁的语法和更高的灵活性。那么在之前的版本想用 tween 该怎么办？
+
+## 由来
+
+因为自己之前有用过白鹭引擎(egret)做开发，感觉里面Tween很好用。
+
+而我刚用 cocos creator 时是没有相关的链式用法，就动手把白鹭里`tween.ts`源码修改一下，搬运到 cocos creator 里使用了。
+
+## 初始化
+
+初始化一次，在主场景下脚本里`update(dt:number)`里添加`Tween.tick(dt)`。
+
+```ts
+import { Tween, Ease } from "./tween";
+const { ccclass, property } = cc._decorator;
+@ccclass
+export default class Main extends cc.Component {
+    update(dt: number) {
+        Tween.tick(dt);
+    }
+}
+```
+
+## 使用示例  
+
+由于是从白鹭移植过来的，使用方法和原来大致相同。不过里面的时间单位采用的是和 cocos 统一的秒。
+
+```ts
+Tween.removeTweens(this.node_label);
+Tween.get(this.node_label,
+    {
+        loop: true
+        , onChange:()=>{
+            cc.log('y',this.node_label.y);
+        }
+    })
+    .to({ y: 100, opacity: 150 }, 1.25, Ease.backInOut)
+    .wait(1)
+    .to({ y: -180, opacity: 255 }, 1)
+    .call(()=>{
+        cc.log('结束');
+    });
+```
+
+预览效果
+
+![](/img/in-post/2019-10-17-result.gif)
+
+### 基本用法
+
+删除一个对象上的全部 Tween 动画
+```ts
+Tween.removeTweens(target: any);
+``` 
+
+激活一个对象，对其添加 Tween 动画
+```ts
+/**
+* @param target {any} 要激活 Tween 的对象
+* @param props {any} 参数，支持loop(循环播放) onChange(变化函数) onChangeObj(变化函数作用域)
+* @returns Tween对象本身
+*/
+Tween.get(target: any, props?: { loop?: boolean, onChange?: Function, onChangeObj?: any }): Tween;
+``` 
+
+`get`之后返回的对象可以进行链式调用。
+```ts
+    /**
+     * 等待指定秒后执行下一个动画
+     * @param duration {number} 要等待的时间，以秒为单位
+     * @param passive {boolean} 等待期间属性是否会更新
+     * @returns Tween对象本身
+     */
+    wait(duration: number, passive?: boolean): Tween;
+
+    /**
+     * 将指定对象的属性修改为指定值
+     * @param props {Object} 对象的属性集合
+     * @param duration {number} 持续时间
+     * @param ease {Ease} 缓动算法
+     * @returns {Tween} Tween对象本身
+     */
+    to(props: any, duration?: number, ease: Function = undefined): Tween;
+
+    /**
+     * 执行回调函数
+     * @param callback {Function} 回调方法
+     * @param thisObj {any} 回调方法this作用域
+     * @param params {any[]} 回调方法参数
+     * @returns {Tween} Tween对象本身
+     */
+    call(callback: Function, thisObj: any = undefined, params: any[] = undefined): Tween;
+```
+
+## 结语
+
+以上是使用 tween 的一种解决方案，希望对你们有帮助。理论上移植的`tween.ts`可以在其他ts/js项目上使用，只需在更新函数里加上`Tween.tick(dt)`。
+
+在 cocos creator 2.0.9 版本之后， 可以使用 [cc.tween](https://docs.cocos.com/creator/api/zh/classes/Tween.html){:target="_blank"}，用法不大相同，可以参考官方API文档。
+
+
+
+---
+
+[项目源码地址](https://github.com/baiyuwubing/Tween_ts){:target="_blank"}
