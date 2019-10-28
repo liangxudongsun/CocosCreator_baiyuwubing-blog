@@ -1,0 +1,55 @@
+---
+layout: post
+title:  "cocos creator | 如何实现 KTV 歌词逐字效果！"
+date:   2019-10-25 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+> 唱歌🎤怎么能少了歌词呢？
+
+# 效果预览
+
+先看下实现的最终效果如何。   
+
+![](/img/in-post/2019-10-25-preview.gif)
+
+# 配置环境
+
+cocos creator 引擎 2.0.8 + typescript
+
+# 使用方法
+
+创建一个空节点，添加组件脚本，修改 string 和 progress 就可以看到效果了。
+
+![](/img/in-post/2019-10-25-option.gif)
+
+当然，还支持设置文本大小，底色和高亮字体颜色。
+
+# 实现原理
+
+原来打算参考 labelOutline 组件去实现，经过小小研究，发现系统字体里的描边是用 canvas 的 strokeText，所以选了另外一个方式。  
+
+最终方案还是使用 cc.Mask 。首先创建两个 Label ，一个在上层，一个在下层。接着为上层的 Label 添加一个 Mask 控制截取区域。    
+
+核心代码参考：
+
+```ts
+_updateRenderData() {
+    this._label_mask.lineHeight = this._label_mask.fontSize = this._label.lineHeight = this._label.fontSize = this.fontSize;
+    this._label.node.color = this.color;
+    this._label_mask.node.color = this.color_mask;
+    this._label_mask.string = this._label.string = this._string;
+    this._updateBarStatus();
+}
+
+_updateBarStatus() {
+    this._node_mask.width = Math.round(this._label.node.width * this.progress);
+    this._node_mask.height = this._label.node.height;
+}
+```
+
+---
+
+[源码获取](https://mp.weixin.qq.com/s/os1_7hd3pZX32c128O7QGA)  
