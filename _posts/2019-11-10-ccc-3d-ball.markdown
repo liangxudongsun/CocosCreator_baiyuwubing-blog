@@ -1,0 +1,92 @@
+---
+layout: post
+title:  "cocos creator 3D | 蚂蚁庄园运动会星星球 "
+date:   2019-11-10 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+> 上一篇文章写了一个简易版的蚂蚁庄园登山赛，有小伙伴留言说想要看星星球的，那么就写起来吧！  
+
+![](/img/in-post/201911/1110-bg.png)  
+
+# 效果预览
+
+![](/img/in-post/201911/1110-result.gif)  
+
+配置环境 cocos creator  3d 1.0.0  
+
+# 小球点击
+
+3d里节点无法用 cc.Node.EventType.TOUCH_START 监听。最终在论坛上找到一个 raycast 解决方法。参考代码如下。  
+
+```ts
+start() {
+    systemEvent.on(SystemEventType.TOUCH_START, this.onClickBall, this);
+}
+private _ray = new geometry.ray();
+private onClickBall(touch: Touch, event: EventTouch) {
+    const pos = touch.getLocation();
+    this.camera.screenPointToRay(pos.x, pos.y, this._ray);
+    const result: { node: Node }[] = this.node_ball_click.scene.renderScene['raycast'](this._ray);
+    if (result.some((i) => {
+        if (i.node === this.node_ball_click) {
+            return true;
+        }
+    })) {
+        //点击到小球处理逻辑
+    }
+}
+```
+
+其中 result 返回的是一个包含node节点的结果数组。获取后需要判断一下是否为小球节点。  
+
+据说这个方案消耗性能比较大，后续应该会有更好的解决方案。  
+
+![](/img/in-post/201911/1110-panda.png)  
+
+
+# 动画系统
+
+采用了编辑器的动画编辑器，对需要部分增加动画效果。由于我的资源是网上找的，那只鸡有些身体部分切割的不好，所以小鸡的动画比较差一些。  
+
+需要注意的是动画编辑器里的rotation属性，与节点里的属性面板的rotation对应不上，而应该采用eulerAngles的属性。  
+
+![](/img/in-post/201911/1110-angle.png)  
+
+据说后续版本会处理？  
+
+![](/img/in-post/201911/1110-angle-2.png)  
+
+# 小球轨迹
+
+采用tween控制小球坐标数值，先移动到最高点，然后再移动到最低点。  
+
+![](/img/in-post/201911/1110-tween.png)  
+
+
+在运动轨迹中加入一些随机值，就可以达到不同位置的效果啦。 
+```ts
+tweenUtil(this._node_balll_pos)
+    .stop()
+    .to(time, new math.Vec3((this.node_ball.position.x + BALL_INIT_X) / 2, BALL_MAX_Y * (0.8 + 0.2 * Math.random()), targetZ / 2))
+    .to(time, new math.Vec3(BALL_GAMEOVER_X, BALL_MIN_Y, targetZ))
+    .start();
+```
+
+
+# 小结
+
+完成这个小功能主要遇到的问题是3d节点点击事件，和动画系统的rotation的问题。不过这些都在论坛里找到了相应的解决方法。  
+
+以上就是我最新的学习成果！如有问题或新的想法欢迎留言！我有了好想法会第一时间分享给大家的！  
+
+--- 
+
+游戏开发小赤佬，也玩python 和 shell。—白玉无冰  
+
+---
+
+[在线试玩](http://lamyoung.gitee.io/web/ballGame)   
+[源码获取](https://mp.weixin.qq.com/s/sq_6PitkkHgDAj5bm1noPQ)  

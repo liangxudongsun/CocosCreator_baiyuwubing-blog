@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "cocos creator 3d | 蚂蚁庄园运动会登山赛 "
+title:  "cocos creator 3D | 蚂蚁庄园运动会登山赛 "
 date:   2019-11-07 22:22:22 +0800
 header-img: "img/in-post/post-bg-cocos-creator.png"
 categories: cocos-creator
