@@ -1,0 +1,86 @@
+---
+layout: post
+title:  "用 python 实现切割视频，加入水印，压缩并转成 gif ！"
+date:   2019-11-13 22:22:22 +0800
+categories: python
+tags:
+    - python
+---
+> 写文章的时候经常需要用视频的形式展示，而上传视频不太方便，通常要转成gif图方便预览。之前录屏后一般都是上ezgif网站，上传文件，选取时间，转成gif，压缩，下载。作为懒人，觉得这步骤太繁琐，决定用python实现这个功能，顺便加了一个水印功能。
+
+
+# 效果预览
+
+### 源视频文件
+[![Watch the video](/img/in-post/201911/1113-old.png)](/img/in-post/201911/1113-jump.mp4){:target="_blank"}
+
+
+### 切割1-3s后加水印，转成gif的效果
+
+![](/img/in-post/201911/1113-result.gif)  
+
+
+# 配置环境
+
+python3 + moviepy  
+
+安装 moivepy 可以使用国内镜像快一点。
+```
+(sudo) pip3 install moviepy -i http://pypi.douban.com/simple --trusted-host=pypi.douban.com
+```
+引入库：
+```
+from moviepy.editor import *
+```
+
+# 实现步骤
+
+### 加载视频文件：
+
+直接调用 VideoFileClip 读取视频文件。
+```
+vedioClip = VideoFileClip(CONST_FILE_NAME,audio=False)
+```
+
+### 添加logo：
+
+先用 ImageClip 载入图片文件，并添加时间，设置透明度，再根据时间参数动态移动logo位置。
+
+接着用 CompositeVideoClip 把图片clip和视频clip合成一个clip。
+```
+def logo_pos(t):
+  if(t<duration/2):
+    return ('center', t*2/duration);
+  else:
+    return ('center', -t*2/duration+2);
+imageClip=ImageClip(CONST_FILE_LOGO).set_duration(duration).set_opacity(0.4).set_position(logo_pos,relative=True);
+final_clip=CompositeVideoClip([vedioClip.subclip(t_start=CONST_START_TIME, t_end=CONST_END_TIME),imageClip]).to_RGB();
+```
+
+### 压缩并导出gif：
+
+moviepy 提供了三种导出gif的方式
+
+- imageio - 提供colors参数可以控制总色值
+- ffmpeg
+- ImageMagick  - 目前有bug无法导出gif，并且需要安装ImageMagick库。
+
+```
+final_clip.write_gif(CONST_FILE_OUTPUT_ffmpeg,program='ffmpeg',fps=vedioClip.fps*CONST_FPS_PERCENT);
+final_clip.write_gif(CONST_FILE_OUTPUT_imageio,colors=CONST_COLORS,fps=vedioClip.fps*CONST_FPS_PERCENT);
+```
+
+# 结语
+
+moivepy是个强大的视频处理库，除了可以对每帧图片像素级处理，还有音频，组合切割等功能。这次只用到其中的一小部分。
+
+对gif的压缩主要是采用的是控制fps和整体长度，感觉还可以进一步优化，如果有其他的压缩方法欢迎留言分享。
+
+以上就是我学到新技能！如果你有什么想偷懒的，可以告诉我！我们一起学习成长！
+
+
+![](/img/in-post/bottom.png)  
+
+---  
+
+[参考资料](https://mp.weixin.qq.com/s/83g-FkNBBIPuOm4ZsKI3Jw)  
