@@ -8,7 +8,7 @@ tags:
 ---
 > 什么？为什么审核不通过？
 
-### 流量主
+# 流量主
 
 我们先从流量主说起。游戏通过审核发布上线，累计注册用户达到1000后，可以在管理后台开启流量主功能。  
 
@@ -21,7 +21,7 @@ tags:
 我就直接点掉了公测，然后第二天差不多给了2000的量，第三天开始就没什么量了。  
 
 
-### 排行榜
+# 排行榜
 
 排行榜我接入了两种，一种是世界排行榜，用的是微信云开发，有兴趣的可以参考微信云开发之排行榜的实现；另一种是好友排行榜。  
 
@@ -30,7 +30,7 @@ tags:
 排行榜设置需要运营素材配置过审。  
 
 
-### 广告接入
+# 广告接入
 
 广告类型有三种：激励式视频、插屏和Banner  
 
@@ -46,7 +46,7 @@ Banner广告接入需要注意：
 ```ts
 const systemInfo = wx.getSystemInfoSync();
 let bannerAd = wx.createBannerAd({
-    adUnitId: 'adunit-a195f5405e9ccf2b', //todo
+    adUnitId: 'your-id', //todo
     adIntervals: 30,
     style: {
         left: (systemInfo.windowWidth - 300) / 2,
@@ -65,7 +65,7 @@ bannerAd.onResize(res => {
 激励视频按钮一定要有视频广告相关的提示！  
 
 
-### 结语
+# 结语
 
 如果你有时间，想放松放松，可以试下不停歇的球 。  
 
