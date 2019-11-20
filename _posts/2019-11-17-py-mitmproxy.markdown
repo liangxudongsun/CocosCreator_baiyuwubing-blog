@@ -66,8 +66,8 @@ headers = {
 }
 def scrapy(index):
   params = {
-    'X-UA': 'V=1&PN=TapTap&VN_CODE=536&LOC=CN&LANG=zh_CN&CH=tencent',#'V%3D1%26PN%3DTapTap%26VN_CODE%3D536%26LOC%3DCN%26LANG%3Dzh_CN%26CH%3Dtencent',
-    'tag': '单机',#'%E5%8D%95%E6%9C%BA',
+    'X-UA': 'V=1&PN=TapTap&VN_CODE=536&LOC=CN&LANG=zh_CN&CH=tencent',
+    'tag': '单机',
     'sort': 'hits',
     'from': f'{index*10}',
     'limit': '10',
