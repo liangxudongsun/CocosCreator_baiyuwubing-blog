@@ -1,0 +1,147 @@
+---
+layout: post
+title:  "python 实现图片批量加入水印！pillow 入门实战!"
+date:   2019-11-26 22:22:22 +0800
+categories: python
+tags:
+    - python
+---
+> 写文章的时候可以设置是否添加水印。可是，有些图片可能想加水印，有些不想加水印，该怎么办呢？
+
+# 配置环境
+
+python3 + pillow  
+
+```
+pip3 install pillow
+```
+
+引入库
+
+```
+from PIL import Image, ImageSequence
+import os
+import random
+```
+
+### 效果预览：
+
+![](/img/in-post/201911/1126-result.gif)  
+
+### 使用方法：
+
+1. 在脚本同目录下添加水印图片 logo.png
+2. 创建目录 input 并在放入要添加水印的图片
+3. 创建目录 output 执行脚本 addlogo.py
+4. 结果输出在 output 文件夹下
+
+![](/img/in-post/201911/1126-use.png)  
+
+
+# 实现原理
+
+### 水印图片采集：
+
+先读取水印图片的像素点信息和大小信息。去除透明度为0的像素，并修改透明度像素信息。
+
+```
+img_logo = Image.open("logo.png")
+img_logo_width, img_logo_height = img_logo.size
+img_logo_pixels = dict()
+for w in range(img_logo_width):
+    for h in range(img_logo_height):
+        c = img_logo.getpixel((w,h))
+        if c!=(0, 0, 0, 0):
+            img_logo_pixels[(w, h)] = c[:3]+(125,)
+```
+          
+### 混合颜色：
+
+对每一个像素点采取颜色混合，其中c1是源图片的像素点信息(r,g,b,a)，c2是logo图片像素点的信息。混合算法如下:
+
+```
+def blendPixel(c1,c2):
+    a1=256-c2[3]
+    a2=c2[3]-(a1*c2[3])/256.0
+    a=a1+a2
+    c=(int((a1*c1[0] + a2*c2[0])/a), int((a1*c1[1] + a2*c2[1])/a), int((a1*c1[2] + a2*c2[2])/a),int(a))
+    return c
+```
+
+### 处理源 Image 对象：
+
+随机一个位置开始处理像素，具体代码参考如下。
+
+```
+def dealOneImage(image,offX=None,offY=None):
+    w, h = image.size
+    offX = offX if offX else random.random();
+    offY = offY if offY else random.random();
+    #如果图片尺寸小于水印图片，不加水印
+    if w>=img_logo_width and h>=img_logo_height:
+        top = int((w - img_logo_width)*offX)
+        left = int((h - img_logo_height)*offY)
+        for p, c in img_logo_pixels.items():
+            p_x = (p[0]+top)
+            p_y = (p[1]+left)
+            image_c = image.getpixel((p_x,p_y))
+            if(isinstance(image_c, tuple) and len(image_c)>2):
+                image.putpixel((p_x, p_y), blendPixel(image_c,c))
+    return image;
+```
+
+### 处理单个文件：
+
+对于 gif 文件先拆成一张一张图片，在图片上添加水印，最后再合成 gif 。对于其他格式的图片文件可以多添加几个水印。最后输出保存到 output 文件夹下。
+
+```
+def dealOneFile(filePath):
+    img_orign = Image.open(filePath)
+    _,file_type = os.path.splitext(filePath)
+    basename = os.path.basename(filePath)
+    if file_type == '.gif':
+        sequence = [];
+        offX=random.random()
+        offY=random.random()
+        for f in ImageSequence.Iterator(img_orign):
+            if len(sequence) % 2 == 0:
+                offX=random.random()
+                offY=random.random()
+            sequence.append(dealOneImage(f.convert(),offX,offY))
+        sequence[0].save(f'./output/{basename}', save_all=True, append_images=sequence[1:])
+    else:
+        image_out = (dealOneImage(img_orign))
+        for x in range(1):
+            image_out = (dealOneImage(image_out))
+        image_out.save(f'./output/{basename}')
+```
+
+### 处理目录：
+
+对当前目录下的文件做一个筛选，只选取图片格式的文件。
+
+```
+def dealSrc(srcDir):
+    picFiles = [os.path.join(srcDir,fn) for fn in os.listdir(srcDir) if fn.endswith(('.gif', '.jpg', '.png','.jpeg'))]
+    for filePath in picFiles:
+        dealOneFile(filePath)
+```
+
+# 小结
+
+添加水印主要用了 python3 中的 pillow 库来实现。 首先是读取 logo 图片信息，接着在随机一个位置添加混合后的像素点信息，最后再保存起来。  
+
+其中，对于 gif 文件的处理是拆帧，再添加水印，最后再组合成一个 gif。这个只能对应比较小的 gif 文件处理，如果有更好的方法欢迎留言交流分享！  
+
+
+---  
+
+本文仅供个人学习交流使用，请勿用于其他用途！
+
+--- 
+
+![](/img/in-post/bottom.png)  
+
+---  
+
+[参考资料](https://mp.weixin.qq.com/s/hO2e8ez_vXTGwHLjCPSQWw)  
