@@ -1,0 +1,92 @@
+---
+layout: post
+title:  "竟然可以用 effect 玩水？Cocos Creator 3D !"
+date:   2019-12-22 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> 最近逛论坛时，看到一位大佬在分享各种 shader 特效。基于其中的水波 shader ，白玉无冰写了一个玩水效果！文章底部获取完整代码！还可以试试水哦！
+
+先一起看看效果～
+
+![](/img/in-post/201912/22-result.gif)  
+
+
+点击任意位置，会在该位置生成一个水纹，就像是雨水落在水洼中一样～
+
+
+
+如何使用 effect 文件？新建一个 material ，Effect 属性选择 water , 接着将纹理图片拖到相应参数。
+
+![](/img/in-post/201912/22-01.png)  
+
+
+最后为你的模型节点选择材料。
+
+![](/img/in-post/201912/22-02.png)  
+
+
+
+水纹片元着色器实现原理：通过计算与点击点的距离和方向，用 sin 函数模拟水纹效果。通过计算点击时间戳和当前时间与距离，判断是否添加水纹效果。再将多个点击点叠加起来，得到 texture 最终 uv 。 主要代码如下。
+
+```
+for(int i = 0; i < 10; i++){
+    vec2 uvDir = normalize(v_uv - center[i].xy);
+    float dis = distance(v_uv, center[i].xy);
+    float dis_time = center[i].z - cc_time.x + dis * 3.0;
+    if ( center[i].z > 0.0 && dis_time < 0.0 && dis_time > -0.1 ){
+        uv += sin_A  * uvDir * sin(sin_W * cc_time.x - dis * sin_D);
+    }
+}
+o *= texture(mainTexture, uv);
+```
+
+如何获取点击点？这里需要用到射线检测，如果对射线检测不了解的话，可以参考 [浅析射线检测 raycast 的使用 ！Cocos Creator 3D ！](https://mp.weixin.qq.com/s/ATbpJNKromv17ke1cWgDDw)
+
+通过射线检测，会返回一个距离参数，再结合射线的起点和方向，可以计算出点击点的坐标。参考代码如下。
+
+```
+this._temp_v3.set(this._ray.o);
+this._temp_v3 = this._temp_v3.add(this._ray.d.clone().multiplyScalar(item.distance));
+```
+
+这个坐标是世界坐标，还需要计算出在模型中的相对位置，数值范围是 0~1。可以通过模型的最小、最大位置，计算出这个值。并将当前的渲染时间戳一并赋值。
+
+```
+const minPosition = item.node.worldPosition.clone().add(this.model_plane.mesh.struct.minPosition);
+const maxPosition = item.node.worldPosition.clone().add(this.model_plane.mesh.struct.maxPosition);
+this._temp_v4.set((this._temp_v3.x - minPosition.x) / (maxPosition.x - minPosition.x), (this._temp_v3.z - minPosition.z) / (maxPosition.z - minPosition.z), director.root.cumulativeTime, 0)
+```
+
+如何传值给 shader 中的 uniform 变量？可以通过 material 直接设置。
+
+```
+this.model_plane.material.setProperty(`center${this._count++ % 10}`, this._temp_v4);
+```
+
+当然还有一个效率更高的方法，直接使用 pass 的接口。
+
+```
+const pass = this.model_plane.material.passes[0];
+pass.setUniform(pass.getHandle(`center${this._count++ % 10}`), this._temp_v4);
+```
+
+既然用到了 shader ，顺便讲一下存储限定字吧。attribute 只能出现在顶点着色器中，一般用来表示逐顶点信息。uniform 变量是一个全局变量，顶点着色器和片元着色器共用。varying 变量的任务是从顶点着色器向片元着色器传输数据。
+
+![](/img/in-post/201912/22-03.png)  
+
+以上为白玉无冰使用 Cocos Creator 3D 实现"玩水效果"的技术分享。不过有个问题没解决，不懂如何在 cocos3D 中实现 uniform 数组变量的传输。如果你有想法，欢迎留言分享！  
+
+---
+
+![](/img/in-post/bottom.png)  
+
+---
+
+[试玩链接](http://lamyoung.gitee.io/web/water/)   
+[完整代码](https://github.com/baiyuwubing/cocos-creator-3d-examples/tree/master/water)   
+[参考文章](https://mp.weixin.qq.com/s/-5FSWg4YuGgqwv3L9tQ2dA)   
+[参考资料](https://forum.cocos.org/t/creator3d-shader/87339)   
