@@ -1,7 +1,5 @@
+> Game dev; cocos; egret; python;
 
 
-> coder.
-
-
-Hi !
+[https://github.com/baiyuwubing](https://github.com/baiyuwubing)
 

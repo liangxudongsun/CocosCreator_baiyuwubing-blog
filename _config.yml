@@ -86,29 +86,29 @@ service-worker: true
 
 # Friends
 friends: [
-    {
-        title: "games",
-        href: "/games"
-    }
+    # {
+    #     title: "games",
+    #     href: "/games"
+    # }
 ]
 
 # Games
 games: [
-    {
-        name: "firing_balls",
-        desc: "firing_balls game!",
-        href: "/games/firing_balls"
-    },
-    {
-        name: "tween example",
-        desc: "egret tween example!",
-        href: "/games/egret_tween_example"
-    },
-    {
-        name: "basketball",
-        desc: "basketball game",
-        href: "/games/basketball"
-    }
+    # {
+    #     name: "firing_balls",
+    #     desc: "firing_balls game!",
+    #     href: "/games/firing_balls"
+    # },
+    # {
+    #     name: "tween example",
+    #     desc: "egret tween example!",
+    #     href: "/games/egret_tween_example"
+    # },
+    # {
+    #     name: "basketball",
+    #     desc: "basketball game",
+    #     href: "/games/basketball"
+    # }
 ]
 
 
