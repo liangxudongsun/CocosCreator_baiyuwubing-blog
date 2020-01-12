@@ -71,18 +71,63 @@ const vy = 1.0 - (pt.y + this.texture.height / 2 + this.offset.y) / this.texture
 
 ## 计算顶点索引
 
-(未完待续)
+首先需要知道一个概念，绘制一个形状实际上是绘制多个三角形。一个多边形可以分割成多个三角形，而顶点索引是告诉它如何去绘制这些三角形。
 
+![](/img/in-post/202001/10-07.jpeg)  
+
+如何将一个多边形切割成多个三角形？可以采用'耳切法'的方式。把多边形的一个耳朵切掉，然后再对剩下的多边形再次切割。
+
+![](/img/in-post/202001/10-08.png)  
+
+怎么样的耳朵才能切呢？这个耳朵的顶点需要满足是凸顶点且没有其他顶点在这个耳朵里。
+
+![](/img/in-post/202001/10-09.jpg)  
+
+如何判断是凸顶点呢？首先要知道向量外积的定义，表示向量的法向量。方向根据右手法则确定，就是手掌立在a、b所在平面的向量a上，掌心由a转向b的过程中，大拇指的方向就是外积的方向。
+
+![](/img/in-post/202001/10-10.png)  
+
+对于`cc.Vec2`的外积就是面积，有正负之分，也是根据右手法则确定。
+
+![](/img/in-post/202001/10-11.png)  
+
+若多边形ABCDEF顶点以逆时针顺序排序的话，`AB x BC > 0` 表示B点是凸顶点。参考代码如下。
+
+```js
+const v1 = p2.sub(p1);
+const v2 = p3.sub(p2);
+if (v1.cross(v2) >= 0) {
+    // 是凸点
+}
+```
+
+判断点D是否在三角形ABC内，可以通过外积计算点与线的位置关系判断出。
+
+![](/img/in-post/202001/10-12.png)  
+
+```js
+// 判断一个点是否在三角形内
+_testInTriangle(point, triA, triB, triC) {
+    let AB = triB.sub(triA), AC = triC.sub(triA), BC = triC.sub(triB), AD = point.sub(triA), BD = point.sub(triB);
+    return (AB.cross(AC) >= 0 ^ AB.cross(AD) < 0)  // D,C 在AB同同方向
+        && (AB.cross(AC) >= 0 ^ AC.cross(AD) >= 0) // D,B 在AC同同方向
+        && (BC.cross(AB) > 0 ^ BC.cross(BD) >= 0); // D,A 在BC同同方向
+},
+```
+
+最后把以上综合起来就可以计算出顶点索引。
 
 # 小结
 
-以上为白玉无冰使用 Cocos Creator 开发"使用 mesh 实现多边形裁剪图片"的技术分享。有想法欢迎留言！如果这篇对你有点帮助，欢迎分享给身边的朋友。  
+以上为白玉无冰使用 Cocos Creator v2.2.2 开发"使用 mesh 实现多边形裁剪图片"的技术分享。有想法欢迎留言！如果这篇对你有点帮助，欢迎分享给身边的朋友。  
 
 ---
 
 ![](/img/in-post/bottom.png)  
 
 ---
+
+[多边形分解成三角形算法](https://blog.csdn.net/zzq61974/article/details/87635763)  
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/meshTexture)   
 <!-- [参考文章](https://mp.weixin.qq.com/s/5GgL_pONl0bQPxFz4xtjmQ)    -->
