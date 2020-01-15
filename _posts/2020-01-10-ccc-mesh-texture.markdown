@@ -130,4 +130,4 @@ _testInTriangle(point, triA, triB, triC) {
 [多边形分解成三角形算法](https://blog.csdn.net/zzq61974/article/details/87635763)  
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/meshTexture)   
-<!-- [参考文章](https://mp.weixin.qq.com/s/5GgL_pONl0bQPxFz4xtjmQ)    -->
+[参考文章](https://mp.weixin.qq.com/s/r1IEcFXdy4O2Fn4IPs1m_w)   

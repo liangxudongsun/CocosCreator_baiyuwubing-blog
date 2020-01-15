@@ -1,0 +1,44 @@
+---
+layout: post
+title:  "飘扬的旗帜！shader 编程实战！Cocos Creator！"
+date:   2020-01-15 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> 快过年了，用 shader 立个 flag。 文章底部获取完整代码！
+
+# 效果预览
+
+![](/img/in-post/202001/15-result.gif)  
+
+# 使用方法
+
+1. 创建一个空节点
+2. 添加用户脚本组件 `mesh-texture-flag`
+3. 添加图片
+4. 修改对应属性
+
+![](/img/in-post/202001/15-01.png)  
+
+# 实现原理
+
+
+(施工中...)
+
+
+# 小结
+
+以上为白玉无冰使用 Cocos Creator v2.2.2 开发"飘扬的旗帜！"的技术分享。有想法欢迎留言！如果这篇对你有点帮助，欢迎分享给身边的朋友。  
+
+---
+
+![](/img/in-post/bottom.png)  
+
+---
+
+
+[完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/flag)   
+<!-- [参考文章](https://mp.weixin.qq.com/s/r1IEcFXdy4O2Fn4IPs1m_w)    -->
