@@ -25,8 +25,78 @@ tags:
 
 # 实现原理
 
+概括来说就是创建 mesh 网格模型，通过顶点着色器对顶点坐标不断的修改，达到飘动的效果。关于 mesh 的介绍，可以参考上一篇文章。
 
-(施工中...)
+![](/img/in-post/202001/15-02.jpeg)  
+
+## 确定顶点坐标
+
+为了让顶点着色器里有多个顶点可以改变位置，需要把一个形状分割成多个方形(三角形)。分割数量越大，效果越精细，但需要消耗更多的性能消耗。下图是分割成两行三列的例子。
+
+![](/img/in-post/202001/15-03.jpeg)  
+
+根据分割的行列数和节点大小，节点锚点，从左到右从上到下，算出每个顶点的位置信息。可以先算出相对左上角的位置，然后再根据锚点偏移，参考代码如下。
+
+```js
+const x = (_col - this._col * this.node.anchorX) * _width / this._col;
+const y = (_row - this._row * this.node.anchorY) * _height / this._row;
+```
+
+## 确定纹理uv坐标
+
+纹理uv坐标系在左上角，`u`轴是向右，`v`轴是向下，范围是 0-1。而我们的坐标系是根据锚点确定的，`x`轴向右，`y`轴向上。
+
+![](/img/in-post/202001/15-04.jpeg)  
+
+根据锚点求出位置坐标在左下角的占比，然后再翻转一下v就可以求出对应的uv坐标了。参考代码如下。
+
+```js
+const u = (pt.x + this.texture.width * this.node.anchorX + this.offset.x) / this.texture.width;
+const v = 1.0 - (pt.y + this.texture.height * this.node.anchorY + this.offset.y) / this.texture.height;
+```
+
+
+## 确定顶点索引
+
+从网格左上角的格子开始，依次确定三角形顶点画法。下图是分割成两行两列的索引。
+
+![](/img/in-post/202001/15-05.jpeg)  
+
+每个格子有两个三角形，参考代码如下。
+
+```js
+// 计算顶点索引 
+let ids = [];
+let getIndexByRowCol = (_row, _col) => {
+    return _row * (this._col + 1) + _col;
+}
+for (let _row = 0; _row < this._row; _row++) {
+    for (let _col = 0; _col < this._col; _col++) {
+        ids.push(getIndexByRowCol(_row, _col), getIndexByRowCol(_row, _col + 1), getIndexByRowCol(_row + 1, _col));
+        ids.push(getIndexByRowCol(_row + 1, _col), getIndexByRowCol(_row + 1, _col + 1), getIndexByRowCol(_row, _col + 1));
+    }
+};
+```
+
+## 顶点着色器编写
+
+使用的是`sin`函数对顶点进行修改。
+
+![](/img/in-post/202001/15-06.jpg)  
+
+一个波浪就是一个 `PI` , 所以要把位置坐标变化幅度映射到 ` wave *  PI` 。通过求出占宽度比就可以得到 `sin` 函数的角度了。
+
+通过内置变量 `cc_time` 可以使坐标随着时间变化。不过得在非编辑器下才能预览到，因为默认是不会赋值的。
+
+![](/img/in-post/202001/15-07.png)  
+
+参考代码如下。
+
+```glsl
+float angleSpanH = wave * 3.14159265;
+float pz = amplitude * sin(cc_time.x * speed - (a_position.x - startPos.x + a_position.y - startPos.y) / textureWidth * angleSpanH);
+vec4 position = vec4(a_position.x, a_position.y + pz, a_position.z, 1);
+```
 
 
 # 小结
