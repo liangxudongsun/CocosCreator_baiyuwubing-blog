@@ -76,4 +76,4 @@ gl_FragColor = o;
 
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/convolutions)   
-<!-- [参考文章](https://mp.weixin.qq.com/s/E5ZjzIFozvPRIIytmtiuTQ)    -->
+[参考文章](https://mp.weixin.qq.com/s/WAajs8p69X8UJFvNiYuNDA)   
