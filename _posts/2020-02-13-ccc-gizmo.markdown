@@ -1,0 +1,103 @@
+---
+layout: post
+title:  "可用鼠标编辑的多边形裁剪！ gizmo 插件入门 ！ Cocos Creator！ "
+date:   2020-02-13 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> 在编辑器用鼠标拖动顶点编辑多边形形状！  
+
+**效果预览：**
+
+![](/img/in-post/202002/13-01.gif)  
+
+
+在[使用 mesh 实现多边形裁剪图片！](http://lamyoung.com/cocos-creator/2020/01/10/ccc-mesh-texture/)这篇文章中介绍了一种不用 `mask` 实现多边形裁剪的一种方法。
+
+![](/img/in-post/202001/10-01.png)   
+
+其中有一步编写顶点感觉不是很方便。想着要是能够像`cc.PolygonCollider`组件那样可编辑该多好！
+
+![](/img/in-post/202002/13-02.jpg)   
+
+于是通过查看引擎源码，进入编辑器开发者工具(搜索gizmo)，解压`app.asar`(解压失败)，都没找到可参考的代码！
+
+![](/img/in-post/202002/13-03.jpg)   
+
+最后，只能通过[gizmo 官方文档](https://docs.cocos.com/creator/manual/zh/extension/custom-gizmo.html)和[gizmo api 文档](https://docs.cocos.com/creator/manual/zh/extension/api/editor-framework/renderer/gizmo.html)重新写一个了。
+
+新建一个扩展包。
+
+![](/img/in-post/202002/13-04.jpg)  
+
+扩展包里的 `package.json` 中定义 `gizmos` 字段, 并注册上到 `mesh-texture-mask` 的脚本上。  
+
+```json
+"gizmos": {
+	"mesh-texture-mask": "packages://points-polygon/main.js"
+}
+```
+
+参考 [自定义 Gizmo 进阶](https://docs.cocos.com/creator/manual/zh/extension/custom-gizmo-advance.html) 中的代码，编写插件。 
+
+这个插件需要画出顶点坐标，根据组件脚本的顶点坐标画出多个小圆。需要注意的是，顶点坐标需要乘以编辑器的缩放系数。参考代码如下。  
+
+```js
+this._tool.plot = (points, position) => {
+  // 移动到节点位置
+  this._tool.move(position.x, position.y);
+  // 清除原来的点
+  circles.forEach(v => v.radius(0));
+  // 画圆点
+  points.map((v, i) => {
+    // this._view.scale 编辑器缩放系数
+    v = Editor.GizmosUtils.snapPixelWihVec2(v.mul(this._view.scale));
+    let circle = circles[i];
+    if (!circle) {
+      circles[i] = circle = this._tool.circle()
+        // 设置 fill 样式
+        .fill({ color: 'rgba(0,128,255,0.8)' })
+        // 设置点击区域，这里设置的是根据 fill 模式点击
+        .style('pointer-events', 'fill')
+        // 设置鼠标样式
+        .style('cursor', 'move')
+      // 注册点击事件
+      this.registerMoveSvg(circle, i, { cursor: 'pointer' });
+    }
+    circle.center(v.x, -v.y).radius(10 * this._view.scale);
+  })
+};
+```
+
+同样的，对于点击回调事件，也要乘以编辑器缩放系数。
+
+```js
+{
+    update: (dx, dy, event, i) => {
+        // 获取 gizmo 依附的组件
+        let target = this.target;
+        if (!start_vertex) {
+            start_vertex = target.vertexes[i].clone();
+        }
+        target.vertexes[i].x = start_vertex.x + dx / this._view.scale;
+        target.vertexes[i].y = start_vertex.y + dy / this._view.scale;
+        target.vertexes = target.vertexes;
+    }
+}
+```
+
+
+以上为白玉无冰使用 `Cocos Creator v2.2.2` 开发`"gizmo 插件入门"`的技术分享。有什么想法欢迎留言交流！如果这篇对你有点帮助，欢迎分享给身边的朋友。  
+
+---
+
+![](/img/in-post/bottom.png)  
+
+---
+
+
+[完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/meshTexture)   
+<!-- [参考文章](https://mp.weixin.qq.com/s/WAajs8p69X8UJFvNiYuNDA)    -->
