@@ -74,4 +74,4 @@ void main () {
 
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/gradient)   
-<!-- [参考文章](https://mp.weixin.qq.com/s/WAajs8p69X8UJFvNiYuNDA)    -->
+[参考文章](https://mp.weixin.qq.com/s/tN2Al3kfo4HwIBGXNjmEDA)
