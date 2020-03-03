@@ -107,4 +107,4 @@ float c_image = image;
 
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/fractal)   
-<!-- [参考文章](https://mp.weixin.qq.com/s/tN2Al3kfo4HwIBGXNjmEDA) -->
+[参考文章](https://mp.weixin.qq.com/s/OuQaI18LwX3Lw7aRcKjDOw)
