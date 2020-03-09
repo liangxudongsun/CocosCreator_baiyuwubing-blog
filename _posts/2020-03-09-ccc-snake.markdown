@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "贪吃蛇大作战！蛇移动的思考与实现！ Cocos Creator! "
-date:   2020-03-05 22:22:22 +0800
+date:   2020-03-09 22:22:22 +0800
 header-img: "img/in-post/post-bg-cocos-creator.png"
 categories: cocos-creator
 tags:
@@ -76,7 +76,15 @@ this._node_snake_body.forEach((s, i) => {
 })
 ```
 
+每次移动后，把移动节点的位置信息放在位置点信息数组的最前端，再重新计算蛇身位置就可以了。  
 
+```ts
+this.node_snake_head.x += this._snake_vector.x * SNAKE_SPEED * dt;
+this.node_snake_head.y += this._snake_vector.y * SNAKE_SPEED * dt;
+this._snake_pos.unshift(cc.v2(this.node_snake_head.x, this.node_snake_head.y));
+this.updateSnakeBodyPos();
+this._snake_pos.pop();
+```
 
 以上为白玉无冰使用 `Cocos Creator v2.2.2` 开发`"摇杆与蛇移动"`的技术分享。有什么想法欢迎留言交流！如果这篇对你有点帮助，欢迎分享给身边的朋友。  
 
