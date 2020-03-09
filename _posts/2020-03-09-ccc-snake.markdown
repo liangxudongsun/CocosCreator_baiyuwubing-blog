@@ -1,0 +1,91 @@
+---
+layout: post
+title:  "贪吃蛇大作战！蛇移动的思考与实现！ Cocos Creator! "
+date:   2020-03-05 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> 摇杆与蛇移动的结合！文章底部附完整代码！
+
+**效果预览**
+
+![](/img/in-post/202003/09-01.gif)  
+
+
+摇杆控制器的实现就不多说了，可以参考`KUOKUO`写的[ 摇杆控制器！Cocos Creator！](https://mp.weixin.qq.com/s/XbmMXUuOmSL3IvAPp-ThNQ) 我稍微修改了下，改成`typescript`版本了。  
+
+![](/img/in-post/202003/09-02.jpg)  
+
+先分析需求，蛇移动有什么特点？  
+
+蛇身每次移动的轨迹，都是蛇头移动的轨迹。  
+
+以我们小时候在诺基亚玩的贪吃蛇为例，可以看到，移动后，`每个蛇身的位置刚好是该蛇身前面一节的位置`。
+
+![](/img/in-post/202003/09-03.jpg)  
+
+所以只要移动到前一个蛇身的位置就可以了？  
+
+可惜并不是。  
+
+那么为什么会觉得好像是移动一个位置呢？  
+
+因为诺基亚上的贪吃蛇每次移动刚好是一个格子(一节蛇身的长度)。  
+
+看起来，蛇身的位置和每次移动的距离有关！  
+
+![](/img/in-post/202003/09-04.jpg)  
+
+所以，可以用一个数组记录所有身体要经过的位置点。  
+
+假设，蛇的初始状态是竖直的。  
+
+可以根据蛇的总长度，每次移动的距离，求出所有的移动位置点。  
+
+```ts
+// 蛇总长度
+const snake_length = SNAKE_CELL_SIZE * this._node_snake_body.length;
+// 每次移动的距离
+const snake_move_delta = SNAKE_SPEED * CELL_TIME;
+// 总共点数
+const snake_pos_count = Math.ceil(snake_length / snake_move_delta) + 1;
+this._snake_pos = [];
+// 初始化位置信息，按照蛇头的位置往下排
+for (let index = 0; index < snake_pos_count; index++) {
+    this._snake_pos.push(cc.v2(this.node_snake_head.x, this.node_snake_head.y - index * snake_move_delta));
+}
+```
+
+如何确定某个蛇身的位置？根据索引和移动距离以及身体的大小关系可以求出。  
+
+![](/img/in-post/202003/09-05.jpg)  
+
+
+```ts
+// 每次移动的距离
+const snake_move_delta = SNAKE_SPEED * CELL_TIME;
+this._node_snake_body.forEach((s, i) => {
+    // 计算当前身体在位置中的索引
+    const pos_index = Math.floor((i + 1) * SNAKE_CELL_SIZE / snake_move_delta);
+    const pos = this._snake_pos[pos_index];
+    s.x = pos.x;
+    s.y = pos.y;
+})
+```
+
+
+
+以上为白玉无冰使用 `Cocos Creator v2.2.2` 开发`"摇杆与蛇移动"`的技术分享。有什么想法欢迎留言交流！如果这篇对你有点帮助，欢迎分享给身边的朋友。  
+
+
+---
+
+![](/img/in-post/bottom.png)  
+
+---
+
+[完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/snake)   
+<!-- [参考文章](https://mp.weixin.qq.com/s/hgybmgTHlga0KgHfz1vIfg) -->

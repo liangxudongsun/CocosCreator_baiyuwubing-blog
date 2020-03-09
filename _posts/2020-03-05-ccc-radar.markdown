@@ -86,7 +86,7 @@ this.graphics.fill();
 ```
 
 以上为白玉无冰使用 `Cocos Creator v2.2.2` 开发`"雷达图"`的技术分享。有什么想法欢迎留言交流！如果这篇对你有点帮助，欢迎分享给身边的朋友。  
-
+<!--  -->
 
 ---
 
@@ -96,4 +96,4 @@ this.graphics.fill();
 
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/radar)   
-<!-- [参考文章](https://mp.weixin.qq.com/s/OuQaI18LwX3Lw7aRcKjDOw) -->
+[参考文章](https://mp.weixin.qq.com/s/hgybmgTHlga0KgHfz1vIfg)
