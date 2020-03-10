@@ -96,4 +96,4 @@ this._snake_pos.pop();
 ---
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/snake)   
-<!-- [参考文章](https://mp.weixin.qq.com/s/hgybmgTHlga0KgHfz1vIfg) -->
+[参考文章](https://mp.weixin.qq.com/s/qZ7CGFRmncxvQZ0Hhs4g5g)
