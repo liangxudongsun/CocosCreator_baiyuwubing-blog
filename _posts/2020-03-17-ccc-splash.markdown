@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "物体随机飞溅运动！ Cocos Creator! "
-date:   2020-03-09 22:22:22 +0800
+date:   2020-03-17 22:22:22 +0800
 header-img: "img/in-post/post-bg-cocos-creator.png"
 categories: cocos-creator
 tags:
@@ -101,4 +101,4 @@ coin.initial_velocity.y = (random_normal_y / 4 + 0.5) * (V_Y_MAX - V_Y_MIN) + V_
 ---
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/splash)   
-<!-- [参考文章](https://mp.weixin.qq.com/s/qZ7CGFRmncxvQZ0Hhs4g5g) -->
+[参考文章](https://mp.weixin.qq.com/s/Qu9Uy55KvUX5sSLt_PTUJQ)
