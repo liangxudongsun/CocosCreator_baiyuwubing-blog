@@ -68,4 +68,4 @@ for (let count = 0; count < 100; count++) {
 ---
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/parabola)   
-<!-- [参考文章](https://mp.weixin.qq.com/s/Qu9Uy55KvUX5sSLt_PTUJQ) -->
+[参考文章](https://mp.weixin.qq.com/s/Z-7zQuvjIaBzyQRJslH7bQ)
