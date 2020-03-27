@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "欢乐水杯(happay glass)的流体实现！ Cocos Creator! "
+title:  "欢乐水杯(happy glass)的流体实现！ Cocos Creator! "
 date:   2020-03-26 22:22:22 +0800
 header-img: "img/in-post/post-bg-cocos-creator.png"
 categories: cocos-creator
@@ -20,13 +20,13 @@ tags:
 
 **实现原理**
 
-整体思路是参考论坛中的一个帖子。(链接：https://forum.cocos.org/t/happy-glass/72468 ) 
+整体思路是参考论坛中的一个[帖子](https://forum.cocos.org/t/happy-glass/72468) 
 
-> 这款游戏中水的粘连效果在Construct3中利用图层很容易实现，就是每个水滴都是挂了两个圆形图片素材，其中一个是水滴本来的蓝色，另一个是其他颜色且素材边缘半是透明的。当几个水滴靠近时让半透明素材边缘相互重叠，这时原本半透明的边缘透明度变低。通过在当前图层中使用Shader，并设定Alpha阈值——小于Alpha阈值部分按全透明处理，大于Alpha阈值部分则按不透明处理——这样一来，一个单独孤立的水滴，其半透明边缘全部被处理成全透明，以此表现一个孤立的水滴，而挤在一起的几个水滴，其重叠的边缘就会处理成不透明，从而形成水滴粘连的效果，代表汇集在一起的水滴，并模拟水的张力。
+> 这款游戏中水的粘连效果在Construct3中利用图层很容易实现，就是每个水滴都是挂了两个圆形图片素材，其中一个是水滴本来的蓝色，另一个是其他颜色且素材边缘是半透明的。当几个水滴靠近时让半透明素材边缘相互重叠，这时原本半透明的边缘透明度变低。通过在当前图层中使用Shader，并设定Alpha阈值——小于Alpha阈值部分按全透明处理，大于Alpha阈值部分则按不透明处理——这样一来，一个单独孤立的水滴，其半透明边缘全部被处理成全透明，以此表现一个孤立的水滴，而挤在一起的几个水滴，其重叠的边缘就会处理成不透明，从而形成水滴粘连的效果，代表汇集在一起的水滴，并模拟水的张力。
 由于Cocos Creator没有Construct3中的图层Layer概念，不能对一个图层中全部的图片素材整体使用一个Shader，因此上述方法并不适用。
 那么问题就是——有没有别的办法让Cocos Creator实现上述水的效果？
 
-上面一段是论坛原文。顺着思路走，这里准备一张特殊的图片。这个图片从内到外`alpha`(透明度)逐渐变小。  
+上面一段是论坛原文。顺着思路走，这里准备一张特殊的图片。这个图片从内到外`alpha`(不透明度)逐渐变小。  
 
 当两张图片靠近时，重叠区域的透明度会变小。小于alpha阈值部分按全透明处理，大于alpha阈值部分则按不透明处理。这样就能实现水滴连接效果了。     
 
@@ -62,7 +62,11 @@ this.sp_water_show.spriteFrame = spriteFrame;
 
 最后，给水滴添加物理组件，在场景内布置一些物理节点，随手写几行水滴生成代码，就可以看到水滴落下的效果了。  
 
-![](/img/in-post/202003/26-06.jpg)  
+![](/img/in-post/202003/26-06.jpg) 
+
+**[视频讲解](https://www.bilibili.com/video/BV167411X7NG/)**
+
+
 
 > 学会思考，拆解需求，解决问题。
 
@@ -76,4 +80,4 @@ this.sp_water_show.spriteFrame = spriteFrame;
 ---
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/water)   
-<!-- [参考文章](https://mp.weixin.qq.com/s/Qu9Uy55KvUX5sSLt_PTUJQ) -->
+[参考文章](https://mp.weixin.qq.com/s/8Kz0l46YWxcx6cLukAnt9w)

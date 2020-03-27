@@ -86,10 +86,10 @@ service-worker: true
 
 # Friends
 friends: [
-    # {
-    #     title: "games",
-    #     href: "/games"
-    # }
+    {
+        title: "IT老兵哥",
+        href: "http://www.itlaobingge.com/"
+    }
 ]
 
 # Games
