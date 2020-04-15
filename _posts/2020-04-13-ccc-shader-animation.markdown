@@ -155,6 +155,7 @@ o.b += o.a * (sin(i/count + time + PI*2.0/3.0)+1.0)/2.0;
 
 以上为白玉无冰使用 `Cocos Creator v2.3.3` 开发`"shader 动画之 loading"`的技术分享。如果对你有点帮助，欢迎分享给身边的朋友。  
 
+**[视频讲解](https://b23.tv/BV1eg4y1873u)**
  
 
 ---
@@ -164,4 +165,4 @@ o.b += o.a * (sin(i/count + time + PI*2.0/3.0)+1.0)/2.0;
 ---
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/shader_animation)   
-<!-- [参考文章](https://mp.weixin.qq.com/s/8Kz0l46YWxcx6cLukAnt9w) -->
+[参考文章](https://mp.weixin.qq.com/s/QhKzmtpwiQgOzsGPcBHSJQ)
