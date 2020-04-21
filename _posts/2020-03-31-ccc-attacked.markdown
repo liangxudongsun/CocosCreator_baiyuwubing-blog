@@ -63,7 +63,14 @@ private attackOne(render: cc.RenderComponent) {
 ![](/img/in-post/202003/31-07.jpg)   
 
 
-最后，推荐一个学习shader编程的网站: [https://thebookofshaders.com/](https://thebookofshaders.com/?lan=ch)
+最后，推荐几个学习shader编程的网站和贴子:
+
+- [https://thebookofshaders.com/](https://thebookofshaders.com)
+- [https://webglfundamentals.org](https://webglfundamentals.org)
+- [https://learnopengl-cn.github.io/](https://learnopengl-cn.github.io)
+- [https://forum.cocos.org/t/cosos-creator-2-2-x-shader/87180](https://forum.cocos.org/t/cosos-creator-2-2-x-shader/87180)
+- [https://forum.cocos.org/t/cocos-2-3-shader/90789](https://forum.cocos.org/t/cocos-2-3-shader/90789)
+- [https://forum.cocos.org/t/cocos-creator-shader-effect-2020-02-17-cocos-creator-2-3-0/87889](https://forum.cocos.org/t/cocos-creator-shader-effect-2020-02-17-cocos-creator-2-3-0/87889)
 
 > 动手实践！在实践中成长！在模仿中学习！  
 
