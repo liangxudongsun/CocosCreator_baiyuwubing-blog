@@ -84,4 +84,4 @@ private attackOne(render: cc.RenderComponent) {
 ---
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/attacked)   
-<!-- [参考文章](https://mp.weixin.qq.com/s/8Kz0l46YWxcx6cLukAnt9w) -->
+[参考文章](https://mp.weixin.qq.com/s/3_ShiqpcJDsBcgeszAMT3Q)
