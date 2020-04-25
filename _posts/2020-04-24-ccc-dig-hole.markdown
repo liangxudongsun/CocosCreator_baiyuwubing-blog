@@ -195,7 +195,7 @@ enabled_chains_points_sort.forEach(({ curPoly, count }) => {
 })
 ```
 
-顺便吐槽一下，`canvas` 中的 `fill` 可以带`evenodd` 的参数， 而 `cc.Graphics` 中不能带这个参数，可能是因为 `creator` 中的 ``webgl` 画图不方便实现吧！(试图从源码中看看有没方案，最终还是自己多次填充了，而且`webgl`中的实现会不停创建`buffer` )。   
+顺便吐槽一下，`canvas` 中的 `fill` 可以带`evenodd` 的参数， 而 `cc.Graphics` 中不能带这个参数，可能是因为 `creator` 中的 `webgl` 画图不方便实现吧！(试图从源码中看看有没方案，最终还是自己多次填充了，而且`webgl`中的实现会不停创建`buffer` )。   
 
 
 好吧，看看效果如何！
@@ -217,7 +217,7 @@ enabled_chains_points_sort.forEach(({ curPoly, count }) => {
 
 # 视频讲解
 
-<!-- **[视频讲解](https://b23.tv/BV1eg4y1873u)** -->
+**[视频讲解](https://b23.tv/BV1jz411z7w1)**
 
 ---
 
@@ -225,5 +225,5 @@ enabled_chains_points_sort.forEach(({ curPoly, count }) => {
 
 ---
 
-<!-- [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/dig_hole)    -->
-<!-- [参考文章](https://mp.weixin.qq.com/s/QhKzmtpwiQgOzsGPcBHSJQ) -->
+[完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/dig_hole)   
+[参考文章](https://mp.weixin.qq.com/s/Xcf-WPaqiIo-ef6O_IITFg)  
