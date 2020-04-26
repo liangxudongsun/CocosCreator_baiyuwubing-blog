@@ -25,7 +25,7 @@ tags:
 
 ![](/img/in-post/202004/24-02.jpg)   
 
-前往 `https://github.com/voidqk/polybooljs` 下载。并作为插件脚本。  
+前往  https://github.com/voidqk/polybooljs  下载。并作为插件脚本。  
 
 ![](/img/in-post/202004/24-03.jpg)   
 
@@ -205,13 +205,158 @@ enabled_chains_points_sort.forEach(({ curPoly, count }) => {
 
 # 优化
 
-< 未完待续 >
+## 物理引擎
+
+调低物理引擎的步长和处理的迭代次数。  
+
+```ts
+// onLoad() {
+// 开启物理步长的设置
+cc.director.getPhysicsManager().enabledAccumulator = true;
+// 物理步长，默认 FIXED_TIME_STEP 是 1/60
+cc.PhysicsManager.FIXED_TIME_STEP = 1 / 30;
+// 每次更新物理系统处理速度的迭代次数，默认为 10
+cc.PhysicsManager.VELOCITY_ITERATIONS = 8;
+// 每次更新物理系统处理位置的迭代次数，默认为 10
+cc.PhysicsManager.POSITION_ITERATIONS = 8;
+```
+
+## 多边形的顶点
+
+计算的过程中，可能会带有小数，我们可以把所有的点都优化到整数范围。  
+
+```ts
+//const DIG_OPTIMIZE_SIZE = 1;
+private _optimizePoint(point) {
+    return [Math.floor(point[0] * DIG_OPTIMIZE_SIZE) / DIG_OPTIMIZE_SIZE, Math.floor(point[1] * DIG_OPTIMIZE_SIZE) / DIG_OPTIMIZE_SIZE];
+}
+```
+
+`DIG_OPTIMIZE_SIZE`也可以改大一点，就是把图中红色的点都算作灰色的点。  
+
+![](/img/in-post/202004/24-12.jpg)   
+
+
+## 多边形的边
+
+需要剔除一些长度为0的边。
+
+去除一些共线的边，这边用到了向量的叉积，关于向量的点积和叉积介绍可以[参考之前的这一篇文章](https://mp.weixin.qq.com/s/-zh_4SEd_QMk56T0yE01hQ)。  
+
+```ts
+private _optimizeRegions() {
+    const regions = [];
+    for (let index = 0; index < this._regions.length; index++) {
+        const pos = this._regions[index];
+        const newPos = [];
+        pos.forEach((p, i) => {
+            p = this._optimizePoint(p);
+            const p_pre = this._optimizePoint(pos[(i - 1 + pos.length) % pos.length]);
+            const p_next = this._optimizePoint(pos[(i + 1) % pos.length]);
+            const vec1 = cc.v2(p[0] - p_pre[0], p[1] - p_pre[1]);
+            const vec2 = cc.v2(p_next[0] - p[0], p_next[1] - p[1]);
+            if (vec1.lengthSqr() != 0 && vec2.lengthSqr() != 0 && vec1.cross(vec2) != 0) {
+                newPos.push(p);
+            }
+        })
+
+        if (newPos.length > 2) {
+            regions.push(newPos);
+        }
+    }
+    this._regions = regions;
+}
+
+```
+
+## 触摸平滑连续
+
+当手指滑动时，如果 `touch_move` 的抓取的两个点距离比较大的话，就会出现不平滑的情况。
+
+![](/img/in-post/202004/24-13.jpg)   
+
+这里用到向量的点乘帮助我们解决这个问题，不清楚向量计算[参考之前的这一篇文章](https://mp.weixin.qq.com/s/-zh_4SEd_QMk56T0yE01hQ)。  
+
+算出两个触摸点和各自边的向量，与移动的方向向量关系，可以确定整个多边形的点。  
+
+![](/img/in-post/202004/24-14.jpg)   
+
+当两个偏移点距离太小我们就忽略。  
+
+```ts
+// private _touchMove(touch: cc.Touch) {
+const regions = [[]];
+const pos = this.graphics.node.convertToNodeSpaceAR(touch.getLocation());
+const delta = touch.getDelta();
+const count = DIG_FRAGMENT;
+if (delta.lengthSqr() < 5) {
+    for (let index = 0; index < count; index++) {
+        const r = 2 * Math.PI * index / count;
+        const x = pos.x + DIG_RADIUS * Math.cos(r);
+        const y = pos.y + DIG_RADIUS * Math.sin(r);
+        regions[0].push(this._optimizePoint([x, y]));
+    }
+} else {
+    const startPos = pos.sub(delta);
+    for (let index = 0; index < count; index++) {
+        const r = 2 * Math.PI * index / count;
+        let vec_x = DIG_RADIUS * Math.cos(r);
+        let vec_y = DIG_RADIUS * Math.sin(r);
+        let x, y;
+        if (delta.dot(cc.v2(vec_x, vec_y)) > 0) {
+            x = pos.x + vec_x;
+            y = pos.y + vec_y;
+        } else {
+            x = startPos.x + vec_x;
+            y = startPos.y + vec_y;
+        }
+        regions[0].push(this._optimizePoint([x, y]));
+    }
+}
+```
+
+## 调用 `PolyBool` 的优化
+
+在这个库 `https://github.com/voidqk/polybooljs` 中提到了更高级的用法。
+
+![](/img/in-post/202004/24-15.jpg)   
+
+```ts
+// private _touchMove(touch: cc.Touch) {
+const seg1 = PolyBool.segments({
+    regions: this._regions,
+    inverted: false
+});
+const seg2 = PolyBool.segments({
+    regions,
+    inverted: false
+});
+const comb = PolyBool.combine(seg1, seg2);
+const result = PolyBool.polygon(PolyBool.selectDifference(comb));
+```
+
 
 # 其他
 
+## 另一种实现思路
+
+首先创建一堆刚体铺满所有泥土，在监听到触摸事件后，移除对应位置的刚体。  
+
+## 算法参考
+
+多边形算法我没有深究其实现，如果要做到更好的优化，可能需要自己去实现其中的算法，可以把上面的优化点融入到算法中。以下是一些相关算法的参考资料。  
+
+- http://www.cs.ucr.edu/~vbz/cs230papers/martinez_boolean.pdf
+- https://hal.inria.fr/inria-00517670/document
+- https://www.sciencedirect.com/science/article/abs/pii/S0965997813000379
+
+## 可能的问题
+
+在`web`端测试感觉比较流畅，未在`native`端测试，也没有在微信小游戏端做测试。
+
 # 小结
 
-> 动手实践！在实践中成长！在模仿中学习！  
+可能有其他更好的方案去实现这个功能，如果你有更好的方案，欢迎分享！欢迎加入qq交流群（`859642112`）一起讨论，群里收集了一些我认为还不错的书籍和资料。    
 
 以上为白玉无冰使用 `Cocos Creator v2.3.3` 开发`"物理挖洞！涂抹地形! "`的技术分享。如果对你有点帮助，欢迎分享给身边的朋友。  
 
