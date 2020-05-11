@@ -314,4 +314,4 @@ private _touchEnd(touch: cc.Touch) {
 ---
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/dig_hole)   
-<!-- [参考文章](https://mp.weixin.qq.com/s/Xcf-WPaqiIo-ef6O_IITFg)   -->
+[参考文章](https://mp.weixin.qq.com/s/jxKeM2Ah5UHlGTryksdr6Q)  
