@@ -297,7 +297,7 @@ private _touchMove(touch: cc.Touch) {
 private _touchEnd(touch: cc.Touch) {
     this._touchStartPos = undefined;
 }
-```
+``` 
 
 # 小结   
 
@@ -306,6 +306,128 @@ private _touchEnd(touch: cc.Touch) {
 # 视频讲解
 
 <!-- **[视频讲解](https://b23.tv/BV1jz411z7w1)** -->
+(暂无)
+
+---
+
+# 挖洞新方案遇到的坑
+
+> 专业挖坑，从未停止。与群内小伙伴讨论后，发现一些坑和可优化的点。。。
+
+## 填充纹理
+
+之前是使用 `cc.graphic` 作图的，可能有小伙伴需要填充好看的纹理。  
+
+这时，可以巧用 `cc.mask` 中的 `_graphic`。    
+
+![](/img/in-post/202005/14-01.jpg)     
+
+可以清楚的看到， `mask` 的裁剪实质上是由一个 `graphic` 作图实现的。  
+
+所以我们上面的 `graphic` 组件可以替换成 `mask` 中的 `_graphic`。在该节点添加一个 `cc.mask` 组件即可。  
+
+在代码中获取一下这个这个 `graphic`，原来的逻辑不变。  
+
+```ts
+this.graphics = this.node_dirty.getComponent(cc.Mask)['_graphics'];
+```
+
+准备一张 `256x256` 的图片(一定要是2的n次幂)，设置为 `repeat` 模式。并将这个张图片放在 `mask` 节点下，铺满界面。  
+
+![](/img/in-post/202005/14-02.jpg)     
+
+看看效果怎么样。  
+
+![](/img/in-post/202005/14-03.gif)     
+
+## 奇怪的 bug
+
+有群友(感谢`@两年`)反馈，滑动时有概率出现刚体消失。    
+
+![](/img/in-post/202005/14-04.gif)     
+
+仔细琢磨后，发现是 `poly2tri` 这个库有些限制。用 `clipper` 计算的结果还要加一层处理。  
+
+先看第一个报错。  
+
+![](/img/in-post/202005/14-05.jpg)     
+
+大概是说有自交的多边形。  
+
+![](/img/in-post/202005/14-06.jpg)     
+
+我也没办法呀，这结果是 `clipper` 算出来的。  
+
+![](/img/in-post/202005/14-07.jpg)     
+
+还好，`clipper` 官方文档翻了一阵。找到一个可以用的。   
+
+[https://sourceforge.net/p/jsclipper/wiki/documentation/](https://sourceforge.net/p/jsclipper/wiki/documentation/)
+
+![](/img/in-post/202005/14-08.jpg)     
+
+加一个参数，可以实现严格简单的多边形(但是效率更低)。  
+
+```ts
+const cpr = new ClipperLib.Clipper(ClipperLib.Clipper.ioStrictlySimple);
+```
+
+再看另一种情况下的报错。  
+
+![](/img/in-post/202005/14-09.png)     
+
+这个大概是说，出现了共线不支持。  
+
+经过我细心分析(日志大法)，发现是 `clipper` 计算的结果中的 `holes` 和 `outer` 之间有重复的点时候，就会产生错误。  
+
+![](/img/in-post/202005/14-10.jpg)     
+
+可惜这次没在文档中找到相应的方法处理。  
+
+![](/img/in-post/202005/14-11.jpg)     
+
+只好自己写一个方法，计算后再过滤一下这些重复的节点。   
+
+```ts
+private _convertClipperPathToPoly2triPoint(poly: { X: number, Y: number }[], exclude: poly2tri.Point[] = []): poly2tri.Point[] {
+    const newPos: poly2tri.Point[] = [];
+    poly.forEach((p, i) => {
+        const p_now = new poly2tri.Point(p.X, p.Y)
+        const isIn = exclude.some((e_p) => {
+            if (e_p.equals(p_now)) {
+                return true;
+            }
+        })
+        if (!isIn) {
+            newPos.push(p_now);
+            exclude.push(p_now);
+        }
+    })
+    if (newPos.length > 2)
+        return newPos;
+    else
+        return [];
+}
+```
+
+最后，发给热心群(`859642112`)友，测试后，暂时没出现这个问题了。  
+
+## 其他
+
+加了这些优化，是否会增加了计算量？是否会产生新的卡顿？
+
+每次绘制一个三角形，效率会不会更低？能否直接绘制多边形？减少绘制次数？  
+
+如果初始多边形比较大，是否可以分割成几个多边形，分区域划分计算？减少大量多边形计算。  
+
+是否可以需要把库拆解？只选取自己需要的部分？根据算法重新设计？这样就不需要转格式了。  
+
+....
+
+这些问题，就交给大家去思考了吧！挖洞挖坑，填坑，就像不停歇的球，永不停歇。
+
+
+
 
 ---
 
