@@ -61,4 +61,5 @@ tags:
 ---
 
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/dig_hole_3d)   
+[原文链接](https://mp.weixin.qq.com/s/LJCdpdiRn9vZe83pf3ysUg)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   

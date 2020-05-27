@@ -103,5 +103,5 @@ this.sp.setVertsDirty();
 
 ---
 
-<!-- [完整代码](https://github.com/baiyuwubing/cocos-creator-examples)    -->
+[原文链接](https://mp.weixin.qq.com/s/2FcixeoV-Fg-7OodILECeg)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
