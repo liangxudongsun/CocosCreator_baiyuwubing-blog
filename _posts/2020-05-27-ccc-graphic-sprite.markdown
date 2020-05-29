@@ -42,7 +42,7 @@ tags:
 
 这个 `_impl` 里有一个 `_paths` 变量，记录了所有画线路径，和对应的画线的点。  
 
-都会 `lineTo` 和 `moveTo` 往 `_paths` 塞入画线的点数据。  
+而 `lineTo` 和 `moveTo` 都会往 `_paths` 塞入画线的点数据。  
 
 对于 `circle` 和 `arc` 以及 `rect` 等接口，最终还是调用 `lineTo` 和 `moveTo` 。  
 
@@ -133,5 +133,6 @@ vertices.triangles.push(i_offset + 3);
 
 ---
 
+[原文链接](https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ)   
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/graphics_sprite)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
