@@ -10,6 +10,8 @@ tags:
 
 > `cc.Graphics` 画线也能加纹理了？文末附送完整代码。  
 
+# 初步实现  
+
 在 [初探精灵中的网格渲染模式 ！](https://mp.weixin.qq.com/s/2FcixeoV-Fg-7OodILECeg) 中简单分析了 `Sprite` 组件的渲染模式 `Mesh` 。  
 
 ![](/img/in-post/202005/18-08.jpg)   
@@ -129,10 +131,91 @@ vertices.triangles.push(i_offset + 3);
 
 ---
 
+[原文链接](https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ)   
+
+
+---
+
+# 画线纹理之连接优化  
+
+> 对转角处加一层处理，就可以更加平滑了。。。。  
+
+先看看效果。   
+
+![](/img/in-post/202006/02-01.gif)   
+
+在 [画线纹理的一种简单实现！](https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ) 中介绍了可以使用 `Sprite` 渲染模式 `Mesh` 和 `cc.Graphics` ，实现画线纹理。     
+
+不过在连接处存在缝隙。   
+
+![](/img/in-post/202005/27-07.jpg)  
+
+那么怎么处理这个缝隙呢？   
+
+只需要在连接点画一个圆，这样缝隙就能去掉了。   
+
+![](/img/in-post/202006/02-02.jpg)   
+
+那么怎画圆呢？可以把圆看成是正多边形，根据半径和圆心的关系，可以确认位置坐标。可参考 [shader 动画之 loading 特效!](https://mp.weixin.qq.com/s/QhKzmtpwiQgOzsGPcBHSJQ)这篇文章。  
+
+![](/img/in-post/202004/13-11.jpg)   
+
+半径刚好就是画线宽度的一半，某个圆上的坐标转成代码如下。   
+
+```ts
+// 角度
+const r = 2 * Math.PI * index3 / count;
+// 先算方向向量，在加上圆心坐标就是，圆上的点。
+const pos_circle = cc.v2(w / 2 * Math.cos(r), w / 2 * Math.sin(r)).addSelf(p);
+```
+
+怎么确定顶点索引呢？   
+
+其实可以按照圆心走，画一个一个三角形的就行啦。   
+
+![](/img/in-post/202006/02-03.jpg)   
+
+当然这是其中一种索引方式，转成代码如下。  
+
+```ts
+//画圆
+const count = 12;
+i_offset = vertices.x.length;
+vertices.x.push(p.x);
+vertices.y.push(p.y);
+vertices.nu.push(p.x / uv_mul);
+vertices.nv.push(p.y / uv_mul);
+for (let index3 = 0; index3 < count; index3++) {
+    const r = 2 * Math.PI * index3 / count;
+    const pos_circle = cc.v2(w / 2 * Math.cos(r), w / 2 * Math.sin(r)).addSelf(p);
+    vertices.x.push(pos_circle.x);
+    vertices.y.push(pos_circle.y);
+    vertices.nu.push(pos_circle.x / uv_mul);
+    vertices.nv.push(pos_circle.y / uv_mul);
+    if (index3 === 0) {
+        // 0 - count -1
+        vertices.triangles.push(i_offset, i_offset + 1 + index3, i_offset + count);
+    } else {
+        // 0 - index3 - (index3-1)
+        vertices.triangles.push(i_offset, i_offset + 1 + index3, i_offset + index3);
+    }
+}
+```
+
+以上只是实现简单画线纹理的效果，如果要实现绳子这种效果，那就需要重新计算纹理坐标，和位置/方向/长度等有关系。    
+
+![](/img/in-post/202006/02-04.gif)   
+
+这个暂时还没想好，留给大家讨论吧哈哈～   
+
+以上为白玉无冰使用 `Cocos Creator v2.3.3` 关于 `"画线纹理之连接优化！"` 的技术分享。如果对你有点帮助，欢迎分享给身边的朋友。   
+
+
+---
+
 ![](/img/in-post/bottom.png)  
 
 ---
 
-[原文链接](https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ)   
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/graphics_sprite)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
