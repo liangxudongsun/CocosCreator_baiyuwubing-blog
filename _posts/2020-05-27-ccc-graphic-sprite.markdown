@@ -156,7 +156,7 @@ vertices.triangles.push(i_offset + 3);
 
 ![](/img/in-post/202006/02-02.jpg)   
 
-那么怎画圆呢？可以把圆看成是正多边形，根据半径和圆心的关系，可以确认位置坐标。可参考 [shader 动画之 loading 特效!](https://mp.weixin.qq.com/s/QhKzmtpwiQgOzsGPcBHSJQ)这篇文章。  
+那么怎么画圆呢？可以把圆看成是正多边形，根据半径和圆心的关系，可以确认位置坐标。可参考 [shader 动画之 loading 特效!](https://mp.weixin.qq.com/s/QhKzmtpwiQgOzsGPcBHSJQ)这篇文章。  
 
 ![](/img/in-post/202004/13-11.jpg)   
 
@@ -171,7 +171,7 @@ const pos_circle = cc.v2(w / 2 * Math.cos(r), w / 2 * Math.sin(r)).addSelf(p);
 
 怎么确定顶点索引呢？   
 
-其实可以按照圆心走，画一个一个三角形的就行啦。   
+其实可以按照圆心走，画一个个三角形就行啦。   
 
 ![](/img/in-post/202006/02-03.jpg)   
 
