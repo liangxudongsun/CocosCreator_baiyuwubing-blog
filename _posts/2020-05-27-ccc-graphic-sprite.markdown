@@ -217,5 +217,7 @@ for (let index3 = 0; index3 < count; index3++) {
 
 ---
 
+[原文链接1](https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ)   
+[原文链接2](https://mp.weixin.qq.com/s/xniwz-a_FI0snWqqPd2NOg)   
 [完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/graphics_sprite)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
