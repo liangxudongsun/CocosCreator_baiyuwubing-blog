@@ -81,5 +81,6 @@ onDisable() {
 
 ---
 
+[原文链接](https://mp.weixin.qq.com/s/8pMNeD78fBvF480xiGJCVQ)   
 [完整代码(见readme)](https://github.com/baiyuwubing/cocos-creator-examples)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
