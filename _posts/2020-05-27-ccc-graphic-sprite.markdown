@@ -210,6 +210,136 @@ for (let index3 = 0; index3 < count; index3++) {
 
 以上为白玉无冰使用 `Cocos Creator v2.3.3` 关于 `"画线纹理之连接优化！"` 的技术分享。如果对你有点帮助，欢迎分享给身边的朋友。   
 
+---
+
+# 画线纹理之绳子
+
+> 为绳子任意方向的拖动添加纹理～   
+
+## 效果预览 
+
+![](/img/in-post/202006/09-01.gif)   
+
+
+## 前置教程
+
+这次的纹理是使用 `Sprite` 组件的渲染模式 `Mesh` ，前文 [初探精灵中的网格渲染模式 ！](https://mp.weixin.qq.com/s/2FcixeoV-Fg-7OodILECeg) 介绍了这个用法。   
+
+![](/img/in-post/202006/09-02.jpg)   
+ 
+绘制的数据要用到利用 `_poins` 来画长方形，前文 [画线纹理之简单实现](https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ) 中有介绍。      
+
+![](/img/in-post/202006/09-03.jpg)   
+
+在连接处画个圆达到平衡效果，前文 [画线纹理之连接优化](https://mp.weixin.qq.com/s/xniwz-a_FI0snWqqPd2NOg) 中有讲到处理方法。     
+
+![](/img/in-post/202006/09-04.jpg)     
+
+回顾一下这三篇文章有助于本文的理解哦～   
+
+## 实现原理
+
+前几篇已经实现了画线纹理，这次主要的目标是计算正确的 `uv` 坐标。  
+
+因为这个线有方向，有长度，都会影响纹理坐标的计算。  
+
+这里想到的一个思路是，**`把所有的线段拉成一条直线，并放到一个方向`**。  
+
+![](/img/in-post/202006/09-05.jpg)  
+
+为了使这个纹理能从尾部带动头部的效果，拉直后，最后一个点作为纹理的起始点。   
+
+所以遍历这个点的时候，要从尾部开始，并记录一下每节的长度。  
+
+![](/img/in-post/202006/09-06.jpg)  
+
+纹理坐标 `v` 的两个点是 `0` 和 `1` 。 纹理坐标 `u` (水平方向) 根据绳子的长度去推算。  
+
+```ts
+// 从最后一点开始计算
+for (let index2 = pathPoints.length - 1; index2 > 0; index2--) {
+	// 省略部分代码
+	vertices.x.push(p_r_t.x, p_r_b.x, p_l_t.x, p_l_b.x);
+	vertices.y.push(p_r_t.y, p_r_b.y, p_l_t.y, p_l_b.y);
+    // 计算uv
+	vertices.nu.push(offsetX.x * uv_mul, offsetX.x * uv_mul, (offsetX.x + dirLen) * uv_mul, (offsetX.x + dirLen) * uv_mul);
+	vertices.nv.push(1, 0, 1, 0);
+	// 省略部分代码
+	offsetX.addSelf(cc.v2(dirLen, 0)); // 记录已经画的长度长度
+}
+```
+
+这么倒着便利会出现一个问题，就是尾巴的纹理会被头覆盖。  
+
+![](/img/in-post/202006/09-07.jpg)  
+
+所以计算长方形的顶点索引后，要整体反转，让他从头开始画。主要代码如下。    
+
+```ts
+let trianglesCache: number[][] = [];
+for (let index2 = pathPoints.length - 1; index2 > 0; index2--) {
+    // 省略部分代码
+    triangles.push(i_offset + 0);
+    triangles.push(i_offset + 1);
+    triangles.push(i_offset + 2);
+    triangles.push(i_offset + 1);
+    triangles.push(i_offset + 2);
+    triangles.push(i_offset + 3);
+    trianglesCache.push(triangles);
+}	
+trianglesCache.reverse(); // 顶点索引反转
+trianglesCache.forEach(v => {
+	// 真正的顶点索引顺序
+    vertices.triangles.push(...v)
+})
+```
+
+反转后，绳子的纹理就正确了。  
+
+![](/img/in-post/202006/09-08.jpg)  
+
+对于连接处画圆(实际是多边形)，需要注意每个点都要旋转，这样才能让圆的纹理方向正确。  
+
+![](/img/in-post/202006/09-09.jpg)  
+
+参考代码如下。  
+
+```ts
+//画圆
+const dir_angle = dir.signAngle(cc.v2(-1, 0));//与x轴的负方向的夹角
+const count = 12;
+i_offset = vertices.x.length;
+// 这里是圆心
+vertices.x.push(p.x);
+vertices.y.push(p.y);
+vertices.nu.push(offsetX.x * uv_mul);
+vertices.nv.push(0.5);
+for (let index3 = 0; index3 < count; index3++) {
+    const r = 2 * Math.PI * index3 / count;
+    // 圆心到各个边的向量
+    const pos_circle = cc.v2(w / 2 * Math.cos(r), w / 2 * Math.sin(r));
+    vertices.x.push(pos_circle.add(p).x);
+    vertices.y.push(pos_circle.add(p).y);
+    // 对于圆的uv需要旋转
+    vertices.nu.push((pos_circle.rotate(dir_angle).x + offsetX.x) * uv_mul);
+    vertices.nv.push(pos_circle.rotate(dir_angle).y / w + 0.5);
+    if (index3 === 0) {
+        triangles.push(i_offset, i_offset + 1 + index3, i_offset + count);
+    } else {
+        triangles.push(i_offset, i_offset + 1 + index3, i_offset + index3);
+    }
+}
+```
+
+最后，给大家画个星吧～  
+
+![](/img/in-post/202006/09-10.gif)   
+
+## 小结
+
+这个绳子纹理的整个思路就是把所有弯的线，都转化成直的后，再计算纹理坐标。    
+
+以上为白玉无冰使用 `Cocos Creator v2.3.3` 关于 `"画线纹理之绳子！"` 的技术分享。如果对你有点帮助，欢迎分享给身边的朋友。   
 
 ---
 
@@ -219,5 +349,5 @@ for (let index3 = 0; index3 < count; index3++) {
 
 [原文链接1](https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ)   
 [原文链接2](https://mp.weixin.qq.com/s/xniwz-a_FI0snWqqPd2NOg)   
-[完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/graphics_sprite)   
+[完整代码（详细见readme）](https://github.com/baiyuwubing/cocos-creator-examples)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
