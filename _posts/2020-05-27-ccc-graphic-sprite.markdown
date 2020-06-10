@@ -227,7 +227,7 @@ for (let index3 = 0; index3 < count; index3++) {
 
 ![](/img/in-post/202006/09-02.jpg)   
  
-绘制的数据要用到利用 `_poins` 来画长方形，前文 [画线纹理之简单实现](https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ) 中有介绍。      
+绘制的数据要用到 `_poins` 来画长方形，前文 [画线纹理之简单实现](https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ) 中有介绍。      
 
 ![](/img/in-post/202006/09-03.jpg)   
 
@@ -269,7 +269,7 @@ for (let index2 = pathPoints.length - 1; index2 > 0; index2--) {
 }
 ```
 
-这么倒着便利会出现一个问题，就是尾巴的纹理会被头覆盖。  
+这么倒着遍历会出现一个问题，就是尾巴的纹理会被头覆盖。  
 
 ![](/img/in-post/202006/09-07.jpg)  
 
@@ -337,6 +337,8 @@ for (let index3 = 0; index3 < count; index3++) {
 
 ## 小结
 
+> 把弯的掰直！  
+
 这个绳子纹理的整个思路就是把所有弯的线，都转化成直的后，再计算纹理坐标。    
 
 以上为白玉无冰使用 `Cocos Creator v2.3.3` 关于 `"画线纹理之绳子！"` 的技术分享。如果对你有点帮助，欢迎分享给身边的朋友。   
@@ -347,7 +349,8 @@ for (let index3 = 0; index3 < count; index3++) {
 
 ---
 
-[原文链接1](https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ)   
-[原文链接2](https://mp.weixin.qq.com/s/xniwz-a_FI0snWqqPd2NOg)   
+[画线纹理1](https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ)   
+[画线纹理2](https://mp.weixin.qq.com/s/xniwz-a_FI0snWqqPd2NOg)   
+[画线纹理3](https://mp.weixin.qq.com/s/QvJ2DHFhUxO3doNviCqBIg)   
 [完整代码（详细见readme）](https://github.com/baiyuwubing/cocos-creator-examples)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   

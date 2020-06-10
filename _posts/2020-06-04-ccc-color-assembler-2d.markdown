@@ -18,7 +18,7 @@ tags:
 
 如何使用？
 
-在 `cc.Spirte` 或 `cc.Label` 添加脚本 `ColorAssembler2D` 。  
+在 `cc.Sprite` 或 `cc.Label` 添加脚本 `ColorAssembler2D` 。  
 
 调整颜色 `colors` 参数即可。  
 
