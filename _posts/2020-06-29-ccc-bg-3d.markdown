@@ -1,0 +1,58 @@
+---
+layout: post
+title:  "2D实现背景图3D滚动效果(透视) ！Cocos Creator ! "
+date:   2020-06-29 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> 战斗地面效果！在 2D 中实现有纵深感(透视)的卷动效果。 
+
+# 效果
+
+![](/img/in-post/202006/29-01.gif)   
+
+# 回顾
+
+这次的纹理管理仍然是使用 `Sprite` 组件的渲染模式 `Mesh` ，需要的可以参考 [初探精灵中的网格渲染模式 ！](https://mp.weixin.qq.com/s/2FcixeoV-Fg-7OodILECeg) 。
+
+![](/img/in-post/202006/09-02.jpg)   
+
+# 原理
+
+为了达到这种3D效果，就要让近地处移动的快，远地处移动的慢。   
+
+准备一张梯形的图片，让下面的图形快速移动，上面的图形慢速移动，就能透视的感觉了。  
+
+![](/img/in-post/202006/29-02.jpg)   
+
+
+
+
+
+> 参考书籍 《游戏开发的数学和物理》
+
+# 更多精彩
+
+[█    shader顶点动画之旗子水纹    █](https://mp.weixin.qq.com/s/Ubv-wbA8cOPR58GM50bXrA)   [█    物理挖洞(整理+分块)    █](https://mp.weixin.qq.com/s/5JbIX7kHyZoGvJjGrXaZug)   [█    渐变色的实现    █](https://mp.weixin.qq.com/s/8pMNeD78fBvF480xiGJCVQ)   [█    画线纹理之绳子    █](https://mp.weixin.qq.com/s/QvJ2DHFhUxO3doNviCqBIg)   [█    精灵之网格模式    █](https://mp.weixin.qq.com/s/2FcixeoV-Fg-7OodILECeg)   [█    shader动画 之loading    █](https://mp.weixin.qq.com/s/QhKzmtpwiQgOzsGPcBHSJQ)   [█    js的三位一体    █](https://mp.weixin.qq.com/s/6wq5ekTtyF_LO_oFBb1vRA)   [█    shader 之攻击闪白    █](https://mp.weixin.qq.com/s/3_ShiqpcJDsBcgeszAMT3Q)  [█    物理流体(欢乐水杯)    █](https://mp.weixin.qq.com/s/8Kz0l46YWxcx6cLukAnt9w)   [█    瞄准线之抛物线    █](https://mp.weixin.qq.com/s/Z-7zQuvjIaBzyQRJslH7bQ)   [█    随机(正态分布)飞溅运动    █](https://mp.weixin.qq.com/s/Qu9Uy55KvUX5sSLt_PTUJQ)   [█    贪吃蛇之平滑移动    █](https://mp.weixin.qq.com/s/qZ7CGFRmncxvQZ0Hhs4g5g)   [█    雷达图的实现  █](https://mp.weixin.qq.com/s/hgybmgTHlga0KgHfz1vIfg)  [█    分形着色器(数学之美)    █](https://mp.weixin.qq.com/s/OuQaI18LwX3Lw7aRcKjDOw)  [█    shader 之渐变过渡    █](https://mp.weixin.qq.com/s/tN2Al3kfo4HwIBGXNjmEDA)   [█    初探 gizmo 使用    █](https://mp.weixin.qq.com/s/YjH9PAWvtgPiDGxp9y7big)   [█    shader 之卷积滤镜    █](https://mp.weixin.qq.com/s/WAajs8p69X8UJFvNiYuNDA)   [█    旗帜效果(meshRenderer)    █](https://mp.weixin.qq.com/s/E5ZjzIFozvPRIIytmtiuTQ)   [█    多边形裁剪(meshRenderer)    █](https://mp.weixin.qq.com/s/r1IEcFXdy4O2Fn4IPs1m_w)   [█    高抛平抛发射    █](https://mp.weixin.qq.com/s/5GgL_pONl0bQPxFz4xtjmQ)   [█    水纹效果(片元着色器)    █](https://mp.weixin.qq.com/s/-5FSWg4YuGgqwv3L9tQ2dA)   [█    2019年原创(黑历史)    █](https://mp.weixin.qq.com/s/-5FSWg4YuGgqwv3L9tQ2dA)   [█    原创文章导航    █](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)  
+
+# 小结  
+  
+> 梯形！卷动！透视！   
+
+以上为白玉无冰使用 `Cocos Creator v2.3.3` 实现 `" 用2D实现背景图3D滚动效果"` 的技术分享。如果对你有点帮助，欢迎分享给身边的朋友。  
+
+> 每人每天能够专注地、富有成效地工作的时间是有上限的。你的时间只有这么多，要怎么利用你自己说了算。  
+
+
+---
+
+![](/img/in-post/bottom.png)  
+
+---
+
+[原文链接](https://mp.weixin.qq.com/s/Ubv-wbA8cOPR58GM50bXrA)   
+[完整代码(见readme)](https://github.com/baiyuwubing/cocos-creator-examples)   
+[原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
