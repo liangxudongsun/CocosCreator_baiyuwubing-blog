@@ -87,6 +87,6 @@ nu[2] = nu[3] + 0.3;
 
 ---
 
-<!-- [原文链接](https://mp.weixin.qq.com/s/Ubv-wbA8cOPR58GM50bXrA)    -->
+[原文链接](https://mp.weixin.qq.com/s/fJxE-Z0BEiQgAhFoJeHjlw)   
 [完整代码(见readme)](https://github.com/baiyuwubing/cocos-creator-examples)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
