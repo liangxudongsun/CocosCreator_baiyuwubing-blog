@@ -44,7 +44,7 @@ const { retrieve, contacts } = this._quadCollision.check(this._all_collider, thi
 
 ![](/img/in-post/202007/05-02.gif)   
 
-检测的时候，就是根据待测试对象的位置，去找属于哪个块，再把这个块中的物体告诉你。如下图绿色中的绿色物体。  
+检测的时候，就是根据待测试对象的位置，去找属于哪个块，再把这个块中的物体告诉你。如下图的绿色物体。  
 
 ![](/img/in-post/202007/05-03.gif)   
 
@@ -169,6 +169,6 @@ check(colliders: cc.Collider[], testCollider: cc.Collider) {
 
 ---
 
-<!-- [原文链接](https://mp.weixin.qq.com/s/fJxE-Z0BEiQgAhFoJeHjlw)    -->
+[原文链接](https://mp.weixin.qq.com/s/gkvOd11kbZYcKXkBc7V8kQ)   
 [完整代码(见readme)](https://github.com/baiyuwubing/cocos-creator-examples)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
