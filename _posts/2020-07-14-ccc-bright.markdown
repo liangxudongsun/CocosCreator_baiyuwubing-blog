@@ -217,6 +217,6 @@ this.setVertsDirty();
 
 ---
 
-<!-- [原文链接](https://mp.weixin.qq.com/s/gkvOd11kbZYcKXkBc7V8kQ)    -->
+[原文链接](https://mp.weixin.qq.com/s/bKjJS3KX2rEI0F7_4QPJEw)   
 [完整代码(见readme)](https://github.com/baiyuwubing/cocos-creator-examples)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
