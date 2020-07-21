@@ -108,6 +108,6 @@ fix_update(dt: number) {
 
 ---
 
-<!-- [原文链接](https://mp.weixin.qq.com/s/bKjJS3KX2rEI0F7_4QPJEw)    -->
+[原文链接](https://mp.weixin.qq.com/s/Cs2woHVVBT1zUHOoaq_VgA)   
 [完整代码(见readme)](https://github.com/baiyuwubing/cocos-creator-3d-examples)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
