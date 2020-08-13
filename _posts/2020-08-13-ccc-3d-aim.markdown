@@ -1,0 +1,94 @@
+---
+layout: post
+title:  "瞄准器！3D入门实战！拇指射箭！Cocos Creator 3D ！"
+date:   2020-08-13 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> 瞄哪打哪！超简单的射线检测！
+
+# 效果预览
+
+![](/img/in-post/202008/13-01.gif)  
+
+# 原理
+
+在 `Cocos Creator 3D` 刚出来时， 写了一个简单的[拇指射箭](https://mp.weixin.qq.com/s/ISsxM411netkEWLKi4v7XA)  
+
+不过，当时的瞄准发射计算是以某一个系数来控制的。  
+
+这感觉不太对。  
+
+![](/img/in-post/202008/13-02.jpg)  
+
+还是用一个射线检测去处理这个瞄准结果吧。  
+
+![](/img/in-post/202008/13-03.jpg)  
+
+首先，通过摄像机，把瞄准器的位置转到屏幕坐标。  
+
+```ts
+const screenPoint = this.camera_main.worldToScreen(this.NodePos_bows.node.worldPosition);
+```
+
+然后，在通过摄像机做出一条射线。  
+
+```ts
+const outRay = this.camera_main.screenPointToRay(screenPoint.x, screenPoint.y);
+```
+
+最后通过射线计算出终点位置。  
+
+![](/img/in-post/202008/13-04.jpg)  
+
+这边用分轴思想。
+
+因为`z`轴坐标是确定的，可以先计算出`z`轴的方向长度比例。  
+
+
+```ts
+const targetZ = this.NodePos_target.z;
+const dir_t = (targetZ - outRay.o.z) / outRay.d.z;
+```
+
+再根据这个比例，计算出`x`和`y`坐标就可以啦。  
+
+```ts
+const targetX = outRay.o.x + outRay.d.x * dir_t;
+const targetY = outRay.o.y + outRay.d.y * dir_t;
+```
+
+小伙伴们学会了么？   
+
+# 小结  
+  
+> 坐标转换！摄像机！射线！    
+
+以上为白玉无冰使用 `Cocos Creator 3D v1.1.2` 实现 `"3D瞄准器"` 的技术分享。欢迎分享给身边的朋友！    
+
+> 知识不过是潜在的力量，只有将它组织成明确的行动计划，并指引它朝着某个明确目的发挥作用的时候，知识才是力量。
+
+![](/img/in-post/202008/13-05.jpg)  
+
+
+# 更多
+[![gizmo与多边形裁剪](/img/in-post/title/20200804.jpg)](https://mp.weixin.qq.com/s/EkMP_UcFcWTlSn_4Ml8zsA)   
+[![3D摇杆](/img/in-post/title/20200717.jpg)](https://mp.weixin.qq.com/s/Cs2woHVVBT1zUHOoaq_VgA)   
+[![两种方法实现亮度/饱和度/对比度的调整](/img/in-post/title/20200714.jpg)](https://mp.weixin.qq.com/s/bKjJS3KX2rEI0F7_4QPJEw)   
+[![Assembler 源码解读及使用](/img/in-post/title/20200710.png)](https://mp.weixin.qq.com/s/YaPHcTN1lkgo5eiYoG3p9A)   
+[![物理挖洞系列](/img/in-post/title/20200616.jpg)](https://mp.weixin.qq.com/s/5JbIX7kHyZoGvJjGrXaZug)   
+[█    原创文章导航    █](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)  
+
+
+---
+
+![](/img/in-post/bottom.png)  
+
+---
+
+<!-- [原文链接](https://mp.weixin.qq.com/s/EkMP_UcFcWTlSn_4Ml8zsA)    -->
+[完整代码(见readme)](https://github.com/baiyuwubing/cocos-creator-3d-examples)   
+[原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
