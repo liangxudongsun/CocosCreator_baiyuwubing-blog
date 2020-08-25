@@ -104,7 +104,7 @@ const v = this._lerp(uv_b, uv_t, (pt.y + texture.height / 2) / texture.height);
 
 
 # 更多
-[![3D瞄准器](/img/in-post/title/20200813.jpg)](https://mp.weixin.qq.com/s/3xB7Ab_nR76gRzUkFjAKqwA)   
+[![3D瞄准器](/img/in-post/title/20200813.jpg)](https://mp.weixin.qq.com/s/3xB7Ab_nR76gRzUkFjAKqw)   
 [![gizmo与多边形裁剪](/img/in-post/title/20200804.jpg)](https://mp.weixin.qq.com/s/EkMP_UcFcWTlSn_4Ml8zsA)   
 [![3D摇杆](/img/in-post/title/20200717.jpg)](https://mp.weixin.qq.com/s/Cs2woHVVBT1zUHOoaq_VgA)   
 [█    原创文章导航    █](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)  
@@ -116,6 +116,6 @@ const v = this._lerp(uv_b, uv_t, (pt.y + texture.height / 2) / texture.height);
 
 ---
 
-[原文链接](https://mp.weixin.qq.com/s/3xB7Ab_nR76gRzUkFjAKqwA)   
+[原文链接](https://mp.weixin.qq.com/s/T-xkgkLonYqA_4yqPIYLSg)   
 [完整代码(见readme)](https://github.com/baiyuwubing/cocos-creator-examples)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
