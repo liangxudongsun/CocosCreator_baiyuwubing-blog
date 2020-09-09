@@ -1,0 +1,174 @@
+---
+layout: post
+title:  "初探雾效果！shader 源码分析与讲解！ Cocos Creator 3D Shader Fog !"
+date:   2020-09-09 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> 随便讲讲雾的原理以及旧版本的使用雾的方法。     
+
+# 效果
+
+![](/img/in-post/202009/09-01.jpg)  
+
+
+# 原理
+
+雾效(`fog`)是游戏中常用的一种效果，根据远近产生不同的深度的雾效果。  
+
+这个效果涉及两个关键字。
+- 距离
+- 颜色
+
+在着色器中，雾效的`距离`，一般转成换计算雾效因素(`factor_fog`)，这个数字范围是`0-1`。  
+- `1` 表示完全不受雾影响
+- `0` 表示完全被雾笼罩
+
+接着再根据这个雾效因素去计算`颜色`，混合当前颜色`color`和雾`factor_fog`的颜色即可。  
+ 
+```glsl
+mix(cc_fogColor.rgb, color.rgb, factor_fog)
+```
+![](/img/in-post/202009/09-02.jpg)  
+
+
+接下来就是如何去计算这个雾效因素了。
+
+雾效因素一般是通过由摄像机位置(`cc_cameraPos`)和当前点位置(世界坐标，由世界空间矩阵和模型坐标计算的`wPos`)的距离去计算的。  
+
+```GLSL
+float cam_dis = distance(cc_cameraPos, wPos);
+```
+
+不同的雾效果，采用不同的方式去计算雾效因素。  
+
+## 线性雾
+
+线性一般会有两个参数去计算。雾开始的地方`fogStart`和雾最远的地方`fogEnd`。
+- 当距离小于雾开始的地方，表示没有雾，即雾效因素为`1`
+- 当距离大于雾最远的地方，完全被雾给覆盖了，即雾效因素为`0`
+
+![](/img/in-post/202009/09-03.png)  
+
+```glsl
+factor_fog = clamp((fogEnd - cam_dis) / (fogEnd - fogStart), 0., 1.);
+```
+![](/img/in-post/202009/09-04.jpg)  
+
+当然也可以改造一下，在`0-1`之间平滑一些。
+
+```glsl
+factor_fog = 1.0 - smoothstep(fogStart, fogEnd, fogDistance);
+```
+
+![](/img/in-post/202009/09-05.png)  
+
+
+## 指数雾
+
+指数雾就是用指数函数根据距离计算雾效因素。  
+
+一般会有一个雾浓度`fogDensity`去控制这个指数函数。
+
+一般指数雾：  
+
+```glsl
+factor_fog = exp(-cam_dis * fogDensity);
+```
+
+平方指数雾：  
+
+```glsl
+factor_fog = exp(-cam_dis * cam_dis * fogDensity * fogDensity);
+```
+
+![](/img/in-post/202009/09-06.png)  
+
+
+## 层级雾
+
+层级雾计算过程相对复杂，大致过程就是计算水平面的距离和高度距离以及浓度参数，具体实现过程可以参考源代码 `cc-fog.chunk`。  
+
+```gsls
+fDensity = (sqrt(1.0 + ((fDeltaD / fDeltaY) * (fDeltaD / fDeltaY)))) * fDensityIntegral;
+
+factor_fog = exp(-fDensity);
+```
+
+# 移植
+
+在 `Cocos Creator 3D v1.2` 版本之前还未提供雾效果，那么该如何移植或定制呢？
+
+把控一个重点，雾效果的关键就是计算雾效因素。
+
+因为材质默认使用的是 `builtin-standard.effect`，可以拷贝一份重新写个`build-in-fog.effect`，然后再将需要雾化的材质选择这个`effect`。  
+
+先在顶点着色器中加一个雾效因素的计算方法。  
+
+```glsl
+out float v_fogFactor;
+float computeFogFactor(float fogDistance){
+    const float start = 1000.0;
+    const float end = 3000.0;
+    const float density = 0.0002;
+    // return clamp((end-fogDistance)/(end-start), 0.0, 1.0); //雾化因子线性变化
+    return 1.0 - smoothstep(start,end,fogDistance); //雾化因子非线性变化
+    // return exp(-(density*fogDistance)); // 指数雾
+    // return exp(-density*density*fogDistance*fogDistance); // 指数雾2
+}
+```
+
+把雾效因素传给片元着色器。
+
+```glsl
+v_fogFactor = computeFogFactor(length(cc_cameraPos.xyz - pos.xyz));
+```
+
+在片元着色器中接收雾效因素。  
+
+```glsl
+in float v_fogFactor;
+```
+
+计算混合颜色。
+
+```glsl
+color.rgb = mix(fogColor, color.rgb, v_fogFactor); 
+```
+
+效果预览(示例项目可以加Q群 `859642112` 获取)：
+
+![](/img/in-post/202009/09-07.gif)  
+
+
+# 小结  
+  
+> 雾 `fog` ！ 计算雾效系数 ！混合颜色 ！`shader` ！    
+
+以上为白玉无冰讲解 `Cocos Creator 3D v1.2` 中的 `"雾效果(fog)原理解析"` 的技术分享。欢迎分享给身边的朋友！    
+
+> 天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。人之为学有难易乎？学之，则难者亦易矣；不学，则易者亦难矣。   
+
+
+
+
+# 更多
+[![噪声纹理之消融效果](/img/in-post/title/20200902.jpg)](https://mp.weixin.qq.com/s/9od3cxdinGJ4q8Zjfc4qFQ)   
+[![流体之 LiquidFun 流体纹理 shader](/img/in-post/title/20200821.jpg)](https://mp.weixin.qq.com/s/T-xkgkLonYqA_4yqPIYLSg)   
+[![3D瞄准器](/img/in-post/title/20200813.jpg)](https://mp.weixin.qq.com/s/3xB7Ab_nR76gRzUkFjAKqw)   
+
+[█    原创文章导航    █](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)  
+
+
+---
+
+![](/img/in-post/bottom.png)  
+
+---
+
+<!-- [原文链接](https://mp.weixin.qq.com/s/9od3cxdinGJ4q8Zjfc4qFQ)    -->
+[完整代码(见readme)](https://github.com/baiyuwubing/cocos-creator-examples)   
+[原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   

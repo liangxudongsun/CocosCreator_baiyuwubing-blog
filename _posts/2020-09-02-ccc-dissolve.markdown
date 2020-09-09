@@ -85,6 +85,6 @@ o.rgb = lerp(o.rgb, burnColor.rgb,  t*step(0.0001, noiseThreshold ));
 
 ---
 
-<!-- [原文链接](https://mp.weixin.qq.com/s/T-xkgkLonYqA_4yqPIYLSg)    -->
+[原文链接](https://mp.weixin.qq.com/s/9od3cxdinGJ4q8Zjfc4qFQ)   
 [完整代码(见readme)](https://github.com/baiyuwubing/cocos-creator-examples)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
