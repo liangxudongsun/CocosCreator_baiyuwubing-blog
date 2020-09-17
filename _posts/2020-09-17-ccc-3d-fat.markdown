@@ -1,0 +1,98 @@
+---
+layout: post
+title:  "膨胀肥胖效果！ shader 入门精要！ Cocos Creator 3D Shader !"
+date:   2020-09-17 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> shader 也能让你变胖？ 附完整项目！  
+
+# 效果
+
+![](/img/in-post/202009/17-01.gif)   
+
+
+# 实现
+
+模型的形状一般都是由三角形围成的，每个顶点一般都会有一个法线信息。   
+
+![](/img/in-post/202009/17-02.png)     
+
+所以我们只需要把每个顶点的位置沿着法线方向，增加一点距离就可以了。   
+
+```gsls
+position.xyz + v_normal * fatFactor
+```
+
+那么在 `CCC 3D` 中怎么融入这个效果呢？   
+
+先找到模型的材质，看看默认使用的是什么`effect` (一般都是`builtin-standard.effect`)。   
+
+![](/img/in-post/202009/17-03.png)    
+
+拷贝一份 `effect` 开始编写 (这里拷贝的是`builtin-standard.effect`)。     
+
+找到法线向量和计算顶点坐标的地方。
+
+![](/img/in-post/202009/17-04.png)  
+
+加上法线方向的位移即可。  
+
+```glsl
+return cc_matProj * (cc_matView * matWorld) * vec4(In.position.xyz + v_normal*0.05, In.position.w);
+```
+
+最后选择我们写好的 `builtin-standard-fat.effect` ，就可以看到效果啦。  
+
+![](/img/in-post/202009/17-06.gif)   
+
+当然也可以定义一个肥胖系数`fatFactor`。  
+
+```glsl
+  uniform lamyoung_com {
+    float fatFactor;
+  };
+  //In.position.xyz + v_normal * fatFactor
+```
+
+在外部控制这个肥胖系数，就达到了原理那个效果图啦。
+
+```ts
+this.modelComponent.getMaterial(0).setProperty('fatFactor', 0.1 * slider.progress);
+```
+
+![](/img/in-post/202009/17-01.gif)   
+
+
+# 小结  
+  
+> 法线向量！ 膨胀 ！`shader` ！    
+
+以上为白玉无冰使用 `Cocos Creator 3D v1.1.2` 实现 `"shader 膨胀效果(fat)"` 的技术分享。欢迎分享给身边的朋友！    
+
+> 天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。人之为学有难易乎？学之，则难者亦易矣；不学，则易者亦难矣。   
+
+
+
+
+# 更多
+
+[![3D雾](/img/in-post/title/20200909.jpg)](https://mp.weixin.qq.com/s/3xB7Ab_nR76gRzUkFjAKqw)   
+[![噪声纹理之消融效果](/img/in-post/title/20200902.jpg)](https://mp.weixin.qq.com/s/9od3cxdinGJ4q8Zjfc4qFQ)   
+[![流体之 LiquidFun 流体纹理 shader](/img/in-post/title/20200821.jpg)](https://mp.weixin.qq.com/s/T-xkgkLonYqA_4yqPIYLSg)   
+
+[█    原创文章导航    █](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)  
+
+
+---
+
+![](/img/in-post/bottom.png)  
+
+---
+
+<!-- [原文链接](https://mp.weixin.qq.com/s/9od3cxdinGJ4q8Zjfc4qFQ)    -->
+[完整代码(见readme)](https://github.com/baiyuwubing/cocos-creator-3d-examples)   
+[原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
