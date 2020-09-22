@@ -169,6 +169,6 @@ color.rgb = mix(fogColor, color.rgb, v_fogFactor);
 
 ---
 
-<!-- [原文链接](https://mp.weixin.qq.com/s/9od3cxdinGJ4q8Zjfc4qFQ)    -->
+[原文链接](https://mp.weixin.qq.com/s/6s-e-NnAX_2_G7OxwUhR2A)   
 [完整代码(见readme)](https://github.com/baiyuwubing/cocos-creator-examples)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
