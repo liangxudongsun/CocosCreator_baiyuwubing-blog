@@ -161,7 +161,7 @@ tags:
 
 ## Cocos 3D
 
-### [3D摇杆控制器一种简单实现！](https://mp.weixin.qq.com/s/Cs2woHVVBT1zUHOoaq_VgA)   
+### [3D摇杆控制器一种简单实现！](https://mp.weixin.qq.com/s/Cs2woHVVBT1zUHOoaq_Vg)   
 
 坐标转换！旋转！跳跃！不停歇！  
 
@@ -250,14 +250,14 @@ tags:
 
 ![](/img/in-post/202003/17-01.gif)  
 
-### [javascript 中的三位一体]((https://mp.weixin.qq.com/s/6wq5ekTtyF_LO_oFBb1vRA))
+### [javascript 中的三位一体](https://mp.weixin.qq.com/s/6wq5ekTtyF_LO_oFBb1vRA)
 
 介绍了 JS 中的类型转换和比较。  
 
 ![](/img/in-post/202004/08-01.jpg)   
 
 
-### [图片/文字 的渐变色实现！](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
+### [图片/文字 的渐变色实现！](https://mp.weixin.qq.com/s/8pMNeD78fBvF480xiGJCVQ)   
 
 支持 `Sprite` 和 `Label`！参数可调！
 
@@ -310,4 +310,4 @@ qq加油群 (群文件有一些📚书籍资料)
 
 ---  
 
-[原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
+[原创文章导航](https://mp.weixin.qq.com/s/8pMNeD78fBvF480xiGJCVQ)   
