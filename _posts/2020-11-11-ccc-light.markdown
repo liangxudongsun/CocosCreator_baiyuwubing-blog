@@ -1,0 +1,185 @@
+---
+layout: post
+title:  "基础光照模型！ Cocos Creator 2D 光照!"
+date:   2020-11-11 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> 在2d中实现基础光照效果！
+
+# 前言
+
+本文主要讲的是最基础的光照模型(冯氏光照模型(`Phong Lighting Model`))，是一种光照的简化模型。请务必记住以下几个英文单词，对学习研究非常有帮助。
+- 环境(`Ambient`)
+- 漫反射(`Diffuse`)
+- 镜面高光(`Specular`)
+
+希望我们能大概了解这些知识（但不限于这些）
+- 向量（加法/点乘/叉乘）
+- 着色器（顶点着色器/片元着色器）
+- ...
+
+> 计算机图形学第一定律：如果它看起是对的，那么它就是对的
+
+影响一个物体的外观颜色一般有以下几个因素：
+- 物体表面的特质，即材质属性。（这次实现忽略材质，默认统一材质）
+- 表面的方位与朝向，朝向常用单位挝向量表示。（这次在2d中默认使用朝向屏幕`(0,0,1)`作为所有法向量）
+- 照射光的各光源性质。（这次简化为只有光源位置）
+- 观察者位置。（这次使用相机的位置）
+
+![](/img/in-post/202011/11-01.gif)  
+
+
+# 实现
+
+标准光照公式可以简写成
+
+```
+光 = 环境光 + 漫反射 + 高光
+```
+
+现在逐一去实现。  
+
+## 环境光
+
+环境光(`Ambient`)是标准光照模型中最简单的一部分，可以理解为光照模型中的常数项。
+
+环境光的颜色并不会随着物体的位置，光的位置，视角的位置而改变。  
+
+```
+<环境光> = <全局环境光颜色>x<材质颜色>
+```
+
+![](/img/in-post/202011/11-02.jpg)  
+
+材质色这里采用图片的纹理颜色，环境光的主要代码如下：
+
+```glsl
+vec3 ambient = ambientLight.rgb * lightColor.rgb;
+o.rgb = amibent * o.rgb;
+```
+
+在只有环境光的情况下，对于不同的全局光的系数，物体的亮度也不一样。  
+
+![](/img/in-post/202011/11-03.jpg)  
+
+
+## 漫反射
+
+漫反射(`Diffuse`)是基础光照模型的第二剑客，它不再是个常量。
+
+漫反射的效果会随着物体与光线的夹角变化而变化。
+
+```
+<漫反射> = <入射光颜色>x<材质颜色>x<光与物体法向量的夹角>
+```
+
+![](/img/in-post/202011/11-04.jpg)  
+
+主要代码如下：
+
+```glsl
+vec3 norm = normalize(v_normal); // 法向量
+vec3 lightDir = normalize(lightPos.xyz - v_pos); // 光的方向
+
+// diffuse
+float diff = max(dot(norm, lightDir), 0.0); // 夹角
+vec3 diffuse = diff * lightColor.rgb;
+
+o.rgb = (amibent + diffuse) * o.rgb; // 环境光+漫反射光
+
+```
+
+可以看到光在不同的位置下，物体的亮度不同。  
+
+![](/img/in-post/202011/11-05.gif)  
+
+
+## 镜面高光
+
+镜面高光(`Specular`)是基础光照模型的最后一道工序，不仅受物体夹角影响，还受观察点的影响。
+
+```
+<镜面高光> = <入射光颜色>x<材质颜色>x<观察向量与入射向量和法向量的某种指数关系>
+```
+
+这里有两种模型去实现镜面高光
+- `phong` 模型（用反射向量计算）
+- `bliinn` 模型（用半向量计算）
+
+![](/img/in-post/202011/11-06.jpg)  
+
+主要核心代码如下。  
+
+```glsl
+// phong-specular
+// vec3 viewDir = normalize(viewPos - v_pos);  // 视角向量
+// vec3 reflectDir = reflect(-lightDir, norm); // 反射向量
+// float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess); // 夹角的指数关系
+// vec3 specular = spec * lightColor.rgb; // 乘入射光颜色
+
+// blint-phong
+vec3 viewDir    = normalize(viewPos - v_pos);  // 视角向量
+vec3 halfwayDir = normalize(lightDir + viewDir); // 半向量
+float spec = pow(max(dot(norm, halfwayDir), 0.0), shininess); // 夹角的指数关系
+vec3 specular = lightColor.rgb * spec; // 乘入射光颜色
+
+o.rgb = (ambient + diffuse + specular) * o.rgb; // 混合环境光 漫反射 高光反射
+```
+
+运行后的结果如下，可以看到有一个小光点，就是高光反射。
+
+![](/img/in-post/202011/11-07.gif)  
+
+
+# 小结
+
+> Cocos Creator 2d 光照！Blinn-Phong ! Ambient ! Diffuse ! Specular !
+
+基础光照模型可分为三项去考虑
+- 环境(`Ambient`) [常数，全局环境光]
+- 漫反射(`Diffuse`) [入射角与法向量]
+- 镜面高光(`Specular`) [入射角，观察点，指数]
+
+以上为白玉无冰使用 `Cocos Creator v2.4` 实现 `"基础光照 Blinn-Phong"` 的技术分享。欢迎分享给身边的朋友！    
+
+当然，这只是一种简单的光照模型，进一步探讨的话还有：
+- 法线矩阵
+- 平行光/点光/聚光
+- 基于物理的渲染(`Physically Based Rendering`)[PBR]
+- 双向反射分布函数(`Bidirectional Reflective Distribution Function`)[BRDF]
+- 光线追踪
+- ...
+
+更多的拓展见参考资料。
+
+
+# 参考
+
+- 《Fundamentals of Computer Graphics》
+- 《WebGL编程指南》
+- 《3D数学基础：图形与游戏开发》
+- 《光线跟踪算法技术》
+- 《Unity Shader入门精要》
+- [https://learnopengl.com/](https://learnopengl.com/)
+
+
+# 更多
+
+[2020 原创精选! shader | 挖洞 | 流体 | 3D | 绳子纹理 | 四叉树 | 数学 样样都有！](https://mp.weixin.qq.com/s/ZrIPUEs9mnpPqV4dN_DIGA)   
+[![四元数](/img/in-post/title/20201021.jpg)](https://mp.weixin.qq.com/s/zwF5PcR96gazP1k-IzXEPg)   
+[![3D膨胀](/img/in-post/title/20200917.jpg)](https://mp.weixin.qq.com/s/SkKimNnwqjP1VWYHu-pbdw)   
+[![3D雾](/img/in-post/title/20200909.jpg)](https://mp.weixin.qq.com/s/3xB7Ab_nR76gRzUkFjAKqw)   
+
+
+---
+
+![](/img/in-post/bottom.png)  
+
+---  
+
+[完整代码](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/2.4.x)   
+[原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "四元数与3D旋转实例！ Cocos Creator 3D Quternion !"
+title:  "四元数与3D旋转实例！ Cocos Creator 3D Quaternion !"
 date:   2020-10-21 22:22:22 +0800
 header-img: "img/in-post/post-bg-cocos-creator.png"
 categories: cocos-creator
