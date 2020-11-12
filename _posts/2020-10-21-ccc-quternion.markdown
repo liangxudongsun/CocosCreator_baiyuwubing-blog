@@ -349,6 +349,6 @@ this.node_touch_axi_role.setWorldRotation(this.__temp_quat);
 ![](/img/in-post/bottom.png)  
 
 ---  
-
+[原文链接](https://mp.weixin.qq.com/s/zwF5PcR96gazP1k-IzXEPg)
 [完整代码](https://github.com/baiyuwubing/cocos-creator-3d-examples/tree/master/1-2-x)   
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
