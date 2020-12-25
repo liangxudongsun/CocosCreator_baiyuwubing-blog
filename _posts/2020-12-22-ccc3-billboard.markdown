@@ -38,7 +38,7 @@ tags:
 
 > 此组件并未在线上实际项目实践过，小心驾驶使用！
 
-打开冰箱要几步，使用这个标志板要就要几步：
+打开冰箱要几步，使用这个标志板就要几步：
 - 在场景中新建一个节点，并为其添加蜜汁组件 `BillboardHelper`。
 - 被迫拖入特殊调制的 `lamyoung-billboard.effect` ， 拖入你想要或不想要展示的图片资源。
 - 调教 `BillboardHelper` 中的参数，找到一个你喜欢的姿势。
@@ -117,5 +117,5 @@ set tillOffset(val) {
 
 ---  
 
-<!-- [原文链接](https://mp.weixin.qq.com/s/xHYOzirlAZlbr9Ljuq7NdQ)   -->
+[原文链接](https://mp.weixin.qq.com/s/KV7fyF0kvqqOjf01ZbqbmA)  
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
