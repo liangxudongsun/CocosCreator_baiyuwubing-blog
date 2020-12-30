@@ -1,0 +1,114 @@
+---
+layout: post
+title:  "一种入侵式的日志大法 !"
+date:   2020-12-30 22:22:22 +0800
+categories: javascript
+tags:
+    - javascript
+---
+
+> @你想要的类，打印日志不在累！
+
+# 效果
+
+如何使用？
+
+在需要打印的类前加上这么一行`@logClassFunc()`。  
+
+![效果展示](/img/in-post/202012/30-01.png)    
+
+运行后，肉眼可见，执行的函数都添加了日志，格式为`[类名] [函数名] [Begin | End]`  
+
+
+# 实现
+
+为什么突然写这个东西呢？
+
+缘由是这样的，某一天，一位买了`朝岭红橙`但分不清是橘子还是橙子并觉得好吃的老板突然问我一个问题。
+
+> 有没有插件能自动log函数执行次序的？  
+
+![聊天记录1](/img/in-post/202012/30-02.jpg)    
+
+并且希望直接指定一个类就能实现日志追踪。  
+
+![聊天记录2](/img/in-post/202012/30-03.png)      
+
+当时想到类似`@ccclass`可能可以实现他这个需求， 这个被称为装饰器（`decorator`）。  
+
+> 装饰器是一种特殊类型的声明，它能够被附加到类声明，方法，访问符，属性或参数上。 装饰器使用`@expression`这种形式，`expression`求值后必须为一个函数，它会在运行时被调用，被装饰的声明信息做为参数传入。   
+
+但是该怎么写这个装饰器呢？
+
+白玉无冰是这样做的，参考 `TypeScript` 官方文档以及 `Cocos Creator` 中 `@ccclass` 的实现，组合拼装(借鉴)，哇的一下！就出来了嘛！
+
+需要的话直接拷贝下面这一段代码吧！   
+
+```ts
+export function logClassFunc() { 
+    return function (target: any) {  
+        const className = target.prototype.constructor?.name || 'No Name';
+        const propNames = Object.getOwnPropertyNames(target.prototype);
+        for (let i = 0; i < propNames.length; ++i) {
+            const prop = propNames[i];
+            if (prop !== 'constructor') {
+                const desc = Object.getOwnPropertyDescriptor(target.prototype, prop);
+                const func = desc && desc.value;
+                if (typeof func === 'function') {
+                    let oldFunc = (func as Function);
+                    target.prototype[prop] = function () {
+                        console.log(`[${className}] [${prop}] Begin`, ...arguments);
+                        oldFunc.call(target.prototype, ...arguments)
+                        console.log(`[${className}] [${prop}] End`);
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+> 注意：并未实际在项目中使用，开车需谨慎！
+
+
+更多可能交给大家了：
+1. 传参进去，控制不同的日志层级(`log`,`info`,`warn`,`error`)
+2. 传参进去，控制(不)需要打印的函数
+3. 用一个全局变量，控制整体开关
+4. 。。。  
+
+# 小结
+
+> 通过使用修饰器，可以快速扩充一个类的功能！
+
+本文中出现的英语单词回顾：
+- `decorator` - ` 美 ['dekəreɪtər] `  装饰者
+ 
+以上为白玉无冰实现 `"入侵式日志"` 的技术分享。学会了嘛？ 大家有什么日志大法欢迎留言分享讨论！      
+
+
+# 参考资料
+- [https://www.typescriptlang.org/docs/handbook/decorators.html](https://www.typescriptlang.org/docs/handbook/decorators.html)    
+- [https://github.com/tc39/proposal-decorators](https://github.com/tc39/proposal-decorators)    
+- [https://en.wikipedia.org/wiki/Decorator_pattern](https://en.wikipedia.org/wiki/Decorator_pattern)    
+- [https://developer.mozilla.org/](https://developer.mozilla.org/)    
+- [https://github.com/cocos-creator/engine](https://github.com/cocos-creator/engine)   
+
+
+# 更多
+[Cocos Creator 3.0 教程! 标志板！ Billboard !](https://mp.weixin.qq.com/s/KV7fyF0kvqqOjf01ZbqbmA)    
+[Cocos Creator 3.0 入门! 2D 素材 3D 效果!](https://mp.weixin.qq.com/s/xHYOzirlAZlbr9Ljuq7NdQ)  
+[基础光照模型！ Cocos Creator 2D 光照!](https://mp.weixin.qq.com/s/RtARzTb9KahZ70Ct5r8GRw)  
+[2020 原创精选! shader | 挖洞 | 流体 | 3D | 绳子纹理 | 四叉树 | 数学 样样都有！](https://mp.weixin.qq.com/s/ZrIPUEs9mnpPqV4dN_DIGA)     
+
+
+---
+
+> 更多精彩欢迎关注微信公众号
+
+![](/img/qrcode.jpg)  
+
+---  
+
+
+[原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
