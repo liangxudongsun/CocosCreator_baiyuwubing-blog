@@ -58,8 +58,9 @@ export function logClassFunc() {
                     let oldFunc = (func as Function);
                     target.prototype[prop] = function () {
                         console.log(`[${className}] [${prop}] Begin`, ...arguments);
-                        oldFunc.call(target.prototype, ...arguments)
+                        const ret = oldFunc.call(this, ...arguments);
                         console.log(`[${className}] [${prop}] End`);
+                        return ret;
                     }
                 }
             }
