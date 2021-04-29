@@ -1,0 +1,147 @@
+---
+layout: post
+title:  "折纸效果！ Cocos Creator 3.0 "
+date:   2021-04-29 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> 仅占用一个 drawcall !
+
+# 效果
+ 
+![折纸效果](/img/in-post/202104/29-01.gif)    
+ 
+# 实现
+
+## 整体思路
+
+思路遵循以下几步
+- 初始化一个多边形。  
+- 折叠后分割成两个多边形。  
+- 如果需要继续分割，对场上的所有多边形进行折叠，折叠出新的多边形的层级正好与原来的相反。  
+
+![整体思路](/img/in-post/202104/29-02.jpg)    
+
+所以，所有的计算和渲染都可以转换成对一个多边形的操作。  
+
+为了简化计算，我们约定初始化的多边形为凸多边形。这么做有几个好处。
+- 折叠后生成的仍是凸多变形，并且对于每个多边形只会折叠出两个
+- 渲染时，分割凸多边形为三角形特别方便，即能快速计算出顶点索引
+
+
+## 计算
+
+主要分为三块
+- 多边形分割
+- 线线交点
+- 轴对称
+
+### 分割
+
+观察触摸方向和多边形各个点的关系。  
+
+可以发现，**触摸方向** 与 **触摸方向中点指向多边形顶点** 的夹角决定了分割后的多边形的点。  
+
+![分割](/img/in-post/202104/29-03.jpg)    
+
+- 当夹角大于90度时，该顶点正好是折叠多边形的顶点。
+- 当夹角等于90度时，该顶点是两个多边形的顶点。
+- 当夹角小于90度时，该顶点是底部多边形的顶点。
+
+向量间的点积正好可以帮助我们判断夹角问题。  
+
+```ts
+const dotValue = temp_v2_vector.dot(temp_v2_vector_3)
+if (Math.abs(dotValue) === 0) {
+    // 刚好在点上      
+} else if (dotValue > 0) {
+    // 在前面  
+} else {
+    // 在后面
+}
+```
+
+
+### 交点
+
+当被分割的多边形相邻两点与触摸方向的夹角不同时（属于两个多边形的点），需要计算触摸向量的垂直线与该线段的交点。  
+
+![交点](/img/in-post/202104/29-04.jpg)    
+
+直线上的一点可以用点和向量表示。  
+
+![直线上的点](/img/in-post/202104/29-05.jpg)    
+
+把两直线的点表达式结合，再运用克莱姆法则（`Cramer's Rule`）求出交点。  
+
+![克莱姆法则](/img/in-post/202104/29-06.png)    
+
+```ts
+function linelinePoint(p1: Vec2, p1Dir: Vec2, p2: Vec2, p2Dir: Vec2) {
+    const a1 = p1Dir.x, b1 = -p2Dir.x, c1 = p2.x - p1.x
+    const a2 = p1Dir.y, b2 = -p2Dir.y, c2 = p2.y - p1.y
+    const d = a1 * b2 - a2 * b1,
+        d1 = c1 * b2 - c2 * b1,
+        d2 = a1 * c2 - c1 * a2
+    const t1 = d1 / d, t2 = d2 / d
+    return [t1, t2]
+}
+```
+
+这里计算的是比例`t`，这个`t`不仅可以用来求出顶点坐标，也可以求出相交的纹理坐标。
+
+```ts
+const posSpilt = Vec2(pos.x + dir.x * t1, pos.y + dir.y * t1)
+const uvSpilt = Vec2(uv.x + uvdir.x * t1, uv.y + uvdir.y * t1)
+```
+
+### 对称点
+
+折叠多边形的顶点正好是原多边形顶点关于触摸垂直轴对称的点。
+
+![折叠点](/img/in-post/202104/29-07.jpg)    
+
+求对称点同样可以运用向量计算。
+1. 求出该顶点与中点的向量
+2. 求出该点在触摸方向的单位向量的投影(点乘)，这正好是距离的一半
+3. 求出对称点坐标（距离乘方向向量+起始点坐标）
+
+![求对称点](/img/in-post/202104/29-08.jpg)    
+
+```ts
+Vec2.subtract(temp_v2_vector_4, temp_v2_pos, pos)
+const dotLength = temp_v2_vector_4.dot(temp_v2_vector) * 2
+temp_v2_pos_2.set((pos.x + temp_v2_vector.x * dotLength), pos.y + temp_v2_vector.y * dotLength)
+```
+
+## 渲染
+
+
+# 小结
+
+以上为白玉无冰使用 `Cocos Creator 3.0.0` 实现 `"折纸效果!"` 的技术分享。欢迎三连(点赞/在看/留言/分享)支持!      
+
+> keep hungry! keep foolish! 
+
+ 
+
+# 更多
+[竖直布局的文本](https://mp.weixin.qq.com/s/tMT9ZMFvYf9QoIdWaL8fOQ) 
+[弹性跟随相机！](https://mp.weixin.qq.com/s/NCn8Ygk_I_nRnhmbHQeZwQ)   
+[标志板！Billboard !](https://mp.weixin.qq.com/s/KV7fyF0kvqqOjf01ZbqbmA)   
+[2D 素材 3D 效果!](https://mp.weixin.qq.com/s/xHYOzirlAZlbr9Ljuq7NdQ)   
+[2020 原创精选!](https://mp.weixin.qq.com/s/ZrIPUEs9mnpPqV4dN_DIGA)   
+
+---
+
+> 更多精彩欢迎关注微信公众号
+
+![](/img/qrcode.jpg)  
+
+---  
+
+<!-- [原文链接](https://mp.weixin.qq.com/s/NCn8Ygk_I_nRnhmbHQeZwQ)     -->
+[原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
