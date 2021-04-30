@@ -119,8 +119,125 @@ temp_v2_pos_2.set((pos.x + temp_v2_vector.x * dotLength), pos.y + temp_v2_vector
 
 ## 渲染
 
+渲染一个图形一般是由三角形组成。  
+
+对于凸多边形，分割三角形就比较简单。选取其中一个顶点，和其他顶点连接，就可以把多边形分割成三角形。    
+
+![凸多边形分割](/img/in-post/202104/29-09.png)    
+
+渲染一个凸多边形采用`Assembler`的方式组装顶点数据。  
+
+分为以下几步实现：
+1. 将引擎中的`Sprite-simple`组装器拷贝出来，作为自己的组装器模板。
+2. 新建一个类继承`Sprite`，并设置它的组装器到自己的组装器
+3. 创建变量顶点数组，纹理数组。
+4. 编写组装器逻辑
+
+直接看看代码吧:D
+
+凸多边形的类。  
+
+```ts
+// 仅限凸多边形
+@ccclass('PolygonSprite')
+export class PolygonSprite extends Sprite {
+    @property({ type: [Vec2] })
+    protected _vertices: Vec2[] = [new Vec2(-100, -100), new Vec2(100, -100), new Vec2(100, 100), new Vec2(-100, 100)];
+    // 省略部分代码
+
+    @property({ type: [Vec2] })
+    protected _uvs: Vec2[] = [new Vec2(0, 0), new Vec2(1, 0), new Vec2(1, 1), new Vec2(0, 1)];
+    // 省略部分代码
+
+    protected _flushAssembler() {
+        //指向自定义的组装器
+        let assembler = polygonAssembler;
+        if (this._assembler !== assembler) {
+            this.destroyRenderData();
+            this._assembler = assembler;
+        }
+        // 省略部分代码
+    }
+}
+```
+
+接下来看组装器内修改部分。
+
+处理顶点数据
+
+```ts
+// 保存顶点数据
+updateVertexData(sprite: PolygonSprite) {
+    //中间变量
+    const renderData = sprite.renderData;
+    if (!renderData) {
+        return;
+    }
+    renderData.vertexCount = renderData.dataLength = sprite.vertices.length
+    // 三角形数量 = 顶点数 - 2
+    // 索引数量 = 三角形数量X3
+    renderData.indicesCount = (renderData.vertexCount - 2) * 3
+    renderData.vertDirty = false;
+    for (let i = 0; i < sprite.vertices.length; ++i) {
+        const xy = sprite.vertices[i];
+        renderData.data[i].x = xy.x
+        renderData.data[i].y = xy.y
+    }
+},
+```
+
+缓存UV坐标，我们定义的纹理坐标是归一化到0-1，在更新数据时再根据实际的纹理坐标(合图)进行转换。
+
+```ts
+updateUvs(sprite: PolygonSprite) {
+    const renderData = sprite.renderData!;
+    //实际uv
+    const uv = sprite.spriteFrame!.uv;
+    // 左 下 上 右 
+    const l = uv[0], b = uv[1], t = uv[7], r = uv[6]
+    for (let i = 0; i < sprite.uvs.length; ++i) {
+        const uvs = sprite.uvs[i];
+        renderData.data[i].u = l + (r - l) * uvs.x
+        renderData.data[i].v = b + (t - b) * uvs.y
+    }
+    renderData.uvDirty = false;
+},
+```
+
+填充数据修改，顶点索引就从第一个点开始连接到各个顶点的三角形。  
+
+```ts
+fillBuffers(sprite: PolygonSprite, renderer: any) {
+    //省略代码
+
+    // 填充顶点
+    for (let i = 0; i < renderData.vertexCount; ++i) {
+        const vert = renderData.data[i];
+        // 计算世界坐标
+        vBuf![vertexOffset++] = a * vert.x + c * vert.y + tx;
+        vBuf![vertexOffset++] = b * vert.x + d * vert.y + ty;
+        vBuf![vertexOffset++] = vert.z;
+        // 填充uv
+        vBuf![vertexOffset++] = vert.u;
+        vBuf![vertexOffset++] = vert.v;
+        Color.toArray(vBuf!, sprite.color, vertexOffset);
+        vertexOffset += 4;
+    }
+
+    // 填充索引
+    for (let i = 0; i < sprite.vertices.length - 2; ++i) {
+        const start = i;
+        iBuf![indicesOffset++] = vertexId;
+        iBuf![indicesOffset++] = start + 1 + vertexId;
+        iBuf![indicesOffset++] = start + 2 + vertexId;
+    }
+},
+```
+
 
 # 小结
+
+实现折叠效果可以将问题分解成处理一个多边形的问题，并用`assembler`实现合批渲染。  
 
 以上为白玉无冰使用 `Cocos Creator 3.0.0` 实现 `"折纸效果!"` 的技术分享。欢迎三连(点赞/在看/留言/分享)支持!      
 
