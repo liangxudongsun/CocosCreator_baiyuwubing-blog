@@ -26,17 +26,17 @@ info: |
 
 <img
   class="relative -bottom-0 -left-10 w-80"
-  src="http://lamyoung.gitee.io/blog/res/slidev/assembler-sprite-simple/img/folding.gif"
+  src="/img/folding.gif"
 />
 
 <img
   class="relative -top-80 -right-120  w-150"
-  src="http://lamyoung.gitee.io/blog/res/slidev/assembler-sprite-simple/img/colorful.gif"
+  src="/img/colorful.gif"
 />
 
 <img
   class="relative -top-160 -right-70 w-80"
-  src="http://lamyoung.gitee.io/blog/res/slidev/assembler-sprite-simple/img/verticalLabel.gif"
+  src="/img/verticalLabel.gif"
 />
 
 
@@ -47,7 +47,7 @@ info: |
 # Assembler 哲学三问
 by 白玉无冰  
 
-![](http://lamyoung.gitee.io/blog/res/slidev/assembler-sprite-simple/img/whowhere.jpg)
+![](/img/whowhere.jpg)
 
 
 ---
@@ -57,7 +57,7 @@ by 白玉无冰
 - 装？ 装到哪去？
 - 器？？
 
-![](http://lamyoung.gitee.io/blog/res/slidev/assembler-sprite-simple/img/who.jpg)  
+![](/img/who.jpg)  
 
 
 ---
@@ -67,12 +67,12 @@ by 白玉无冰
 
 <img
   class="relative -top-0 -left-0 w-100"
-  src="http://lamyoung.gitee.io/blog/res/slidev/assembler-sprite-simple/img/renderabale2d.jpg"
+  src="/img/renderabale2d.jpg"
 />
 
 <img
   class="relative -top-100 -right-120 w-100"
-  src="http://lamyoung.gitee.io/blog/res/slidev/assembler-sprite-simple/img/renderabale2d2.jpg"
+  src="/img/renderabale2d2.jpg"
 />
 
 
@@ -82,14 +82,14 @@ by 白玉无冰
 # 我要到哪去
 **sprite-simple** 组装的调用时机？
 
-![](http://lamyoung.gitee.io/blog/res/slidev/assembler-sprite-simple/img/sprite-simple.jpg)  
+![](/img/sprite-simple.jpg)  
  
 ---
 
 # 我要到哪去
 **MeshBuffer** 里是怎么装的？
 
-![](http://lamyoung.gitee.io/blog/res/slidev/assembler-sprite-simple/img/meshbuffer.jpg)  
+![](/img/meshbuffer.jpg)  
  
 
 ---
@@ -99,7 +99,7 @@ by 白玉无冰
 - 继承一个 **Renderabale2D** ，并指向组装器
 - 添加属性，改造组装器
 
-![](http://lamyoung.gitee.io/blog/res/slidev/assembler-sprite-simple/img/doit.gif)  
+![](/img/doit.gif)  
 
 ---
 
@@ -110,5 +110,5 @@ by 白玉无冰
 
 <img
   class="w-80"
-  src="http://lamyoung.gitee.io/blog/res/slidev/assembler-sprite-simple/img/qrcode.jpg"
+  src="/img/qrcode.jpg"
 />
