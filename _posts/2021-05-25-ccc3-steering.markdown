@@ -223,5 +223,5 @@ Cocos Store 链接: [http://store.cocos.com/app/detail/2893](http://store.cocos.
 
 ---  
 
-<!-- [原文链接](https://mp.weixin.qq.com/s/NCn8Ygk_I_nRnhmbHQeZwQ)     -->
+[原文链接](https://mp.weixin.qq.com/s/TOAfkeNBDb6NdOqRqzJhwQ)    
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
