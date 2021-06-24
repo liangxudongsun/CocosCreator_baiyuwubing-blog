@@ -19,7 +19,7 @@ tags:
 
 
 视频预览:  
-<!-- [https://www.bilibili.com/video/BV1hD4y127H2/](https://www.bilibili.com/video/BV1hD4y127H2/) -->
+[https://www.bilibili.com/video/BV12o4y1C717](https://www.bilibili.com/video/BV12o4y1C717)
 
 
 # 实现
@@ -157,5 +157,5 @@ private drawWater() {
 
 ---  
 
-<!-- [原文链接](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)     -->
+[原文链接](https://mp.weixin.qq.com/s/DXl7_rvI5fS3Fg-OmHvgmg)    
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
