@@ -1,0 +1,172 @@
+---
+layout: post
+title:  "MatCap && Cocos Creator Shader"
+date:   2021-07-16 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> 在某些层面能替代PBR的次世代渲染方案。   
+
+# 效果
+
+## 动图 
+
+![效果预览](/img/in-post/202107/16-01.gif)    
+
+## 视频
+
+[https://www.bilibili.com/video/BV1B64y147xc](https://www.bilibili.com/video/BV1B64y147xc)   
+保留
+
+# 实现
+
+实现原理是，用一张特制的纹理图(采样出来的纹理)，加上一段shader代码(法向量映射纹理)，模拟出次世代的效果(场景中无需光照)。     
+
+![原理](/img/in-post/202107/16-02.png)      
+
+
+## 代码
+
+参考 [https://github.com/nidorx/matcaps](https://github.com/nidorx/matcaps) 中的核心代码，在 `Cocos Creator 3.1.0` 中实现的`effect`代码如下。  
+
+```glsl
+CCEffect %{
+  techniques:
+  - name: opaque
+    passes:
+    - vert: unlit-vs:vert # builtin header
+      frag: unlit-fs:frag
+      properties: &props
+        mainTexture:    { value: white }
+  - name: transparent
+    passes:
+    - vert: unlit-vs:vert # builtin header
+      frag: unlit-fs:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendSrcAlpha: src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties: *props
+}%
+
+CCProgram unlit-vs %{
+  precision highp float;
+  #include <input-standard>
+  #include <cc-global>
+  #include <cc-local-batch>
+  
+  out vec2 v_uv;
+  out vec3 v_normal;
+
+  vec4 vert () {
+    StandardVertInput In;
+    CCVertInput(In);
+    vec4 position = In.position;
+
+    mat4 matWorld, matWorldIT;
+    CCGetWorldMatrixFull(matWorld, matWorldIT);
+
+    v_normal = normalize((matWorldIT * vec4(In.normal.xyz, 0.0)).xyz);
+    v_uv = a_texCoord;
+
+    return cc_matProj * (cc_matView * matWorld) * position; 
+  }
+}%
+
+CCProgram unlit-fs %{
+  precision highp float;
+  #include <output>
+  #include <cc-global>
+
+  in vec2 v_uv;
+  in vec3 v_normal;
+  uniform sampler2D mainTexture;
+
+  vec4 frag () {
+    highp vec2 muv = vec2(cc_matView * vec4(normalize(v_normal), 0))*0.5+vec2(0.5,0.5);
+    // read texture inverting Y value
+    vec4 col = texture(mainTexture, vec2(muv.x, 1.0-muv.y)); 
+    return CCFragOutput(col);
+  }
+}%
+```
+
+关于如何移植`shader`代码，可参考上一篇文章[《如何抄一个 shader 到 Cocos Creator》](https://mp.weixin.qq.com/s/X8X1pQh3-juDaKi3LWGWIA)    
+
+
+## MatCap
+
+**MatCap** (`Material Capture`) 是一个包含了光照和反射等信息的贴图，运行时使用法线方向进行采样。  
+
+![MatCap 是什么](/img/in-post/202107/16-03.png)      
+
+`MatCap` 有以下几个特点
+1. 无需光照的计算，运行效率高。  
+2. 对于同一材质，只需一个纹理球贴图，贴图通用。  
+3. 因为光照是写在贴图里的，不适合摄像机转动的要求精准光照的情况。  
+
+![同一模型，不同的贴图](/img/in-post/202107/16-04.png)      
+
+对于法向量纹理映射方法，在[https://github.com/nidorx/matcaps](https://github.com/nidorx/matcaps)中使用的是法向量的`x,y`值。(本demo也是采用这种实现方式)   
+
+> 在相机空间下的物体法线，可以不考虑Z轴。因为法线是一个单位向量，如果法线在XY方向上的投影权重很大，那么说明在Z方向的权重就很小，对应到二维的Matcap上采样的位置越靠近边缘；而如果法线在XY方向的投影权重很小，那么Z方向的权重就很大，对应到二维的Matcap上的采样位置就越靠近中心。
+
+![MatCap的 基于法向量的实现](/img/in-post/202107/16-05.png)      
+
+在[https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/](https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/)介绍了一种基于反射向量的实现。     
+
+![MatCap 基于反射向量的实现原理](/img/in-post/202107/16-06.png)      
+
+既可以逐顶点实现，也可逐像素实现，参考代码如下。  
+
+![MatCap 基于反射向量的实现glsl](/img/in-post/202107/16-07.png)      
+
+
+有几张方法可以制作 `MatCap` 贴图
+- 3d建模软件
+- 用游戏引擎渲染
+- 真实相机拍摄
+- 艺术家手绘
+
+![制作 MatCap 的方法](/img/in-post/202107/16-08.png)      
+
+
+# 小结
+
+> 完整代码工程：https://github.com/baiyuwubing/cocos-creator-examples/tree/master/awesome-shader
+
+以上为白玉无冰使用 `Cocos Creator 3.1.0` 实现 `"MatCap Shader"` 的技术分享。 
+
+## 扩展阅读
+
+[https://github.com/nidorx/matcaps](https://github.com/nidorx/matcaps)  
+[https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/](https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/)   
+[https://medium.com/playkids-tech-blog/matcap-render-art-pipeline-optimization-for-mobile-devices-4e1a520b9f1a](https://medium.com/playkids-tech-blog/matcap-render-art-pipeline-optimization-for-mobile-devices-4e1a520b9f1a)  
+[https://zhuanlan.zhihu.com/p/347947799](https://zhuanlan.zhihu.com/p/347947799)   
+[https://zhuanlan.zhihu.com/p/27339998](https://zhuanlan.zhihu.com/p/27339998)  
+
+## 更多
+[如何抄shader](https://mp.weixin.qq.com/s/X8X1pQh3-juDaKi3LWGWIA) 
+[3D折纸](https://mp.weixin.qq.com/s/iiD9IVNi0p3jdZYVCx_KBw) 
+[渐变色文字3.0](https://mp.weixin.qq.com/s/WUpppo1Db_pQTlaqpRQaTw)
+[水排序效果](https://mp.weixin.qq.com/s/DXl7_rvI5fS3Fg-OmHvgmg) 
+[转向行为AI](https://mp.weixin.qq.com/s/TOAfkeNBDb6NdOqRqzJhwQ) 
+
+
+
+---
+
+> 更多精彩欢迎关注微信公众号
+
+![](/img/qrcode.jpg)  
+
+---  
+
+<!-- [原文链接](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)     -->
+[原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
