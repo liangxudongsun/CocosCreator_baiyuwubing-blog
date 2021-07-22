@@ -1,0 +1,144 @@
+---
+layout: post
+title:  "Fake3d && Depth Map && Cocos Creator Shader"
+date:   2021-07-21 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> 让 2D 图像展示虚拟 3D 的效果。     
+
+# 效果
+
+随着鼠标移动，一张2d图片表现出3d动态的效果。  
+
+## 动图 
+
+![效果预览](/img/in-post/202107/25-01.gif)    
+
+## 视频
+
+[https://www.bilibili.com/video/BV1Xy4y1L7s6](https://www.bilibili.com/video/BV1Xy4y1L7s6)   
+点击
+
+# 实现
+
+## 原理
+
+程序是处理输入和输出的，我们要明确各个条件和结果。  
+- 输入条件
+  - 一张图片
+  - 该图片的深度纹理(越白越近，越黑越远)
+  - 鼠标移动的位置
+- 处理
+  - 片段着色器处理（根据深度纹理与鼠标位置对原图片采样偏移处理）
+- 输出
+  - 根据鼠标位置，图片出现3d动态的效果
+
+
+![原理](/img/in-post/202107/25-02.png)      
+
+
+## 代码
+
+参考 [https://github.com/akella/fake3d](https://github.com/akella/fake3d) 中的代码，在 `Cocos Creator 3.1.0` 中实现的`effect`片段着色器核心代码如下。  
+
+```glsl
+  vec2 mirrored(vec2 v) {
+    vec2 m = mod(v,2.);
+    return mix(m,2.0 - m, step(1.0 ,m));
+  }
+
+  vec4 frag () {
+    vec4 o = vec4(1, 1, 1, 1);
+    vec4 depth = CCSampleWithAlphaSeparated(depthTexture, uv0);
+    vec2 uMouse = mouseAndThreshold.xy;
+    vec2 threshold = mouseAndThreshold.zw;
+    vec2 offsetUv = vec2(depth.r*uMouse.x/threshold.x, depth.r*uMouse.y/threshold.y);
+    o *= CCSampleWithAlphaSeparated(cc_spriteTexture, mirrored(uv0+offsetUv));
+    return o;
+  }
+```
+
+关于如何移植`shader`代码，可参考之前的文章[《如何抄一个 shader 到 Cocos Creator》](https://mp.weixin.qq.com/s/X8X1pQh3-juDaKi3LWGWIA)。   
+
+
+其中 `vec2 mirrored(vec2 v)`，先用`mod`求余，再用`mix`和`step`构成一个分段函数，达到`uv坐标`镜像的结果。  
+
+
+![mirrored](/img/in-post/202107/25-03.png)      
+
+
+## 生成深度纹理图
+
+- 输入
+  - 一张图片
+- 输出
+  - 该图片的深度纹理
+
+### Photoshop
+
+白玉无冰🧊的ps技术拙劣，只能简单的抠图和填色，勉勉强强生成了深度纹理图。   
+
+![ps生成的深度纹理](/img/in-post/202107/25-04.png)      
+
+
+### 相机人像图
+
+善用搜索引擎，搜索`depth map extractor` 找到一个在线工具，通过以下操作可生成一张深度图。  
+- 用手机选择人像模式，拍照。
+- 打开[http://www.hasaranga.com/dmap/](http://www.hasaranga.com/dmap/)，传入图片，生成深度纹理图。  
+
+![人像模式生成的深度纹理](/img/in-post/202107/25-05.png)      
+
+
+猜测其中的原理是人像模式的图片含有一些深度信息，该工具提取深度信息生成深度纹理图片。  
+
+
+### 机器学习训练
+  
+这几年人工智能不是很火嘛？刚好在`github`找到这个项目，[https://github.com/intel-isl/MiDaS](https://github.com/intel-isl/MiDaS)。  
+
+这个项目已经有训练好的数据，主要的工作就是配置环境和下载对应的训练模型结果。  
+
+![机器学习生成的深度纹理](/img/in-post/202107/25-06.png)   
+
+
+### 其他方法
+
+当然还有其他方法，这里没做尝试了，有兴趣的可以去玩玩哈～   
+
+- [https://github.com/panrafal/depthy](https://github.com/panrafal/depthy)
+- [https://stereo.jpn.org/eng/stphmkr/](https://stereo.jpn.org/eng/stphmkr/)
+- ....
+
+
+the end
+
+# 小结
+
+> 完整代码工程：[https://github.com/baiyuwubing/cocos-creator-examples/tree/master/awesome-shader](https://github.com/baiyuwubing/cocos-creator-examples/tree/master/awesome-shader)
+
+以上为白玉无冰使用 `Cocos Creator 3.1.0` 实现 `"2D 图像展示虚拟 3D 效果"` 的技术分享。 
+
+ 
+
+## 更多
+[MatCap && Shader](https://mp.weixin.qq.com/s/_BkQVpEiQaqQ8VojnA0l2w)   
+[如何抄shader](https://mp.weixin.qq.com/s/X8X1pQh3-juDaKi3LWGWIA)   
+[3D折纸](https://mp.weixin.qq.com/s/iiD9IVNi0p3jdZYVCx_KBw)   
+[渐变色文字3.0](https://mp.weixin.qq.com/s/WUpppo1Db_pQTlaqpRQaTw)  
+[水排序效果](https://mp.weixin.qq.com/s/DXl7_rvI5fS3Fg-OmHvgmg)   
+
+---
+
+> 更多精彩欢迎关注微信公众号
+
+![](/img/qrcode.jpg)  
+
+---  
+
+<!-- [原文链接](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)     -->
+[原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
