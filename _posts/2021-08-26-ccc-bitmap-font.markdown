@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "写一个在线位图字体制作工具！BitmapFont!"
-date:   2021-08-09 22:22:22 +0800
+date:   2021-08-26 22:22:22 +0800
 header-img: "img/in-post/post-bg-cocos-creator.png"
 categories: cocos-creator
 tags:
@@ -106,5 +106,5 @@ tags:
 
 ---  
 
-<!-- [原文链接](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)     -->
+[原文链接](https://mp.weixin.qq.com/s/OaoeKVmDDdHddPdUmdIpsg)    
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
