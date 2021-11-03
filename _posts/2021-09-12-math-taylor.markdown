@@ -114,5 +114,5 @@ f^{(1)}(a)(x-a) +
 
 ---  
 
-<!-- [原文链接](https://mp.weixin.qq.com/s/OaoeKVmDDdHddPdUmdIpsg)     -->
+[原文链接](https://mp.weixin.qq.com/s/3XMfRo5L8_omY9SYLAo4kw)    
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
