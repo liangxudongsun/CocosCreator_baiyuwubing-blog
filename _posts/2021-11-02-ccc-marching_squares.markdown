@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  " Regenerate Points 实现解析！ Marching Squares !"
-date:   2021-08-26 22:22:22 +0800
+date:   2021-11-02 22:22:22 +0800
 header-img: "img/in-post/post-bg-cocos-creator.png"
 categories: cocos-creator
 tags:
@@ -351,5 +351,5 @@ Ly/miZPlvIAyLjTnvJbovpHlmajnmoTosIPor5XnlYzpnaLvvIzlsIbov5nmrrXku6PnoIHlpI3liLbl
 
 ---  
 
-<!-- [原文链接](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)     -->
+[原文链接](https://mp.weixin.qq.com/s/trb4dfOyHxAQoyujaSNVaQ)    
 [原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   
