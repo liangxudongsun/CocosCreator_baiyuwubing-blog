@@ -1,0 +1,210 @@
+---
+layout: post
+title:  "3D折纸效果怎么实现？"
+date:   2021-06-23 22:22:22 +0800
+header-img: "img/in-post/post-bg-cocos-creator.png"
+categories: cocos-creator
+tags:
+    - cocos-creator
+---
+
+> Cocos Creator 3.0 演示与实现。  
+
+# 效果
+
+效果预览:  
+![效果预览](/img/in-post/202106/23-01.gif)    
+
+
+视频预览(视频号[白玉无冰]):  
+[https://www.bilibili.com/video/BV11U4y157cz](https://www.bilibili.com/video/BV11U4y157cz)
+
+
+# 前言
+
+开始讲解前，先扯些其他的，如果大伙想看原理讲解，可跳过这一节，直奔原理。  
+
+首先，感谢大家的观看，感谢大家的点赞支持，感谢老板们的赞赏支持，非常感谢。     
+
+![2021年上半年打赏](/img/in-post/202106/23-02.gif)    
+
+写了这么~~多年~~的文章了，很多时候都是单向在写东西。白玉无冰更希望的是多向的交流，碰撞出更多的火花。  
+
+- 就像[3D挖洞效果](https://mp.weixin.qq.com/s/LJCdpdiRn9vZe83pf3ysUg)那样，qq群内集体讨论出一个3D挖洞效果
+- 像 `Cocos Star Meeting` 广州场那样，每个人都上台分享自己的故事
+- 亦像[水排序的实现](https://mp.weixin.qq.com/s/DXl7_rvI5fS3Fg-OmHvgmg)那样，有人在群中指出动画方案，也有人在评论讨论实现中的问题
+- 。。。
+
+![水排序的讨论](/img/in-post/202106/23-03.png)    
+
+我经常不善言表，但大家一起讨论的时候，心中会荡起一点澎湃，一点激动，一点感动。   
+
+虽然很多问题我答不上，各类平台的`sdk`，`native`等我都不熟悉，但群里时常有人能答上。  
+
+不过，还是希望大家能多思考，利用好搜索引擎，能解决部分问题。
+
+打印日志，断点调试，也能解答一些疑惑。  
+
+![鸦哥语录](/img/in-post/202106/23-04.png)    
+
+目前来说，白玉无冰对数学和渲染相关的比较感兴趣，3D相关的也在起步研究阶段，欢迎一起探讨。  
+
+数学真的很重要，以向量为例，**点乘判断前后，叉乘判断左右**。  
+
+顺便整理一些有关向量的实例，希望对大家有所帮助。  
+
+[2D折纸](https://mp.weixin.qq.com/s/1guPBbKkG6iWCcWa_uz6CQ)   
+[四元数与旋转](https://mp.weixin.qq.com/s/zwF5PcR96gazP1k-IzXEPg)      
+[使用 mesh 实现多边形裁剪图片](https://mp.weixin.qq.com/s/r1IEcFXdy4O2Fn4IPs1m_w)    
+[反复横跳的瞄准线！](https://mp.weixin.qq.com/s/-zh_4SEd_QMk56T0yE01hQ)   
+[浅析射线检测](https://mp.weixin.qq.com/s/ATbpJNKromv17ke1cWgDDw)   
+
+可能上面的文章较对应的引擎版本比较老，但重要的是思路思想，希望大家融会贯通，不限于引擎，能实现自己想要的效果。     
+
+接下来进入本篇的主题吧。  
+
+# 实现
+
+总体思路，细分化网格，旋转网格点。  
+
+接下来分以下几步走讲解。  
+1. 初始化平铺网格
+2. 射线检测确定触摸点，触摸轴
+3. 向量叉乘确定要旋转的网格点
+4. 旋转网格点
+
+
+## 平铺网格
+
+只要网格点足够细化，对网格点操作后，折痕就越光滑。  
+
+遨游引擎源码(或`d.ts`)后，找到了可以细分化平面的方法。  
+
+![平铺网格](/img/in-post/202106/23-05.png)    
+
+```ts
+// 创建网格点
+this._gemotry = primitives.plane({ width: 10, length: 10, widthSegments: 99, lengthSegments: 99 });
+// 创建mesh，并转给渲染器
+this.meshRenderer.mesh = utils.createMesh(this._gemotry, this._mesh);
+
+```
+
+## 射线检测
+
+从摄像机发出一条射线，检测`mesh`，返回距离，再根据射线检测起点和方向求出触摸点。  
+
+![射线检测](/img/in-post/202106/23-06.png)    
+
+```ts
+private onTouchStart(touch: Touch, event: EventTouch) {
+    //todo 坐标转换，目前 meshRenderer 在原点
+    const point = touch.getLocation();
+    // 从摄像机发起射线
+    this.cameraCom.screenPointToRay(point.x, point.y, this._ray);
+    // 获取射线距离
+    const minDis = geometry.intersect.rayMesh(this._ray, this._mesh, deOpt)
+    if (minDis) {
+        // 求得射线的终点
+        const pos = Vec3.add(_temp_v3, this._ray.o, Vec3.multiplyScalar(_temp_v3, this._ray.d, minDis));
+        if (event.type === SystemEventType.TOUCH_START) {
+            this._axiStart = v3(pos);
+        } else if (event.type === SystemEventType.TOUCH_END) {
+            this._axiEnd = v3(pos);
+            // 计算需要旋转的点
+            this.calculateSelected();
+        }
+    } 
+}
+```
+
+## 网格点分类
+
+使用向量叉乘判断网格点在触摸轴的左边还是右边。  
+
+
+![射线检测](/img/in-post/202106/23-07.png)    
+
+```ts
+private calculateSelected() {
+    const axiStart = this._axiStart;
+    const axiEnd = this._axiEnd;
+    this._selectedPos.clear();
+    this._gemotry.positions.forEach((v, i, arr) => {
+        if (i % 3 === 0) {
+            //网格点
+            const target = _temp_v3_1.set(arr[i], arr[i + 1], arr[i + 2]);
+            //触摸向量
+            const axi = Vec3.subtract(_temp_v3, axiEnd, axiStart).normalize();
+            //待判断向量
+            const targetVector = Vec3.subtract(_temp_v3_2, target, axiStart);
+            if (Vec3.cross(_temp_v3_3, axi, targetVector).y > 0) {
+                //取其中一边
+                this._selectedPos.set(i, [arr[i], arr[i + 1], arr[i + 2]]);
+            }
+        }
+    })
+}
+```
+
+## 旋转网格点
+
+是[四元数与旋转](https://mp.weixin.qq.com/s/zwF5PcR96gazP1k-IzXEPg)中绕轴旋转的一个实例。  
+
+![旋转网格点](/img/in-post/202106/23-08.png)    
+
+```ts
+
+
+// 单个点处理
+private rotatePos(target: Vec3, axiStart: Vec3, axiEnd: Vec3, rad: number) {
+    // 旋转轴
+    const axi = Vec3.subtract(_temp_v3, axiEnd, axiStart).normalize();
+    // 构造起始向量
+    const targetVector = Vec3.subtract(_temp_v3_2, target, axiStart);
+    // 构造四元数
+    Quat.fromAxisAngle(_temp_quat, axi, rad);
+    // 旋转向量
+    Vec3.transformQuat(targetVector, targetVector, _temp_quat);
+    // 计算旋转点
+    Vec3.add(target, axiStart, targetVector);
+    return target;
+}
+```
+
+
+
+## 视频整合详解
+
+视频讲解(视频号[白玉无冰]，各位老板们走过路过点个关注，后续会录些视频讲讲一些技术点的理解):  
+[https://www.bilibili.com/video/BV1jw411o7bL](https://www.bilibili.com/video/BV1jw411o7bL)
+
+> 大家帮忙在视频号点个关注，白玉无冰想试试500个关注后，加个认证标志✅。  
+
+# 小结
+
+> 完整代码工程： https://store.cocos.com/app/detail/2844
+
+以上为白玉无冰使用 `Cocos Creator 3.0.0` 实现 `"折纸3D效果!"` 的技术分享。 
+
+希望大家多多讨论，碰撞出新思想！  
+
+# 更多
+[渐变色文字](https://mp.weixin.qq.com/s/WUpppo1Db_pQTlaqpRQaTw)
+[水排序效果](https://mp.weixin.qq.com/s/DXl7_rvI5fS3Fg-OmHvgmg) 
+[转向行为AI](https://mp.weixin.qq.com/s/TOAfkeNBDb6NdOqRqzJhwQ) 
+[折纸效果](https://mp.weixin.qq.com/s/1guPBbKkG6iWCcWa_uz6CQ) 
+[竖直的文本](https://mp.weixin.qq.com/s/tMT9ZMFvYf9QoIdWaL8fOQ) 
+
+
+
+---
+
+> 更多精彩欢迎关注微信公众号
+
+![](/img/qrcode.jpg)  
+
+---  
+
+[原文链接](https://mp.weixin.qq.com/s/iiD9IVNi0p3jdZYVCx_KBw)    
+[原创文章导航](https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ)   

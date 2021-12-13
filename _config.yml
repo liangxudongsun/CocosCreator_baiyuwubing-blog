@@ -117,3 +117,5 @@ games: [
 
 
 # theme: jekyll-theme-cayman
+
+include: [_layouts] 
